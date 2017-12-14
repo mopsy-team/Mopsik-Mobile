@@ -6,6 +6,7 @@ Instalacja: https://facebook.github.io/react-native/docs/getting-started.html
 Instalacja map: https://github.com/airbnb/react-native-maps/blob/master/docs/installation.md
 
 Generowanie klucza do Google API: https://console.developers.google.com/apis/credentials
+
 Klucz API należy umieścić w pliku: mopsik_mobile/android/app/src/main/res/values/api-keys.xml
 
 Instalowanie nawigacji:
