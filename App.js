@@ -12,13 +12,20 @@ import {
   View,
   Dimensions,
   Image,
-  Button
+  Button,
+  ScrollView,
+  AsyncStorage,
+  TouchableOpacity
 } from 'react-native';
 import MapView from 'react-native-maps';
-import { DrawerNavigator } from 'react-navigation';
-import MapMops from './src/components/MapMops';
+import { DrawerNavigator, StackNavigator } from 'react-navigation';
+import MapMopsView from './src/components/MapMops';
+import Header from './src/components/Header';
+import Icon from 'react-native-vector-icons/Ionicons';
+import MopDetailsView from './src/components/MopDetailsView';
 
 import { SideMenu, List, ListItem } from 'react-native-elements'
+import { DrawerItems, SafeAreaView } from 'react-navigation';
 
 
 class HomeScreen extends Component {
@@ -30,22 +37,20 @@ class HomeScreen extends Component {
         style={[styles.icon, {width: 15, height: 15}]}
       />
     ),
+    header: ({ state, setParams, navigate }) => ({
+      left: (<Button
+          title={'Menu'}
+          onPress={() => navigate('DrawerToggle')}
+        />)
+    }),
   };
 
 
 
   constructor () {
   super()
-  let markers = [
-    {
-      latlng: {longitude: 21, latitude: 52.22825},
-      title: 'MOP',
-      descripton: 'Przykladowy mop'
-    },
-  ]
   this.state = {
-    toggled: false,
-    markers: markers
+    toggled: false
   }
   }
 
@@ -59,32 +64,27 @@ class HomeScreen extends Component {
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-        <Button
-          onPress={() => this.props.navigation.navigate('DrawerToggle', {markers: this.state.markers})}
-          title="Menu"
-        />
+        <Header navigation={this.props.navigation} />
+        <Text>HOME</Text>
       </View>
     );
   }
 }
 
 
-
-
-export default App = DrawerNavigator({
+export const Drawer = DrawerNavigator({
   Home: { screen: HomeScreen },
-  MapMops: { screen: MapMops },
+  MapMops: { screen: MapMopsView },
 });
 
-// export  class App extends Component {
-//
-//
-// render() {
-//   return (
-// <Nav/>
-// )
-// }
-// }
+
+export default App = StackNavigator({
+  Home: { screen: HomeScreen },
+  Drawer: { screen: Drawer },
+  MapMops: { screen: MapMopsView },
+  MopDetails: { screen: MopDetailsView }
+});
+
 
 const styles = StyleSheet.create({
   container: {
@@ -108,5 +108,4 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
-
 });
