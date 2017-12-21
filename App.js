@@ -37,12 +37,12 @@ class HomeScreen extends Component {
         style={[styles.icon, {width: 15, height: 15}]}
       />
     ),
-    header: ({ state, setParams, navigate }) => ({
-      left: (<Button
-          title={'Menu'}
-          onPress={() => navigate('DrawerToggle')}
-        />)
-    }),
+    // header: ({ state, setParams, navigate }) => ({
+    //   left: (<Button
+    //       title={'Menu'}
+    //       onPress={() => navigate('DrawerToggle')}
+    //     />)
+    // }),
   };
 
 
@@ -72,18 +72,15 @@ class HomeScreen extends Component {
 }
 
 
-export const Drawer = DrawerNavigator({
+export default App = DrawerNavigator({
   Home: { screen: HomeScreen },
   MapMops: { screen: MapMopsView },
+}, {
+  initialRouteName: 'Home',
+  headerMode: 'screen'
 });
 
 
-export default App = StackNavigator({
-  Home: { screen: HomeScreen },
-  Drawer: { screen: Drawer },
-  MapMops: { screen: MapMopsView },
-  MopDetails: { screen: MopDetailsView }
-});
 
 
 const styles = StyleSheet.create({
