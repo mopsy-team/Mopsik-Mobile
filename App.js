@@ -20,12 +20,17 @@ import {
 import MapView from 'react-native-maps';
 import { DrawerNavigator, StackNavigator } from 'react-navigation';
 import MapMopsView from './src/components/MapMops';
+import FavouriteMopsView from './src/components/FavouriteMops';
 import Header from './src/components/Header';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MopDetailsView from './src/components/MopDetailsView';
 
 import { SideMenu, List, ListItem } from 'react-native-elements'
 import { DrawerItems, SafeAreaView } from 'react-navigation';
+
+import styles from './src/config/styles'
+
+MOPS = require('./src/config/mops');
 
 
 class HomeScreen extends Component {
@@ -37,12 +42,7 @@ class HomeScreen extends Component {
         style={[styles.icon, {width: 15, height: 15}]}
       />
     ),
-    // header: ({ state, setParams, navigate }) => ({
-    //   left: (<Button
-    //       title={'Menu'}
-    //       onPress={() => navigate('DrawerToggle')}
-    //     />)
-    // }),
+    title: 'Home'
   };
 
 
@@ -52,6 +52,7 @@ class HomeScreen extends Component {
   this.state = {
     toggled: false
   }
+
   }
 
   toggleSideMenu () {
@@ -60,12 +61,33 @@ class HomeScreen extends Component {
   })
   }
 
+  load_favourites = async () => {
+  favourites = [1,2];
+    try{
+
+    await AsyncStorage.setItem('favouriteMOPs',
+      JSON.stringify(favourites));
+    }
+ catch(e){
+     console.log('caught error', e);
+     // Handle exceptions
+ }
+
+  }
+
   render() {
+
+    this.load_favourites();
+    MOPS.refresh();
+
+
     const { navigate } = this.props.navigation;
     return (
+      <View style={styles.main}>
+      <Header navigation={this.props.navigation} />
       <View style={styles.container}>
-        <Header navigation={this.props.navigation} />
         <Text>HOME</Text>
+      </View>
       </View>
     );
   }
@@ -75,34 +97,22 @@ class HomeScreen extends Component {
 export default App = DrawerNavigator({
   Home: { screen: HomeScreen },
   MapMops: { screen: MapMopsView },
-}, {
-  initialRouteName: 'Home',
-  headerMode: 'screen'
-});
+  Favourite: { screen: FavouriteMopsView }
+}
+);
 
-
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F5FCFF',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    //justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+// export default App = StackNavigator({
+//   App: {
+//     screen: Drawer,
+//     navigationOptions: {
+//       title: 'My Chats',
+//     },
+//   },
+//   MapMops: { screen: MapMopsView },
+//   Favourite: { screen: FavouriteMopsView },
+//   MopDetails: { screen: MopDetailsView },
+// }, {
+//   initialRouteName: 'App',
+//   headerMode: 'screen',
+//   title: 'Main'
+// });

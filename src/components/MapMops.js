@@ -7,12 +7,15 @@ import {
   View,
   Dimensions,
   Image,
-  CustomCallout, Button
+  CustomCallout,
+  Button,
+  AsyncStorage
 } from 'react-native';
 import MapView from 'react-native-maps';
 import { StackNavigator } from 'react-navigation';
 import Header from './Header';
 import MopDetailsView from './MopDetailsView';
+import styles from '../config/styles'
 
 MOPS = require('../config/mops');
 
@@ -23,19 +26,13 @@ let height = Dimensions.get('window').height * 0.8
 export default class MapMopsView extends Component {
 static navigationOptions = {
     drawerLabel: 'Mapa',
-    drawerIcon: ({ tintColor }) => (
+    drawerIcon: () => (
       <Image
         source={require('../images/parking.png')}
         style={[styles.icon, {width: 15, height: 15}]}
       />
     ),
     title: 'Map',
-    // header: ({ state, setParams, navigate }) => ({
-    //   left: <Button
-    //       title={'Menu'}
-    //       onPress={() => navigate('DrawerToggle')}
-    //     />
-    // }),
 };
 
 constructor(props) {
@@ -51,16 +48,17 @@ constructor(props) {
     };
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        this.setState({
+        this.state = {
+          ...this.state,
           region: {
             ...this.state.region,
             latitude: position.coords.latitude,
             longitude: position.coords.longitude
           },
           error: null,
-        });
+        };
       },
-      (error) => this.setState({ error: error.message }),
+      (error) => this.state = { ...this.state, error: error.message },
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
   }
@@ -85,10 +83,12 @@ constructor(props) {
 
   render() {
 
-    return (
+console.log('nav', this.props);
 
-      <View style={styles.container}>
+    return (
+      <View style={styles.main}>
       <Header navigation={this.props.navigation} />
+      <View style={styles.container_map}>
         <MapView
      initialRegion={this.state.region}
      region={this.state.region}
@@ -104,10 +104,11 @@ constructor(props) {
         description={marker.description}
         key={i}>
         <Image
-        source={require('../images/parking.png')}
+        source={require('../images/parking_clear.png')}
         style={{width: 15, height: 15}}
+        tintColor={marker.color}
         />
-        <MapView.Callout onPress={() => {console.log('press'); this.props.navigation.navigate('Home')}}>
+        <MapView.Callout onPress={() => {console.log('press'); this.props.navigation.navigate('MopDetails')}}>
         <View
                       style={{
                         backgroundColor: 'white',
@@ -116,7 +117,8 @@ constructor(props) {
                       }}
                     >
                       <Text>{marker.title}</Text>
-                        <Text>{marker.description}</Text>
+                      <Text>{marker.description}</Text>
+                      <Text>Usage: {marker.usage}%</Text>
                     </View>
 </MapView.Callout>
       </MapView.Marker>
@@ -125,41 +127,7 @@ constructor(props) {
    <Text>Latitude: {this.state.latitude}</Text>
    <Text>Longitude: {this.state.longitude}</Text>
       </View>
+      </View>
     );
   }
 }
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F5FCFF',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-  map: {
-    position: 'absolute',
-    top: 40,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    flex: 1,
-    width: width,
-    height:height
-},
-});
