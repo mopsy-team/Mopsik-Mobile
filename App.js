@@ -74,7 +74,13 @@ class HomeScreen extends Component {
 
   render() {
 
+    //debug
     this.uploadFavourites([1,2]);
+    //debug
+
+
+
+    
     MOPS.refresh();
 
 
