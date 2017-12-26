@@ -61,23 +61,20 @@ class HomeScreen extends Component {
   })
   }
 
-  load_favourites = async () => {
-  favourites = [1,2];
-    try{
-
-    await AsyncStorage.setItem('favouriteMOPs',
-      JSON.stringify(favourites));
-    }
- catch(e){
-     console.log('caught error', e);
-     // Handle exceptions
- }
-
+  uploadFavourites = async (favourites) => {
+      try{
+      await AsyncStorage.setItem('favouriteMOPs',
+        JSON.stringify(favourites));
+      }
+   catch(e){
+       console.log('caught error', e);
+   }
   }
+
 
   render() {
 
-    this.load_favourites();
+    this.uploadFavourites([1,2]);
     MOPS.refresh();
 
 

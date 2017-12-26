@@ -16,6 +16,7 @@ import { StackNavigator } from 'react-navigation';
 import Header from './Header';
 import MopDetailsView from './MopDetailsView';
 import { List, ListItem } from 'react-native-elements'
+import Swipeout from 'react-native-swipeout';
 
 MOPS = require('../config/mops');
 var _ = require('lodash');
@@ -45,19 +46,57 @@ constructor() {
     };
   }
 
+uploadFavourites = async (favourites) => {
+    try{
+    await AsyncStorage.setItem('favouriteMOPs',
+      JSON.stringify(favourites));
+    }
+ catch(e){
+     console.log('caught error', e);
+ }
+}
+
+downloadFavourites = () => {
+  AsyncStorage.getItem('favouriteMOPs').then((response) => {
+    favourites = JSON.parse(response);
+      this.setState({favouriteMOPs: favourites});
+      var favourites_mapped = [];
+      favourites.map((fav, i) => {
+         favourites_mapped.push(_.find(MOPS.mops, { id: fav }));
+     });
+     this.setState({favouriteMOPsmapped: favourites_mapped});
+  }).done();
+}
 
 componentDidMount = () => {
-       AsyncStorage.getItem('favouriteMOPs').then((response) => {
-         favourites = JSON.parse(response);
-           this.setState({favouriteMOPs: favourites});
-           var favourites_mapped = [];
-           favourites.map((fav, i) => {
-              favourites_mapped.push(_.find(MOPS.mops, { id: fav }));
-          });
-          this.setState({favouriteMOPsmapped: favourites_mapped});
-       }).done();
+       this.downloadFavourites();
+}
 
-   }
+deleteFav = (id) => {
+  console.log('delete', id);
+  favs = this.state.favouriteMOPs
+  idx = favs.indexOf(id)
+  favs.splice(idx, 1)
+  console.log(favs)
+  this.setState({favouriteMOPs: favs});
+  this.uploadFavourites(favs);
+  var favourites_mapped = [];
+  favs.map((fav, i) => {
+     favourites_mapped.push(_.find(MOPS.mops, { id: fav }));
+   });
+  this.setState({favouriteMOPsmapped: favourites_mapped});
+}
+
+
+swipeBtns = (id) => {
+    return [{
+     text: 'Delete',
+     backgroundColor: 'red',
+     underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
+     onPress: () => { this.deleteFav(id) }
+   }];
+ }
+
 
   render() {
 
@@ -69,6 +108,10 @@ componentDidMount = () => {
    <Text>Ulubione</Text>
    <List containerStyle={{marginBottom: 20}}>
    {this.state.favouriteMOPsmapped.map((fav, i) => (
+     <Swipeout right={this.swipeBtns(fav.id)}
+        autoClose
+        backgroundColor= 'transparent'
+        key={i}>
      <ListItem
         roundAvatar
         avatar={
@@ -84,9 +127,10 @@ componentDidMount = () => {
         badge={{
           value: fav.usage + "%",
           textStyle: { color: 'white' },
-          containerStyle: { marginTop: 10, backgroundColor: fav.color } 
+          containerStyle: { marginTop: 10, backgroundColor: fav.color }
         }}
       />
+      </Swipeout>
    ))}
    </List>
       </View>
