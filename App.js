@@ -9,40 +9,91 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  Dimensions,
+  Image,
+  Button,
+  ScrollView,
+  AsyncStorage,
+  TouchableOpacity
 } from 'react-native';
+import MapView from 'react-native-maps';
+import { DrawerNavigator, StackNavigator } from 'react-navigation';
+import MapMopsView from './src/components/MapMops';
+import Header from './src/components/Header';
+import Icon from 'react-native-vector-icons/Ionicons';
+import MopDetailsView from './src/components/MopDetailsView';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import { SideMenu, List, ListItem } from 'react-native-elements'
+import { DrawerItems, SafeAreaView } from 'react-navigation';
 
-export default class App extends Component<{}> {
+
+class HomeScreen extends Component {
+  static navigationOptions = {
+    drawerLabel: 'Home',
+    drawerIcon: ({ tintColor }) => (
+      <Image
+        source={require('./src/images/parking.png')}
+        style={[styles.icon, {width: 15, height: 15}]}
+      />
+    ),
+    // header: ({ state, setParams, navigate }) => ({
+    //   left: (<Button
+    //       title={'Menu'}
+    //       onPress={() => navigate('DrawerToggle')}
+    //     />)
+    // }),
+  };
+
+
+
+  constructor () {
+  super()
+  this.state = {
+    toggled: false
+  }
+  }
+
+  toggleSideMenu () {
+  this.setState({
+    toggled: !this.state.toggled
+  })
+  }
+
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          MOPSIK!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
+        <Header navigation={this.props.navigation} />
+        <Text>HOME</Text>
       </View>
     );
   }
 }
 
+
+export default App = DrawerNavigator({
+  Home: { screen: HomeScreen },
+  MapMops: { screen: MapMopsView },
+}, {
+  initialRouteName: 'Home',
+  headerMode: 'screen'
+});
+
+
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#F5FCFF',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    //justifyContent: 'flex-end',
+    alignItems: 'center',
   },
   welcome: {
     fontSize: 20,
