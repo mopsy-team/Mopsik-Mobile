@@ -31,7 +31,6 @@ export default class MyHeader extends Component {
   }
 
   render() {
-    console.log('header', this.props);
     return (
       <Header
         leftComponent={this.leftButton()}

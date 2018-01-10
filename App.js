@@ -31,6 +31,7 @@ import { DrawerItems, SafeAreaView } from 'react-navigation';
 import styles from './src/config/styles'
 
 MOPS = require('./src/config/mops');
+var _ = require('lodash');
 
 
 class HomeScreen extends Component {
@@ -44,7 +45,6 @@ class HomeScreen extends Component {
     ),
     title: 'Home'
   };
-
 
 
   constructor () {
@@ -71,11 +71,28 @@ class HomeScreen extends Component {
     }
   }
 
+  downloadFavourites = () => {
+    AsyncStorage.getItem('favouriteMOPs').then((response) => {
+        favourites = JSON.parse(response);
+        MOPS.favouriteMOPs = favourites;
+        var favourites_mapped = [];
+        favourites.map((fav, i) => {
+           favourites_mapped.push(_.find(MOPS.mops, { id: fav }));
+         });
+        MOPS.favouriteMOPsmapped = favourites_mapped;
+    }).done();
+  }
+
+  componentDidMount() {
+    if(MOPS.favouriteMOPs.length === 0){
+      this.downloadFavourites();
+    }
+  }
 
   render() {
 
     //debug
-    this.uploadFavourites([1,2]);
+    //this.uploadFavourites([1,2]);
     //debug
 
 

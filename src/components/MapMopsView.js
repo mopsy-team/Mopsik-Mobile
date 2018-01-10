@@ -18,6 +18,7 @@ import MopDetailsView from './MopDetailsView';
 import styles from '../config/styles'
 
 MOPS = require('../config/mops');
+var _ = require('lodash');
 
 let width = Dimensions.get('window').width
 let height = Dimensions.get('window').height * 0.8
@@ -63,6 +64,8 @@ export default class MapMopsView extends Component {
     );
   }
 
+
+
   componentDidMount() {
     this.watchId = navigator.geolocation.watchPosition(
       (position) => {
@@ -75,6 +78,8 @@ export default class MapMopsView extends Component {
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, distanceFilter: 10 },
     );
+    if(MOPS.favouriteMOPs.length === 0){
+    }
   }
 
   componentWillUnmount() {
@@ -83,7 +88,6 @@ export default class MapMopsView extends Component {
 
   render() {
 
-    console.log('nav', this.props);
 
     return (
       <View style={styles.main}>
@@ -106,7 +110,7 @@ export default class MapMopsView extends Component {
               <Image
               source={require('../images/parking_clear.png')}
               style={{width: 15, height: 15}}
-              tintColor={marker.color}
+              tintColor={marker.color_car.background}
               />
                 <MapView.Callout onPress={() => {this.props.navigation.navigate('MopDetails', {mop:marker})}}>
                   <View
@@ -118,7 +122,7 @@ export default class MapMopsView extends Component {
                   >
                     <Text>{marker.title}</Text>
                     <Text>{marker.description}</Text>
-                    <Text>Usage: {marker.usage}%</Text>
+                    <Text>Usage: {marker.usage_car}%</Text>
                   </View>
                 </MapView.Callout>
               </MapView.Marker>

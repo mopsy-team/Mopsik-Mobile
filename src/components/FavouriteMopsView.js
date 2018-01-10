@@ -49,23 +49,26 @@ uploadFavourites = async (favourites) => {
 
 downloadFavourites = () => {
   AsyncStorage.getItem('favouriteMOPs').then((response) => {
-    favourites = JSON.parse(response);
-      this.setState({favouriteMOPs: favourites});
+      favourites = JSON.parse(response);
+      MOPS.favouriteMOPs = favourites;
       var favourites_mapped = [];
       favourites.map((fav, i) => {
          favourites_mapped.push(_.find(MOPS.mops, { id: fav }));
-     });
-     this.setState({favouriteMOPsmapped: favourites_mapped});
+       });
+      MOPS.favouriteMOPsmapped = favourites_mapped;
+      this.setState({favouriteMOPsmapped: MOPS.favouriteMOPsmapped});
   }).done();
 }
 
+
 componentDidMount = () => {
-       this.downloadFavourites();
+      this.downloadFavourites();
 }
+
 
 deleteFav = (id) => {
   console.log('delete', id);
-  favs = this.state.favouriteMOPs
+  favs = MOPS.favouriteMOPs
   idx = favs.indexOf(id)
   favs.splice(idx, 1)
   console.log(favs)
@@ -76,6 +79,8 @@ deleteFav = (id) => {
      favourites_mapped.push(_.find(MOPS.mops, { id: fav }));
    });
   this.setState({favouriteMOPsmapped: favourites_mapped});
+ MOPS.favouriteMOPs = favs;
+MOPS.favouriteMOPsmapped = favourites_mapped;
 }
 
 
@@ -109,16 +114,16 @@ swipeBtns = (id) => {
           <Image
             source={require('../images/parking_clear.png')}
             style={{width: 35, height: 35}}
-            tintColor={fav.color}
+            tintColor={fav.color_car.background}
           />
       }
         key={i}
         title={fav.title}
         subtitle={fav.id}
         badge={{
-          value: fav.usage + "%",
-          textStyle: { color: 'white' },
-          containerStyle: { marginTop: 10, backgroundColor: fav.color }
+          value: fav.usage_car + "%",
+          textStyle: { color: fav.color_car.text },
+          containerStyle: { marginTop: 10, backgroundColor: fav.color_car.background }
         }}
         onPress={() => {this.props.navigation.navigate('MopDetails', {mop:fav})}}
       />
