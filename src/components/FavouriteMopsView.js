@@ -17,6 +17,8 @@ import Header from './Header';
 import MopDetailsView from './MopDetailsView';
 import { List, ListItem } from 'react-native-elements'
 import Swipeout from 'react-native-swipeout';
+import { NavigationActions } from 'react-navigation'
+
 
 MOPS = require('../config/mops');
 var _ = require('lodash');
@@ -24,18 +26,7 @@ var _ = require('lodash');
 let width = Dimensions.get('window').width
 let height = Dimensions.get('window').height * 0.8
 
-
 export default class FavouriteMopsView extends Component {
-static navigationOptions = {
-    drawerLabel: 'Ulubione MOPy',
-    drawerIcon: ({ tintColor }) => (
-      <Image
-        source={require('../images/parking.png')}
-        style={[styles.icon, {width: 15, height: 15}]}
-      />
-    ),
-    title: 'Ulubione MOPy',
-};
 
 
 constructor() {
@@ -98,14 +89,14 @@ swipeBtns = (id) => {
  }
 
 
+
   render() {
 
 
     return (
 
       <View>
-      <Header navigation={this.props.navigation} />
-   <Text>Ulubione</Text>
+      <Header navigation={this.props.navigation} title='Ulubione MOPy'/>
    <List containerStyle={{marginBottom: 20}}>
    {this.state.favouriteMOPsmapped.map((fav, i) => (
      <Swipeout right={this.swipeBtns(fav.id)}
@@ -129,6 +120,7 @@ swipeBtns = (id) => {
           textStyle: { color: 'white' },
           containerStyle: { marginTop: 10, backgroundColor: fav.color }
         }}
+        onPress={() => {this.props.navigation.navigate('MopDetails', {mop:fav})}}
       />
       </Swipeout>
    ))}
