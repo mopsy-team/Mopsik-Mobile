@@ -34,6 +34,14 @@ export default class MyHeader extends Component {
   }
 
   render() {
+    if(this.props.firstSettings){
+      return (
+        <Header
+          centerComponent={{ text: 'Konfiguracja aplikacji', style: { color: this.txt } }}
+          outerContainerStyles={{ backgroundColor: this.bkg }}
+        />
+      )
+    }
     return (
       <Header
         leftComponent={this.leftButton()}

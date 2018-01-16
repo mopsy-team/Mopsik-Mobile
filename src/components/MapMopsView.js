@@ -75,7 +75,7 @@ export default class MapMopsView extends Component {
   }
 
   render() {
-
+    let {main_vehicle} = MOPS.settings;
 
     return (
       <View style={styles.main}>
@@ -98,7 +98,7 @@ export default class MapMopsView extends Component {
               <Image
               source={require('../images/parking_clear.png')}
               style={{width: 15, height: 15}}
-              tintColor={marker.color.background}
+              tintColor={marker.color[main_vehicle].background}
               />
                 <MapView.Callout onPress={() => {this.props.navigation.navigate('MopDetails', {mop:marker})}}>
                   <View
@@ -110,7 +110,7 @@ export default class MapMopsView extends Component {
                   >
                     <Text>{marker.title}</Text>
                     <Text>{marker.description}</Text>
-                    <Text>Usage: {marker.usage}%</Text>
+                    <Text>Usage: {marker.usage[main_vehicle]}%</Text>
                   </View>
                 </MapView.Callout>
               </MapView.Marker>

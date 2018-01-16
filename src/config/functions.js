@@ -27,6 +27,7 @@ MOPS.favouriteMOPsmapped = favourites_mapped;
 }
 
 
+
 module.exports = {
   deleteFavourite: deleteFavourite,
   uploadFavourites: uploadFavourites,

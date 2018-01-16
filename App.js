@@ -62,7 +62,12 @@ class HomeScreen extends Component {
 
   downloadFavourites = () => {
     AsyncStorage.getItem('favouriteMOPs').then((response) => {
-        favourites = JSON.parse(response);
+        if(response){
+          favourites = JSON.parse(response);
+        }
+        else{
+          favourites = [];
+        }
         MOPS.favouriteMOPs = favourites;
         var favourites_mapped = [];
         favourites.map((fav, i) => {
@@ -73,13 +78,22 @@ class HomeScreen extends Component {
   }
 
   componentDidMount() {
+    AsyncStorage.getItem('settings').then((response) => {
+        if(response){
+          settings = JSON.parse(response);
+          MOPS.settings = settings;
+        }
+        else{
+          this.props.navigation.navigate('Settings', {first: true});
+        }
+    }).done();
+
     if(MOPS.favouriteMOPs.length === 0){
       this.downloadFavourites();
     }
   }
 
   render() {
-
 
 
     MOPS.refresh();
@@ -91,6 +105,10 @@ class HomeScreen extends Component {
         <Header navigation={this.props.navigation} title='Home'/>
         <View style={styles.container}>
           <Text>HOME</Text>
+          <Button
+        onPress={() => AsyncStorage.clear()}
+        title="Remove settings - DEBUG"
+      />
         </View>
       </View>
     );
@@ -121,17 +139,16 @@ const DrawerContent = (props) => {
   <View  style={{flex: 1}}>
     <View
       style={{
-        backgroundColor: 'grey',
-        height: 150,
+        backgroundColor: 'white',
+        height: 130,
         alignItems: 'center',
         justifyContent: 'center',
       }}
     >
-      <Image source={require('./src/images/gddkia.png')} style={{height: 45, width: 250}}/>
+      <Image source={require('./src/images/logo_clear_all.png')} style={{flex: 1,
+    width: 250,
+    resizeMode: 'contain' }}/>
       <Text></Text>
-      <Text style={{ color: 'white', fontSize: 30 }}>
-        MOPSIK
-      </Text>
     </View>
     <DrawerItems {...tabs} />
     <View
@@ -148,7 +165,7 @@ const DrawerContent = (props) => {
   <Text></Text>
     <View
       style={{
-        backgroundColor: 'grey',
+        backgroundColor: '#8aa8e3',
         height: 45,
         alignItems: 'center',
         position: 'absolute',
@@ -158,7 +175,7 @@ const DrawerContent = (props) => {
         paddingTop: 7
       }}
     >
-    <Text style={{ color: 'orange', fontSize: 15 }}>
+    <Text style={{ color: 'white', fontSize: 15 }}>
       Mopsy Team® 2018
     </Text>
   </View>

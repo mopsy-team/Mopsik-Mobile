@@ -76,8 +76,8 @@ swipeBtns = (id) => {
 }
 
   render() {
-
-
+    let {main_vehicle} = MOPS.settings;
+    console.log(main_vehicle);
     return (
 
       <View ref='favs'>
@@ -94,16 +94,16 @@ swipeBtns = (id) => {
           <Image
             source={require('../images/parking_clear.png')}
             style={{width: 35, height: 35}}
-            tintColor={fav.color.background}
+            tintColor={fav.color[main_vehicle].background}
           />
       }
         key={i}
         title={fav.title}
         subtitle={fav.id}
         badge={{
-          value: fav.usage + "%",
-          textStyle: { color: fav.color.text },
-          containerStyle: { marginTop: 10, backgroundColor: fav.color.background }
+          value: fav.usage[main_vehicle] + "%",
+          textStyle: { color: fav.color[main_vehicle].text },
+          containerStyle: { marginTop: 10, backgroundColor: fav.color[main_vehicle].background }
         }}
         onPress={() => {this.props.navigation.navigate('MopDetails', {mop:fav})}}
       />
