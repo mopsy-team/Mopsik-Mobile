@@ -18,15 +18,15 @@ import {
   TouchableOpacity
 } from 'react-native';
 import MapView from 'react-native-maps';
-import { DrawerNavigator, StackNavigator } from 'react-navigation';
+import { DrawerNavigator, StackNavigator, DrawerItems, SafeAreaView } from 'react-navigation';
+import { List, ListItem, Icon } from 'react-native-elements'
+
 import MapMopsStack from './src/components/MapMopsStack';
 import FavouritesStack from './src/components/FavouritesStack';
+import SearchStack from './src/components/SearchStack';
 import Header from './src/components/Header';
-import Icon from 'react-native-vector-icons/Ionicons';
-import MopDetails from './src/components/MopDetailsView';
-
-import { SideMenu, List, ListItem } from 'react-native-elements'
-import { DrawerItems, SafeAreaView } from 'react-navigation';
+import MopDetailsView from './src/components/MopDetailsView';
+import SettingsView from './src/components/SettingsView';
 
 import styles from './src/config/styles'
 
@@ -35,17 +35,6 @@ var _ = require('lodash');
 
 
 class HomeScreen extends Component {
-  static navigationOptions = {
-    drawerLabel: 'Home',
-    drawerIcon: ({ tintColor }) => (
-      <Image
-      source={require('./src/images/parking.png')}
-      style={[styles.icon, {width: 15, height: 15}]}
-      />
-    ),
-    title: 'Home'
-  };
-
 
   constructor () {
     super()
@@ -91,9 +80,6 @@ class HomeScreen extends Component {
 
   render() {
 
-    //debug
-    //this.uploadFavourites([1,2]);
-    //debug
 
 
     MOPS.refresh();
@@ -112,28 +98,106 @@ class HomeScreen extends Component {
 }
 
 
+const DrawerContent = (props) => {
+  items_set = [];
+  items_tab = [];
+  for (let item of props.items){
+    if (item.key === 'Settings') {
+      items_set.push(item);
+    }
+    else {
+      items_tab.push(item);
+    }
+  }
+  settings = {
+    ...props,
+    items: items_set
+  }
+  tabs = {
+    ...props,
+    items: items_tab
+  }
+  return (
+  <View  style={{flex: 1}}>
+    <View
+      style={{
+        backgroundColor: 'grey',
+        height: 150,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <Image source={require('./src/images/gddkia.png')} style={{height: 45, width: 250}}/>
+      <Text></Text>
+      <Text style={{ color: 'white', fontSize: 30 }}>
+        MOPSIK
+      </Text>
+    </View>
+    <DrawerItems {...tabs} />
+    <View
+      style={{
+        backgroundColor: '#DAE0E9',
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 48,
+      }}
+    >
+    <DrawerItems {...settings} />
+  </View>
+  <Text></Text>
+    <View
+      style={{
+        backgroundColor: 'grey',
+        height: 45,
+        alignItems: 'center',
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        paddingTop: 7
+      }}
+    >
+    <Text style={{ color: 'orange', fontSize: 15 }}>
+      Mopsy Team® 2018
+    </Text>
+  </View>
+  </View>
+);}
+
 
 export default App = DrawerNavigator({
-  Home: { screen: HomeScreen },
+  Home: { screen: HomeScreen,
+    navigationOptions : {
+      drawerLabel: 'Home',
+      drawerIcon: <Icon name='home' />,
+      title: 'Home'
+    }
+   },
   MapMopsStack: { screen: MapMopsStack,
     navigationOptions: {
         drawerLabel: 'Mapa',
-        drawerIcon: ({ tintColor }) => (
-          <Image
-            source={require('./src/images/parking.png')}
-            style={[styles.icon, {width: 15, height: 15}]}
-          />
-        ),
+        drawerIcon: <Icon name='map' />,
     } },
   FavouritesStack: { screen: FavouritesStack,
     navigationOptions: {
         drawerLabel: 'Ulubione MOPy',
-        drawerIcon: ({ tintColor }) => (
-          <Image
-            source={require('./src/images/parking.png')}
-            style={[styles.icon, {width: 15, height: 15}]}
-          />
-        ),
+        drawerIcon: <Icon name='favorite' />,
     } },
+  SearchStack: { screen: SearchStack,
+    navigationOptions: {
+        drawerLabel: 'Wyszukaj MOPa',
+        drawerIcon: <Icon name='search' />,
+    } },
+  Settings: { screen: SettingsView,
+    navigationOptions: {
+        drawerLabel: 'Ustawienia',
+        drawerIcon: <Icon name='build' />,
+    } },
+},{
+  drawerOpenRoute: 'DrawerOpen',
+  drawerCloseRoute: 'DrawerClose',
+  drawerToggleRoute: 'DrawerToggle',
+  contentComponent: DrawerContent
 }
 );

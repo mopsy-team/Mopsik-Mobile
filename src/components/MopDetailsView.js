@@ -8,15 +8,16 @@ import {
   Dimensions,
   Image,
   CustomCallout,
-  Button,
   AsyncStorage
 } from 'react-native';
 import MapView from 'react-native-maps';
 import { StackNavigator } from 'react-navigation';
 import Header from './Header';
 import styles from '../config/styles'
+import { Button } from 'react-native-elements'
 
 MOPS = require('../config/mops');
+FUNCTIONS = require('../config/functions');
 var _ = require('lodash');
 
 let width = Dimensions.get('window').width
@@ -30,11 +31,38 @@ export default class MopDetailsView extends Component {
     return MOPS.favouriteMOPs.find((el) => {return el === id}) !== undefined;
   }
 
+  generateButton = (inFavs) => {
+    if(inFavs){
+      return <Button
+        title='Usuń z ulubionych'
+        onPress={() => {
+          FUNCTIONS.deleteFavourite(this.state.mop.id);
+          inFavs = this.isInFavourites(this.state.mop.id);
+          this.setState({button: this.generateButton(inFavs)})
+        ;}}
+        //large
+        icon={{name: 'favorite', color: 'white'}}
+        backgroundColor='red'
+        color='white'
+      />
+    }
+    else{
+      return <Button
+        title='Dodaj to ulubionych'
+        onPress={() => this.addToFavourites(this.state.mop.id)}
+        //large
+        icon={{name: 'favorite-border', color: 'red'}}
+        backgroundColor='white'
+        color='red'
+      />
+    }
+  }
+
   constructor(props) {
     super(props);
     let {mop} = this.props.navigation.state.params;
     this.state = {
-      disabled: this.isInFavourites(mop.id),
+      button: this.generateButton(this.isInFavourites(mop.id)),
       mop: mop
     };
   }
@@ -48,16 +76,15 @@ export default class MopDetailsView extends Component {
       favourites.map((fav, i) => {
          favourites_mapped.push(_.find(MOPS.mops, { id: fav }));
        });
-      this.setState({favouriteMOPsmapped: favourites_mapped});
      MOPS.favouriteMOPs = favourites;
     MOPS.favouriteMOPsmapped = favourites_mapped;
-    this.setState({disabled: this.isInFavourites(this.state.mop.id)});
+    inFavs = this.isInFavourites(this.state.mop.id);
+    this.setState({button: this.generateButton(inFavs)});
     }).done();
   }
 
 
   render() {
-    console.log(this.state);
     return (
 
       <View style={styles.main}>
@@ -65,7 +92,7 @@ export default class MopDetailsView extends Component {
 
       <Text>Detale mopa: {this.state.mop.title} </Text>
       <Text>Opis: {this.state.mop.description} </Text>
-      <Button title='Dodaj to ulubionych' onPress={() => this.addToFavourites(this.state.mop.id)} disabled={this.state.disabled} />
+      {this.state.button}
       </View>
     );
   }

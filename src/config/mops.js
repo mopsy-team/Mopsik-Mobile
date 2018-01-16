@@ -88,6 +88,8 @@ let downloadMops = () => {
       color_car: get_color(usage_car, simple_legend),
       color_truck: get_color(usage_truck, simple_legend),
       color_bus: get_color(usage_bus, simple_legend),
+      usage: usage_car,
+      color: get_color(usage_car, simple_legend)
     })
   });
 }
