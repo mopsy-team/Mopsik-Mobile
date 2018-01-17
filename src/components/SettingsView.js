@@ -32,9 +32,9 @@ export default class SettingsView extends Component {
     super()
     this.state = {
       selectedIndex: MOPS.settings.main_vehicle_id,
-      car_checked: false,
-      truck_checked: false,
-      bus_checked: false
+      car_selected: MOPS.settings.car_selected,
+      truck_selected: MOPS.settings.truck_selected,
+      bus_selected: MOPS.settings.bus_selected,
     }
     this.updateIndex = this.updateIndex.bind(this)
   }
@@ -62,12 +62,23 @@ export default class SettingsView extends Component {
 
   get_ok_button = () => {
     let dis = (this.state.selectedIndex === -1);
+    let icon = dis ? {name: 'block', color: 'red'} : {name: 'done', color: 'green'};
     return (<Button
       onPress={() => {this.props.navigation.state.params.first = false; this.props.navigation.navigate('Home')}}
       title="OK"
-      disabled = {dis}
+      disabled= {dis}
+      icon={icon}
     />);
   }
+
+updateMultipleSelection = (vehicle_selected) => {
+st = {...this.state};
+v = !st[vehicle_selected];
+st[vehicle_selected] = v;
+  this.setState(st);
+  MOPS.settings[vehicle_selected] = v;
+  AsyncStorage.setItem('settings', JSON.stringify(MOPS.settings));
+}
 
   render() {
     let {params} = this.props.navigation.state;
@@ -96,17 +107,21 @@ export default class SettingsView extends Component {
       <Text>Wybierz typy pojazdów, dla których chcesz wyświetlać dane</Text>
       <CheckBox
         title='Samochód'
-        checked={this.state.car_checked}
-        onPress={() => {this.setState({car_checked: true}); MOPS.settings.car_selected = true;}}
-        checkedColor='red'
+        checked={this.state.car_selected}
+        onPress={() => this.updateMultipleSelection('car_selected')}
+        checkedColor='#8aa8e3'
       />
       <CheckBox
         title='Ciężarówka'
-        checked={this.state.truck_checked}
+        checked={this.state.truck_selected}
+        onPress={() => this.updateMultipleSelection('truck_selected')}
+        checkedColor='#8aa8e3'
       />
       <CheckBox
         title='Autobus'
-        checked={this.state.bus_checked}
+        checked={this.state.bus_selected}
+        onPress={() => this.updateMultipleSelection('bus_selected')}
+        checkedColor='#8aa8e3'
       />
       </View>
       {ok}
