@@ -69,7 +69,12 @@ export default class MopDetailsView extends Component {
 
   addToFavourites = (id) => {
     AsyncStorage.getItem('favouriteMOPs').then((response) => {
-      favourites = JSON.parse(response);
+      if(response){
+        favourites = JSON.parse(response);
+      }
+      else{
+        favourites = [];
+      }
       favourites.push(id)
       AsyncStorage.setItem('favouriteMOPs', JSON.stringify(favourites));
       var favourites_mapped = [];

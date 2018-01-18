@@ -14,9 +14,12 @@ import {
 import { DrawerNavigator, StackNavigator, DrawerItems, SafeAreaView } from 'react-navigation';
 import { List, ListItem, Icon } from 'react-native-elements'
 
+import LinkInBrowserView from 'mopsik_mobile/src/components/LinkInBrowserView'
+
 import Header from '../components/Header';
 
 import styles from '../config/styles'
+
 
 
 export default class HomeView extends Component {
@@ -24,7 +27,8 @@ export default class HomeView extends Component {
   constructor () {
     super()
     this.state = {
-      toggled: false
+      toggled: false,
+      link: false
     }
 
   }
@@ -80,7 +84,7 @@ export default class HomeView extends Component {
 
   render() {
 
-
+    hyperlink = (this.state.link) ? <LinkInBrowserView src='https://logomakr.com/018RtM#'/> : <Text></Text>;
     MOPS.refresh();
 
 
@@ -94,6 +98,10 @@ export default class HomeView extends Component {
         onPress={() => AsyncStorage.clear()}
         title="Reset AsyncStorage - DEBUG"
       />
+      <TouchableOpacity onPress={() => this.setState({link: true})}>
+        <Text>Logo wygenerowane przy pomocy Logo Maker</Text>
+      </TouchableOpacity>
+      {hyperlink}
         </View>
       </View>
     );

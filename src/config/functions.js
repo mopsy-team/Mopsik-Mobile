@@ -23,7 +23,7 @@ deleteFavourite = (id) => {
      favourites_mapped.push(_.find(MOPS.mops, { id: fav }));
    });
  MOPS.favouriteMOPs = favs;
-MOPS.favouriteMOPsmapped = favourites_mapped;
+ MOPS.favouriteMOPsmapped = favourites_mapped;
 }
 
 
