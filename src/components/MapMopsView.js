@@ -25,16 +25,6 @@ let height = Dimensions.get('window').height * 0.8
 
 
 export default class MapMopsView extends Component {
-  static navigationOptions = {
-    drawerLabel: 'Mapa',
-    drawerIcon: () => (
-      <Image
-      source={require('../images/parking.png')}
-      style={[styles.icon, {width: 15, height: 15}]}
-      />
-    ),
-    title: 'Map',
-  };
 
   constructor(props) {
     super(props);
@@ -78,8 +68,6 @@ export default class MapMopsView extends Component {
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, distanceFilter: 10 },
     );
-    if(MOPS.favouriteMOPs.length === 0){
-    }
   }
 
   componentWillUnmount() {
@@ -87,7 +75,7 @@ export default class MapMopsView extends Component {
   }
 
   render() {
-
+    let {main_vehicle} = MOPS.settings;
 
     return (
       <View style={styles.main}>
@@ -110,7 +98,7 @@ export default class MapMopsView extends Component {
               <Image
               source={require('../images/parking_clear.png')}
               style={{width: 15, height: 15}}
-              tintColor={marker.color_car.background}
+              tintColor={marker.color[main_vehicle].background}
               />
                 <MapView.Callout onPress={() => {this.props.navigation.navigate('MopDetails', {mop:marker})}}>
                   <View
@@ -122,7 +110,7 @@ export default class MapMopsView extends Component {
                   >
                     <Text>{marker.title}</Text>
                     <Text>{marker.description}</Text>
-                    <Text>Usage: {marker.usage_car}%</Text>
+                    <Text>Usage: {marker.usage[main_vehicle]}%</Text>
                   </View>
                 </MapView.Callout>
               </MapView.Marker>

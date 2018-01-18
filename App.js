@@ -1,139 +1,53 @@
-/**
-* Sample React Native App
-* https://github.com/facebook/react-native
-* @flow
-*/
-
 import React, { Component } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  Image,
-  Button,
-  ScrollView,
-  AsyncStorage,
-  TouchableOpacity
-} from 'react-native';
-import MapView from 'react-native-maps';
-import { DrawerNavigator, StackNavigator } from 'react-navigation';
-import MapMopsStack from './src/components/MapMopsStack';
-import FavouritesStack from './src/components/FavouritesStack';
-import Header from './src/components/Header';
-import Icon from 'react-native-vector-icons/Ionicons';
-import MopDetails from './src/components/MopDetailsView';
 
-import { SideMenu, List, ListItem } from 'react-native-elements'
-import { DrawerItems, SafeAreaView } from 'react-navigation';
+import { DrawerNavigator, StackNavigator, DrawerItems, SafeAreaView } from 'react-navigation';
+import { List, ListItem, Icon } from 'react-native-elements'
 
-import styles from './src/config/styles'
+import DrawerContent from 'mopsik_mobile/src/components/DrawerContent';
 
-MOPS = require('./src/config/mops');
+import HomeView from 'mopsik_mobile/src/components/HomeView';
+import MapMopsStack from 'mopsik_mobile/src/components/MapMopsStack';
+import FavouritesStack from 'mopsik_mobile/src/components/FavouritesStack';
+import SearchStack from 'mopsik_mobile/src/components/SearchStack';
+import SettingsView from 'mopsik_mobile/src/components/SettingsView';
+
+MOPS = require('mopsik_mobile/src/config/mops');
+
 var _ = require('lodash');
 
 
-class HomeScreen extends Component {
-  static navigationOptions = {
-    drawerLabel: 'Home',
-    drawerIcon: ({ tintColor }) => (
-      <Image
-      source={require('./src/images/parking.png')}
-      style={[styles.icon, {width: 15, height: 15}]}
-      />
-    ),
-    title: 'Home'
-  };
-
-
-  constructor () {
-    super()
-    this.state = {
-      toggled: false
-    }
-
-  }
-
-  toggleSideMenu () {
-    this.setState({
-      toggled: !this.state.toggled
-    })
-  }
-
-  uploadFavourites = async (favourites) => {
-    try{
-      await AsyncStorage.setItem('favouriteMOPs',
-      JSON.stringify(favourites));
-    }
-    catch(e){
-      console.log('caught error', e);
-    }
-  }
-
-  downloadFavourites = () => {
-    AsyncStorage.getItem('favouriteMOPs').then((response) => {
-        favourites = JSON.parse(response);
-        MOPS.favouriteMOPs = favourites;
-        var favourites_mapped = [];
-        favourites.map((fav, i) => {
-           favourites_mapped.push(_.find(MOPS.mops, { id: fav }));
-         });
-        MOPS.favouriteMOPsmapped = favourites_mapped;
-    }).done();
-  }
-
-  componentDidMount() {
-    if(MOPS.favouriteMOPs.length === 0){
-      this.downloadFavourites();
-    }
-  }
-
-  render() {
-
-    //debug
-    //this.uploadFavourites([1,2]);
-    //debug
-
-
-    MOPS.refresh();
-
-
-    const { navigate } = this.props.navigation;
-    return (
-      <View style={styles.main}>
-        <Header navigation={this.props.navigation} title='Home'/>
-        <View style={styles.container}>
-          <Text>HOME</Text>
-        </View>
-      </View>
-    );
-  }
-}
-
-
-
 export default App = DrawerNavigator({
-  Home: { screen: HomeScreen },
+  Home: { screen: HomeView,
+    navigationOptions : {
+      drawerLabel: 'Home',
+      drawerIcon: <Icon name='home' />,
+      title: 'Home'
+    }
+   },
   MapMopsStack: { screen: MapMopsStack,
     navigationOptions: {
         drawerLabel: 'Mapa',
-        drawerIcon: ({ tintColor }) => (
-          <Image
-            source={require('./src/images/parking.png')}
-            style={[styles.icon, {width: 15, height: 15}]}
-          />
-        ),
+        drawerIcon: <Icon name='map' />,
     } },
   FavouritesStack: { screen: FavouritesStack,
     navigationOptions: {
         drawerLabel: 'Ulubione MOPy',
-        drawerIcon: ({ tintColor }) => (
-          <Image
-            source={require('./src/images/parking.png')}
-            style={[styles.icon, {width: 15, height: 15}]}
-          />
-        ),
+        drawerIcon: <Icon name='favorite' />,
     } },
+  SearchStack: { screen: SearchStack,
+    navigationOptions: {
+        drawerLabel: 'Wyszukaj MOPa',
+        drawerIcon: <Icon name='search' />,
+    } },
+  Settings: { screen: SettingsView,
+    navigationOptions: {
+        drawerLabel: 'Ustawienia',
+        drawerIcon: <Icon name='build' />,
+    } },
+},{
+  drawerOpenRoute: 'DrawerOpen',
+  drawerCloseRoute: 'DrawerClose',
+  drawerToggleRoute: 'DrawerToggle',
+  contentComponent: DrawerContent
 }
 );

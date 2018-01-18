@@ -10,12 +10,16 @@ let markers = [
     description: 'Przykladowy mop',
     id:1,
     avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-    taken_car: 15,
-    available_car: 100,
-    taken_truck: 50,
-    available_truck: 100,
-    taken_bus: 1,
-    available_bus: 10,
+    taken: {
+      car: 15,
+      truck: 50,
+      bus: 1
+    },
+    available: {
+      car: 100,
+      truck: 100,
+      bus: 10
+    }
   },
   {
     coords: {longitude: 21, latitude: 52.22},
@@ -23,12 +27,16 @@ let markers = [
     description: 'Przykladowy mop2',
     id:2,
     avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-    taken_car: 50,
-    available_car: 100,
-    taken_truck: 80,
-    available_truck: 100,
-    taken_bus: 5,
-    available_bus: 10,
+    taken: {
+      car: 70,
+      truck: 20,
+      bus: 4
+    },
+    available: {
+      car: 100,
+      truck: 100,
+      bus: 10
+    }
   },
   {
     coords: {longitude: 21, latitude: 52.214},
@@ -36,21 +44,38 @@ let markers = [
     description: 'Przykladowy mop3',
     id:3,
     avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-    taken_car: 90,
-    available_car: 100,
-    taken_truck: 20,
-    available_truck: 100,
-    taken_bus: 8,
-    available_bus: 10,
+    taken: {
+      car: 90,
+      truck: 50,
+      bus: 8
+    },
+    available: {
+      car: 100,
+      truck: 90,
+      bus: 10
+    }
   },
 ]
+
+let settings = {
+  set: false,
+  main_vehicle: 'car',
+  main_vehicle_id: -1,
+  car_selected: false,
+  truck_selected: false,
+  bus_selected: false
+}
 
 let simple_legend = {
   35: {
     background:'green',
     text:'white'
   },
-  65: {
+  50: {
+    background:'yellow',
+    text:'black'
+  },
+  75: {
     background:'orange',
     text:'black'
   },
@@ -77,17 +102,22 @@ let favouriteMOPsmapped = [];
 
 let downloadMops = () => {
   markers.map((marker) => {
-    usage_car = marker.taken_car * 100 / marker.available_car;
-    usage_truck = marker.taken_truck * 100 / marker.available_truck;
-    usage_bus = marker.taken_bus * 100 / marker.available_bus;
+    usage_car = Math.floor(marker.taken.car * 100 / marker.available.car);
+    usage_truck = Math.floor(marker.taken.truck * 100 / marker.available.truck);
+    usage_bus = Math.floor(marker.taken.bus * 100 / marker.available.bus);
     mops.push({
       ...marker,
-      usage_car: usage_car,
-      usage_truck: usage_truck,
-      usage_bus: usage_bus,
-      color_car: get_color(usage_car, simple_legend),
-      color_truck: get_color(usage_truck, simple_legend),
-      color_bus: get_color(usage_bus, simple_legend),
+      usage: {
+        car: usage_car,
+        truck: usage_truck,
+        bus: usage_bus
+      },
+      color: {
+        car: get_color(usage_car, simple_legend),
+        truck: get_color(usage_truck, simple_legend),
+        bus: get_color(usage_bus, simple_legend)
+      }
+
     })
   });
 }
@@ -100,6 +130,7 @@ let refresh = () => {
 
 module.exports = {
   mops: mops,
+  settings: settings,
   downloadMops: downloadMops,
   refresh: refresh,
   favouriteMOPs: favouriteMOPs,
