@@ -17,7 +17,7 @@ export default styles = StyleSheet.create({
   },
   map: {
     position: 'absolute',
-    top: 40,
+    top: 0,
     left: 0,
     right: 0,
     bottom: 0,
@@ -29,7 +29,7 @@ container_map: {
   flex: 1,
   backgroundColor: '#F5FCFF',
   position: 'absolute',
-  top: 0,
+  top: 75,
   left: 0,
   right: 0,
   bottom: 0,
