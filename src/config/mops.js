@@ -101,25 +101,34 @@ let favouriteMOPs = [];
 let favouriteMOPsmapped = [];
 
 let downloadMops = () => {
-  markers.map((marker) => {
-    usage_car = Math.floor(marker.taken.car * 100 / marker.available.car);
-    usage_truck = Math.floor(marker.taken.truck * 100 / marker.available.truck);
-    usage_bus = Math.floor(marker.taken.bus * 100 / marker.available.bus);
-    mops.push({
-      ...marker,
-      usage: {
-        car: usage_car,
-        truck: usage_truck,
-        bus: usage_bus
-      },
-      color: {
-        car: get_color(usage_car, simple_legend),
-        truck: get_color(usage_truck, simple_legend),
-        bus: get_color(usage_bus, simple_legend)
+  fetch('http://reach.mimuw.edu.pl:8008/mops').then(response => (response) ? response.json() : {}).then((mops_dict) => {
+    console.log('resp', mops_dict)
+      markers = [];
+      for (var key in mops_dict) {
+        markers.push(mops_dict[key]);
       }
+      console.log('markers', markers);
+      console.log('len', markers.length);
+      markers.map((marker) => {
+        usage_car = (marker.available.car > 0) ? Math.floor(marker.taken.car * 100 / marker.available.car) : 0;
+        usage_truck = (marker.available.truck > 0) ? Math.floor(marker.taken.truck * 100 / marker.available.truck) : 0;
+        usage_bus = (marker.available.bus > 0) ? Math.floor(marker.taken.bus * 100 / marker.available.bus) : 0;
+        mops.push({
+          ...marker,
+          usage: {
+            car: usage_car,
+            truck: usage_truck,
+            bus: usage_bus
+          },
+          color: {
+            car: get_color(usage_car, simple_legend),
+            truck: get_color(usage_truck, simple_legend),
+            bus: get_color(usage_bus, simple_legend)
+          }
 
-    })
-  });
+        })
+      });
+  }).done();
 }
 
 let refresh = () => {
