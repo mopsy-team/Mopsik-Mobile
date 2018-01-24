@@ -101,7 +101,7 @@ let favouriteMOPs = [];
 let favouriteMOPsmapped = [];
 
 let downloadMops = () => {
-  fetch('http://reach.mimuw.edu.pl:8008/').then(response => (response) ? response.json() : {}).then((mops_dict) => {
+  fetch('http://reach.mimuw.edu.pl:8008/mops').then(response => (response) ? response.json() : {}).then((mops_dict) => {
     console.log('resp', mops_dict)
       markers = [];
       for (var key in mops_dict) {
