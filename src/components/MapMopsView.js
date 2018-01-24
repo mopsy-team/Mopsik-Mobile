@@ -8,16 +8,17 @@ import {
   Dimensions,
   Image,
   CustomCallout,
-  Button,
   AsyncStorage
 } from 'react-native';
 import MapView from 'react-native-maps';
 import { StackNavigator } from 'react-navigation';
 import Header from './Header';
 import MopDetailsView from './MopDetailsView';
+import { Button } from 'react-native-elements'
 import styles from '../config/styles'
 
 MOPS = require('../config/mops');
+THEMES = require('../config/themes');
 var _ = require('lodash');
 
 let width = Dimensions.get('window').width
@@ -28,20 +29,28 @@ export default class MapMopsView extends Component {
 
   constructor(props) {
     super(props);
+    let r = {
+      latitude: 52.226,
+      longitude: 21,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421
+    };
     this.state = {
-      region:{
-        latitude: 52.226,
-        longitude: 21,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421
-      },
+      region: r,
+      savedLocation: r,
       error: null,
+      followPosition: true
     };
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.state = {
           ...this.state,
           region: {
+            ...this.state.region,
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          },
+          savedLocation: {
             ...this.state.region,
             latitude: position.coords.latitude,
             longitude: position.coords.longitude
@@ -57,12 +66,23 @@ export default class MapMopsView extends Component {
 
 
   componentDidMount() {
+    MOPS.refresh();
     this.watchId = navigator.geolocation.watchPosition(
       (position) => {
-        this.setState({
+        r = {
+          ...this.state.region,
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
           error: null,
+        };
+        console.log('follow', this.state.followPosition);
+        if(this.state.followPosition){
+          this.setState({
+            region: r
+          });
+        }
+        this.setState({
+          savedLocation: r
         });
       },
       (error) => this.setState({ error: error.message }),
@@ -74,8 +94,29 @@ export default class MapMopsView extends Component {
     navigator.geolocation.clearWatch(this.watchId);
   }
 
+  selectMops = () => {
+    mops = [];
+    MOPS.mops.map((mop, i) => {
+      if(mop.coords.latitude > (this.state.region.latitude - this.state.region.latitudeDelta)
+        && mop.coords.latitude < (this.state.region.latitude + this.state.region.latitudeDelta)
+        && mop.coords.longitude > (this.state.region.longitude - this.state.region.longitudeDelta)
+        && mop.coords.longitude < (this.state.region.longitude + this.state.region.longitudeDelta)
+      ){
+        mops.push(mop);
+      }
+
+    });
+    return mops;
+  }
+
+  onRegionChange(region) {
+    this.setState({region: region, followPosition: false});
+  }
+
+
   render() {
     let {main_vehicle} = MOPS.settings;
+    let mops = this.selectMops();
 
     return (
       <View style={styles.main}>
@@ -84,12 +125,12 @@ export default class MapMopsView extends Component {
           <MapView
           initialRegion={this.state.region}
           region={this.state.region}
-          //onRegionChange={this.onRegionChange}
+          onRegionChange={this.onRegionChange.bind(this)}
           showsUserLocation={true}
           showsMyLocationButton={true}
           style={styles.map}
           >
-            {MOPS.mops.map((marker, i) => (
+            {mops.map((marker, i) => (
               <MapView.Marker
               coordinate={marker.coords}
               title={marker.title}
@@ -97,7 +138,7 @@ export default class MapMopsView extends Component {
               key={i}>
               <Image
               source={require('../images/parking_clear.png')}
-              style={{width: 15, height: 15}}
+              style={{width: 25, height: 25}}
               tintColor={marker.color[main_vehicle].background}
               />
                 <MapView.Callout onPress={() => {this.props.navigation.navigate('MopDetails', {mop:marker})}}>
@@ -116,8 +157,30 @@ export default class MapMopsView extends Component {
               </MapView.Marker>
             ))}
           </MapView>
-          <Text>Latitude: {this.state.latitude}</Text>
-          <Text>Longitude: {this.state.longitude}</Text>
+          <Text>Latitude: {this.state.region.latitude}</Text>
+          <Text>Longitude: {this.state.region.longitude}</Text>
+          <Button
+            onPress={() => {
+              if(!this.state.followPosition){
+                console.log('follow');
+                this.setState({
+                  followPosition: true,
+                  region: this.state.savedLocation
+                })
+              }
+              else{
+                console.log('unfollow');
+                this.setState({
+                  followPosition: false
+                })
+              }
+
+            ;}}
+            //large
+            icon={{name: 'my-location', color: (this.state.followPosition) ? THEMES.basic.backgroundWhite : THEMES.basic.backgroundDarkGrey}}
+            backgroundColor={(this.state.followPosition) ? THEMES.basic.backgroundLightColor : THEMES.basic.backgroundLightGrey}
+            color={(this.state.followPosition) ? THEMES.basic.backgroundWhite : THEMES.basic.backgroundDarkGrey}
+          />
         </View>
       </View>
     );

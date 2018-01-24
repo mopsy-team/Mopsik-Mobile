@@ -36,7 +36,7 @@ export default DrawerContent = (props) => {
   <View  style={{flex: 1}}>
     <View
       style={{
-        backgroundColor: 'white',
+        backgroundColor: THEMES.basic.backgroundWhite,
         height: 130,
         alignItems: 'center',
         justifyContent: 'center',
@@ -50,7 +50,7 @@ export default DrawerContent = (props) => {
     <DrawerItems {...tabs} />
     <View
       style={{
-        backgroundColor: '#DAE0E9',
+        backgroundColor: THEMES.basic.backgroundLightGrey,
         position: 'absolute',
         left: 0,
         right: 0,
@@ -62,7 +62,7 @@ export default DrawerContent = (props) => {
   <Text></Text>
     <View
       style={{
-        backgroundColor: '#8aa8e3',
+        backgroundColor: THEMES.basic.backgroundLightColor,
         height: 45,
         alignItems: 'center',
         position: 'absolute',
@@ -72,7 +72,7 @@ export default DrawerContent = (props) => {
         paddingTop: 7
       }}
     >
-    <Text style={{ color: 'white', fontSize: 15 }}>
+    <Text style={{ color: THEMES.basic.textLight, fontSize: 15 }}>
       Mopsy Team® 2018
     </Text>
   </View>

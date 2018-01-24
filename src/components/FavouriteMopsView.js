@@ -49,6 +49,7 @@ componentWillMount() {
         this.setState({favouriteMOPsmapped: MOPS.favouriteMOPsmapped});
       }
     })
+    MOPS.refresh();
 }
 
 deleteFav = (id) => {

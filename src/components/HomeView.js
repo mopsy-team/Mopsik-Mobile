@@ -20,7 +20,7 @@ import Header from '../components/Header';
 
 import styles from '../config/styles'
 
-
+var _ = require('lodash');
 
 export default class HomeView extends Component {
 
@@ -49,24 +49,8 @@ export default class HomeView extends Component {
     }
   }
 
-  downloadFavourites = () => {
-    AsyncStorage.getItem('favouriteMOPs').then((response) => {
-        if(response){
-          favourites = JSON.parse(response);
-        }
-        else{
-          favourites = [];
-        }
-        MOPS.favouriteMOPs = favourites;
-        var favourites_mapped = [];
-        favourites.map((fav, i) => {
-           favourites_mapped.push(_.find(MOPS.mops, { id: fav }));
-         });
-        MOPS.favouriteMOPsmapped = favourites_mapped;
-    }).done();
-  }
 
-  componentDidMount() {
+  componentWillMount() {
     AsyncStorage.getItem('settings').then((response) => {
         if(response){
           settings = JSON.parse(response);
@@ -78,14 +62,20 @@ export default class HomeView extends Component {
     }).done();
 
     if(MOPS.favouriteMOPs.length === 0){
-      this.downloadFavourites();
+      FUNCTIONS.downloadFavourites();
+    }
+
+    if(MOPS.mops.length === 0){
+      MOPS.downloadMops();
+    }
+    else{
+      MOPS.refresh();
     }
   }
 
   render() {
 
     hyperlink = (this.state.link) ? <LinkInBrowserView src='https://logomakr.com/018RtM#'/> : <Text></Text>;
-    MOPS.refresh();
 
 
     const { navigate } = this.props.navigation;

@@ -16,11 +16,12 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { SideMenu, List, ListItem } from 'react-native-elements'
 import { Header } from 'react-native-elements'
 
-MOPS = require('../config/mops');
+MOPS = require('mopsik_mobile/src/config/mops');
+THEMES = require('mopsik_mobile/src/config/themes');
 
 export default class MyHeader extends Component {
-  bkg = '#3D6DCC';
-  txt = '#fff';
+  bkg = THEMES.basic.backgroundDarkColor;
+  txt = THEMES.basic.textLight;
   openMenu = () => this.props.navigation.navigate('DrawerToggle');
   goBack = () => {DeviceEventEmitter.emit('refresh favourites',  {}); this.props.navigation.goBack();};
 
