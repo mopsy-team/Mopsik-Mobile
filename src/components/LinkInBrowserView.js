@@ -9,12 +9,12 @@ export default class LinkInBrowserView extends Component {
       <WebView
         ref={(ref) => { this.webview = ref; }}
         source={{ uri }}
-        // onNavigationStateChange={(event) => {
-        //   if (event.url !== uri) {
-        //     this.webview.stopLoading();
-        //     Linking.openURL(event.url);
-        //   }
-        // }}
+        onNavigationStateChange={(event) => {
+          if (event.url !== uri) {
+            this.webview.stopLoading();
+            Linking.openURL(event.url);
+          }
+        }}
       />
     );
   }

@@ -12,6 +12,7 @@ import SearchStack from 'mopsik_mobile/src/components/SearchStack';
 import SettingsView from 'mopsik_mobile/src/components/SettingsView';
 
 MOPS = require('mopsik_mobile/src/config/mops');
+FUNCTIONS = require('mopsik_mobile/src/config/functions');
 
 var _ = require('lodash');
 
