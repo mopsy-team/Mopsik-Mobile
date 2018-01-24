@@ -69,7 +69,6 @@ let downloadMops = () => {
             truck: get_color(usage_truck, simple_legend),
             bus: get_color(usage_bus, simple_legend)
           }
-
         })
       });
   }).done();
