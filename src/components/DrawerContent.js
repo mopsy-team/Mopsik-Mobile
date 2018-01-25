@@ -1,18 +1,11 @@
 import React, { Component } from 'react';
 import {
-  Platform,
-  StyleSheet,
   Text,
   View,
-  Dimensions,
   Image,
-  Button,
-  ScrollView,
-  AsyncStorage,
-  TouchableOpacity
 } from 'react-native';
 
-import { DrawerNavigator, StackNavigator, DrawerItems, SafeAreaView } from 'react-navigation';
+import { DrawerItems} from 'react-navigation';
 
 export default DrawerContent = (props) => {
   items_set = [];
