@@ -29,34 +29,24 @@ export default class MapMopsView extends Component {
 
   constructor(props) {
     super(props);
-    let r = {
-      latitude: 52.226,
-      longitude: 21,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421
-    };
     this.state = {
-      region: r,
-      savedLocation: r,
+      region: MOPS.savedLocation,
       error: null,
       followPosition: true
     };
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        r = {
+          ...this.state.region,
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        };
         this.state = {
           ...this.state,
-          region: {
-            ...this.state.region,
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude
-          },
-          savedLocation: {
-            ...this.state.region,
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude
-          },
+          region: r,
           error: null,
         };
+        MOPS.savedLocation = r;
       },
       (error) => this.state = { ...this.state, error: error.message },
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
@@ -81,9 +71,7 @@ export default class MapMopsView extends Component {
             region: r
           });
         }
-        this.setState({
-          savedLocation: r
-        });
+        MOPS.savedLocation = r;
       },
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, distanceFilter: 10 },
@@ -165,7 +153,11 @@ export default class MapMopsView extends Component {
                 console.log('follow');
                 this.setState({
                   followPosition: true,
-                  region: this.state.savedLocation
+                  region: {
+                    ...this.state.region,
+                    longitude: MOPS.savedLocation.longitude,
+                    latitude: MOPS.savedLocation.latitude
+                  }
                 })
               }
               else{
