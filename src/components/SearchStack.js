@@ -11,17 +11,19 @@ import {
   Button,
   AsyncStorage
 } from 'react-native';
+
 import MapView from 'react-native-maps';
 import { StackNavigator } from 'react-navigation';
-import Header from './Header';
-import MopDetailsView from './MopDetailsView';
-import SearchView from './SearchView';
 import { List, ListItem } from 'react-native-elements'
 import Swipeout from 'react-native-swipeout';
 import { NavigationActions } from 'react-navigation'
 
+import Header from 'mopsik_mobile/src/components/Header';
+import MopDetailsView from 'mopsik_mobile/src/components/MopDetailsView';
+import SearchView from 'mopsik_mobile/src/components/SearchView';
 
-MOPS = require('../config/mops');
+
+MOPS = require('mopsik_mobile/src/config/mops');
 var _ = require('lodash');
 
 

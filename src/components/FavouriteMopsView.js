@@ -12,17 +12,18 @@ import {
   AsyncStorage,
   DeviceEventEmitter
 } from 'react-native';
+
 import MapView from 'react-native-maps';
 import { StackNavigator } from 'react-navigation';
-import Header from './Header';
-import MopDetailsView from './MopDetailsView';
 import { List, ListItem } from 'react-native-elements'
 import Swipeout from 'react-native-swipeout';
 import { NavigationActions } from 'react-navigation'
 
+import Header from 'mopsik_mobile/src/components/Header';
+import MopDetailsView from 'mopsik_mobile/src/components/MopDetailsView';
 
-MOPS = require('../config/mops');
-FUNCTIONS = require('../config/functions');
+MOPS = require('mopsik_mobile/src/config/mops');
+FUNCTIONS = require('mopsik_mobile/src/config/functions');
 var _ = require('lodash');
 
 let width = Dimensions.get('window').width
@@ -93,7 +94,7 @@ swipeBtns = (id) => {
         roundAvatar
         avatar={
           <Image
-            source={require('../images/parking_clear.png')}
+            source={require('mopsik_mobile/src/images/parking_clear.png')}
             style={{width: 35, height: 35}}
             tintColor={fav.color[main_vehicle].background}
           />

@@ -11,14 +11,13 @@ import {
   AsyncStorage,
   TouchableOpacity
 } from 'react-native';
+
 import { DrawerNavigator, StackNavigator, DrawerItems, SafeAreaView } from 'react-navigation';
 import { List, ListItem, Icon } from 'react-native-elements'
 
 import LinkInBrowserView from 'mopsik_mobile/src/components/LinkInBrowserView'
-
-import Header from '../components/Header';
-
-import styles from '../config/styles'
+import Header from 'mopsik_mobile/src/components/Header';
+import styles from 'mopsik_mobile/src/config/styles'
 
 var _ = require('lodash');
 

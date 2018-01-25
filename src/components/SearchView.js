@@ -12,12 +12,13 @@ import {
 } from 'react-native';
 import MapView from 'react-native-maps';
 import { StackNavigator } from 'react-navigation';
-import Header from './Header';
-import styles from '../config/styles'
-import { Button } from 'react-native-elements'
+import { Button } from 'react-native-elements';
 
-MOPS = require('../config/mops');
-FUNCTIONS = require('../config/functions');
+import Header from 'mopsik_mobile/src/components/Header';
+import styles from 'mopsik_mobile/src/config/styles';
+
+MOPS = require('mopsik_mobile/src/config/mops');
+FUNCTIONS = require('mopsik_mobile/src/config/functions');
 var _ = require('lodash');
 
 let width = Dimensions.get('window').width

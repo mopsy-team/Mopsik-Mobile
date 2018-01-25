@@ -10,15 +10,17 @@ import {
   CustomCallout,
   AsyncStorage
 } from 'react-native';
+
 import MapView from 'react-native-maps';
 import { StackNavigator } from 'react-navigation';
-import Header from './Header';
-import MopDetailsView from './MopDetailsView';
 import { Button } from 'react-native-elements'
-import styles from '../config/styles'
 
-MOPS = require('../config/mops');
-THEMES = require('../config/themes');
+import Header from 'mopsik_mobile/src/components/Header';
+import MopDetailsView from 'mopsik_mobile/src/components/MopDetailsView';
+import styles from 'mopsik_mobile/src/config/styles'
+
+MOPS = require('mopsik_mobile/src/config/mops');
+THEMES = require('mopsik_mobile/src/config/themes');
 var _ = require('lodash');
 
 let width = Dimensions.get('window').width
@@ -125,7 +127,7 @@ export default class MapMopsView extends Component {
               description={marker.description}
               key={i}>
               <Image
-              source={require('../images/parking_clear.png')}
+              source={require('mopsik_mobile/src/images/parking_clear.png')}
               style={{width: 25, height: 25}}
               tintColor={marker.color[main_vehicle].background}
               />
