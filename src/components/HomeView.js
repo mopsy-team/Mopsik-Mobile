@@ -1,30 +1,22 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
-  Platform,
-  StyleSheet,
   Text,
   View,
-  Dimensions,
-  Image,
   Button,
-  ScrollView,
   AsyncStorage,
   TouchableOpacity
 } from 'react-native';
-
-import { DrawerNavigator, StackNavigator, DrawerItems, SafeAreaView } from 'react-navigation';
-import { List, ListItem, Icon } from 'react-native-elements'
 
 import LinkInBrowserView from 'mopsik_mobile/src/components/LinkInBrowserView'
 import Header from 'mopsik_mobile/src/components/Header';
 import styles from 'mopsik_mobile/src/config/styles'
 
-var _ = require('lodash');
+let _ = require('lodash');
 
 export default class HomeView extends Component {
 
-  constructor () {
-    super()
+  constructor() {
+    super();
     this.state = {
       toggled: false,
       link: false
@@ -32,41 +24,41 @@ export default class HomeView extends Component {
 
   }
 
-  toggleSideMenu () {
+  toggleSideMenu() {
     this.setState({
       toggled: !this.state.toggled
     })
   }
 
   uploadFavourites = async (favourites) => {
-    try{
+    try {
       await AsyncStorage.setItem('favouriteMOPs',
-      JSON.stringify(favourites));
+        JSON.stringify(favourites));
     }
-    catch(e){
-          }
-  }
+    catch (e) {
+    }
+  };
 
 
   componentWillMount() {
     AsyncStorage.getItem('settings').then((response) => {
-        if(response){
-          settings = JSON.parse(response);
-          MOPS.settings = settings;
-        }
-        else{
-          this.props.navigation.navigate('Settings', {first: true});
-        }
+      if (response) {
+        settings = JSON.parse(response);
+        MOPS.settings = settings;
+      }
+      else {
+        this.props.navigation.navigate('Settings', {first: true});
+      }
     }).done();
 
-    if(MOPS.favouriteMOPs.length === 0){
+    if (MOPS.favouriteMOPs.length === 0) {
       FUNCTIONS.downloadFavourites();
     }
 
-    if(MOPS.mops.length === 0){
+    if (MOPS.mops.length === 0) {
       MOPS.downloadMops();
     }
-    else{
+    else {
       MOPS.refresh();
     }
   }
@@ -76,20 +68,20 @@ export default class HomeView extends Component {
     hyperlink = (this.state.link) ? <LinkInBrowserView src='https://logomakr.com/018RtM#'/> : <Text></Text>;
 
 
-    const { navigate } = this.props.navigation;
+    const {navigate} = this.props.navigation;
     return (
       <View style={styles.main}>
         <Header navigation={this.props.navigation} title='Home'/>
         <View style={styles.container}>
           <Text>HOME</Text>
           <Button
-        onPress={() => AsyncStorage.clear()}
-        title="Reset AsyncStorage - DEBUG"
-      />
-      <TouchableOpacity onPress={() => this.setState({link: true})}>
-        <Text>Logo wygenerowane przy pomocy Logo Maker</Text>
-      </TouchableOpacity>
-      {hyperlink}
+            onPress={() => AsyncStorage.clear()}
+            title="Reset AsyncStorage - DEBUG"
+          />
+          <TouchableOpacity onPress={() => this.setState({link: true})}>
+            <Text>Logo wygenerowane przy pomocy Logo Maker</Text>
+          </TouchableOpacity>
+          {hyperlink}
         </View>
       </View>
     );
