@@ -42,9 +42,9 @@ export default class MopDetailsView extends Component {
           this.setState({button: this.generateButton(inFavs)})
         ;}}
         //large
-        icon={{name: 'favorite', color: 'white'}}
-        backgroundColor='red'
-        color='white'
+        icon={{name: 'favorite', color: 'THEMES.basic.backgroundWhite'}}
+        backgroundColor='THEMES.basic.backgroundRed'
+        color='THEMES.basic.backgroundWhite'
       />
     }
     else{
@@ -52,9 +52,9 @@ export default class MopDetailsView extends Component {
         title='Dodaj to ulubionych'
         onPress={() => this.addToFavourites(this.state.mop.id)}
         //large
-        icon={{name: 'favorite-border', color: 'red'}}
-        backgroundColor='white'
-        color='red'
+        icon={{name: 'favorite-border', color: 'THEMES.basic.red'}}
+        backgroundColor='THEMES.basic.backgroundWhite'
+        color='THEMES.basic.red'
       />
     }
   }

@@ -49,7 +49,7 @@ export default class SettingsView extends Component {
   }
 
   get_button = (icon_name, text, text_id) => {
-    return (<View><Icon name={icon_name} color={((MOPS.settings.main_vehicle_id !== -1) && (text_id === MOPS.settings.main_vehicle)) ? '#8aa8e3' : 'grey'}/><Text>{text}</Text></View>)
+    return (<View><Icon name={icon_name} color={((MOPS.settings.main_vehicle_id !== -1) && (text_id === MOPS.settings.main_vehicle)) ? 'THEMES.basic.backgroundLightColor' : 'grey'}/><Text>{text}</Text></View>)
   }
 
   car = () => this.get_button('directions-car', 'Samochód', 'car')
@@ -110,19 +110,19 @@ st[vehicle_selected] = v;
         title='Samochód'
         checked={this.state.car_selected}
         onPress={() => this.updateMultipleSelection('car_selected')}
-        checkedColor='#8aa8e3'
+        checkedColor='THEMES.basic.backgroundLightColor'
       />
       <CheckBox
         title='Ciężarówka'
         checked={this.state.truck_selected}
         onPress={() => this.updateMultipleSelection('truck_selected')}
-        checkedColor='#8aa8e3'
+        checkedColor='THEMES.basic.backgroundLightColor'
       />
       <CheckBox
         title='Autobus'
         checked={this.state.bus_selected}
         onPress={() => this.updateMultipleSelection('bus_selected')}
-        checkedColor='#8aa8e3'
+        checkedColor='THEMES.basic.backgroundLightColor'
       />
       </View>
       {ok}

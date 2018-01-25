@@ -133,14 +133,14 @@ export default class MapMopsView extends Component {
                 <MapView.Callout onPress={() => {this.props.navigation.navigate('MopDetails', {mop:marker})}}>
                   <View
                   style={{
-                    backgroundColor: 'white',
+                    backgroundColor: 'THEMES.basic.backgroundWhite',
                     height: 100,
                     width: 100,
                   }}
                   >
                     <Text>{marker.title}</Text>
                     <Text>{marker.description}</Text>
-                    <Text>Usage: {marker.usage[main_vehicle]}%</Text>
+                    <Text>Zapełnienie MOPa: {marker.usage[main_vehicle]}%</Text>
                   </View>
                 </MapView.Callout>
               </MapView.Marker>

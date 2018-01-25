@@ -62,8 +62,8 @@ deleteFav = (id) => {
 swipeBtns = (id) => {
     return [{
      text: 'Delete',
-     backgroundColor: 'red',
-     underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
+     backgroundColor: 'THEMES.basic.backgroundRed',
+     underlayColor: 'THEMES.basic.underlayWhite',
      onPress: () => { this.deleteFav(id) }
    }];
  }

@@ -8,7 +8,7 @@ let height = Dimensions.get('window').height * 0.8
 
 export default styles = StyleSheet.create({
   container: {
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#f5fcff',
     alignItems: 'center',
   },
   main: {
@@ -27,7 +27,7 @@ export default styles = StyleSheet.create({
 },
 container_map: {
   flex: 1,
-  backgroundColor: '#F5FCFF',
+  backgroundColor: '#f5fcff',
   position: 'absolute',
   top: 75,
   left: 0,
