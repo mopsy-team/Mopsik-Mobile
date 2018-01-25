@@ -67,8 +67,7 @@ export default class MapMopsView extends Component {
           longitude: position.coords.longitude,
           error: null,
         };
-        console.log('follow', this.state.followPosition);
-        if(this.state.followPosition){
+                if(this.state.followPosition){
           this.setState({
             region: r
           });
@@ -152,8 +151,7 @@ export default class MapMopsView extends Component {
           <Button
             onPress={() => {
               if(!this.state.followPosition){
-                console.log('follow');
-                this.setState({
+                                this.setState({
                   followPosition: true,
                   region: {
                     ...this.state.region,
@@ -163,8 +161,7 @@ export default class MapMopsView extends Component {
                 })
               }
               else{
-                console.log('unfollow');
-                this.setState({
+                                this.setState({
                   followPosition: false
                 })
               }

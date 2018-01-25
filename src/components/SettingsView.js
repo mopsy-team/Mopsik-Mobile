@@ -84,8 +84,7 @@ st[vehicle_selected] = v;
 
   render() {
     let {params} = this.props.navigation.state;
-    console.log('pars',  params);
-    let first = (params) ? params.first : false;
+        let first = (params) ? params.first : false;
     let header =  (first)
     ? (<Header navigation={this.props.navigation} firstSettings/>)
     : (<Header navigation={this.props.navigation} title='Ustawienia' />);

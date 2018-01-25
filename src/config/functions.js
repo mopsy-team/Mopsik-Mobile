@@ -12,8 +12,7 @@ uploadFavourites = async (favourites) => {
 }
 
 deleteFavourite = (id) => {
-  console.log('delete', id);
-  favs = MOPS.favouriteMOPs
+    favs = MOPS.favouriteMOPs
   idx = favs.indexOf(id)
   favs.splice(idx, 1)
   console.log(favs)

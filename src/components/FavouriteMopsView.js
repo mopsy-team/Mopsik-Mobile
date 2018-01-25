@@ -69,7 +69,6 @@ swipeBtns = (id) => {
  }
 
  onNavigatorEvent = event => {
-   console.log('event', event);
     switch (event.id) {
       case 'willAppear':
         this.setState({favouriteMOPsmapped: MOPS.favouriteMOPsmapped});
@@ -79,8 +78,7 @@ swipeBtns = (id) => {
 
   render() {
     let {main_vehicle} = MOPS.settings;
-    console.log(main_vehicle);
-    return (
+        return (
 
       <View ref='favs'>
       <Header navigation={this.props.navigation} title='Ulubione MOPy'/>

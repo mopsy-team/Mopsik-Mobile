@@ -44,8 +44,7 @@ export default class HomeView extends Component {
       JSON.stringify(favourites));
     }
     catch(e){
-      console.log('caught error', e);
-    }
+          }
   }
 
 

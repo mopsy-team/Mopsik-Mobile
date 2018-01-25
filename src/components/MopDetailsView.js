@@ -29,8 +29,7 @@ let height = Dimensions.get('window').height * 0.8
 export default class MopDetailsView extends Component {
 
   isInFavourites = (id) => {
-    console.log(MOPS.favouriteMOPs, MOPS.favouriteMOPs.find((el) => {return el === id}));
-    return MOPS.favouriteMOPs.find((el) => {return el === id}) !== undefined;
+        return MOPS.favouriteMOPs.find((el) => {return el === id}) !== undefined;
   }
 
   generateButton = (inFavs) => {
