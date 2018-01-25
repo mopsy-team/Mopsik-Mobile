@@ -77,8 +77,7 @@ let downloadMops = () => {
       for (var key in mops_dict) {
         markers.push(mops_dict[key]);
       }
-      console.log('len', markers.length);
-      markers.map((marker) => {
+            markers.map((marker) => {
         mops.push(updateMop(marker));
       });
   }).done();
@@ -90,13 +89,11 @@ let downloadUsages = () => {
         marker.taken = taken_dict[marker.id].taken;
         marker = updateMop(marker);
       });
-      console.log(mops);
-  }).done();
+        }).done();
 }
 
 let refresh = () => {
-  console.log('refresh');
-  downloadUsages();
+    downloadUsages();
 }
 
 

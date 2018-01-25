@@ -10,14 +10,16 @@ import {
   CustomCallout,
   AsyncStorage
 } from 'react-native';
+
 import MapView from 'react-native-maps';
 import { StackNavigator } from 'react-navigation';
-import Header from './Header';
-import styles from '../config/styles'
-import { Button, ButtonGroup, Icon, CheckBox } from 'react-native-elements'
+import { Button, ButtonGroup, Icon, CheckBox } from 'react-native-elements';
 
-MOPS = require('../config/mops');
-FUNCTIONS = require('../config/functions');
+import Header from 'mopsik_mobile/src/components/Header';
+import styles from 'mopsik_mobile/src/config/styles';
+
+MOPS = require('mopsik_mobile/src/config/mops');
+FUNCTIONS = require('mopsik_mobile/src/config/functions');
 var _ = require('lodash');
 
 let width = Dimensions.get('window').width
@@ -82,8 +84,7 @@ st[vehicle_selected] = v;
 
   render() {
     let {params} = this.props.navigation.state;
-    console.log('pars',  params);
-    let first = (params) ? params.first : false;
+        let first = (params) ? params.first : false;
     let header =  (first)
     ? (<Header navigation={this.props.navigation} firstSettings/>)
     : (<Header navigation={this.props.navigation} title='Ustawienia' />);

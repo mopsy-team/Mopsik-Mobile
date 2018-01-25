@@ -11,6 +11,7 @@ import {
   AsyncStorage,
   TouchableOpacity
 } from 'react-native';
+
 import { DrawerNavigator, StackNavigator, DrawerItems, SafeAreaView } from 'react-navigation';
 
 export default DrawerContent = (props) => {
