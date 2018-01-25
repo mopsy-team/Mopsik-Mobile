@@ -77,7 +77,6 @@ export default class HomeView extends Component {
 
     hyperlink = (this.state.link) ? <LinkInBrowserView src='https://logomakr.com/018RtM#'/> : <Text></Text>;
 
-
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.main}>

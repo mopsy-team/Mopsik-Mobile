@@ -51,6 +51,7 @@ let savedLocation = {
   latitudeDelta: 0.0922,
   longitudeDelta: 0.0421
 };
+let lastLocationUpdate = new Date().getTime();
 
 let updateMop = (marker) => {
   usage_car = (marker.available.car > 0) ? Math.floor(marker.taken.car * 100 / marker.available.car) : 0;
@@ -107,5 +108,6 @@ module.exports = {
   refresh: refresh,
   favouriteMOPs: favouriteMOPs,
   favouriteMOPsmapped: favouriteMOPsmapped,
-  savedLocation: savedLocation
+  savedLocation: savedLocation,
+  lastLocationUpdate: lastLocationUpdate
 };

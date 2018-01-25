@@ -14,7 +14,7 @@ import MapView from 'react-native-maps';
 import { StackNavigator } from 'react-navigation';
 import Header from './Header';
 import MopDetailsView from './MopDetailsView';
-import { Button } from 'react-native-elements'
+import { Icon } from 'react-native-elements'
 import styles from '../config/styles'
 
 MOPS = require('../config/mops');
@@ -65,13 +65,16 @@ export default class MapMopsView extends Component {
           longitude: position.coords.longitude,
           error: null,
         };
-        console.log('follow', this.state.followPosition);
-        if(this.state.followPosition){
-          this.setState({
-            region: r
-          });
-        }
-        MOPS.savedLocation = r;
+        var t = new Date().getTime();
+        if((t - MOPS.lastLocationUpdate) >= 2000){
+          if(this.state.followPosition){
+            this.setState({
+              region: r
+            });
+          }
+          MOPS.savedLocation = r;
+          MOPS.lastLocationUpdate = t;
+      }
       },
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, distanceFilter: 10 },
@@ -109,6 +112,34 @@ export default class MapMopsView extends Component {
     return (
       <View style={styles.main}>
         <Header navigation={this.props.navigation} title='Mapa'/>
+        <View style={{zIndex: 10}}>
+        <Icon
+          onPress={() => {
+            if(!this.state.followPosition){
+              console.log('follow');
+              this.setState({
+                followPosition: true,
+                region: {
+                  ...this.state.region,
+                  longitude: MOPS.savedLocation.longitude,
+                  latitude: MOPS.savedLocation.latitude
+                }
+              })
+            }
+            else{
+              console.log('unfollow');
+              this.setState({
+                followPosition: false
+              })
+            }
+          ;}}
+          name='my-location'
+          raised
+          reverse={this.state.followPosition}
+          color={THEMES.basic.backgroundLightColor}
+          size={30}
+        />
+        </View>
         <View style={styles.container_map}>
           <MapView
           initialRegion={this.state.region}
@@ -147,32 +178,6 @@ export default class MapMopsView extends Component {
           </MapView>
           <Text>Latitude: {this.state.region.latitude}</Text>
           <Text>Longitude: {this.state.region.longitude}</Text>
-          <Button
-            onPress={() => {
-              if(!this.state.followPosition){
-                console.log('follow');
-                this.setState({
-                  followPosition: true,
-                  region: {
-                    ...this.state.region,
-                    longitude: MOPS.savedLocation.longitude,
-                    latitude: MOPS.savedLocation.latitude
-                  }
-                })
-              }
-              else{
-                console.log('unfollow');
-                this.setState({
-                  followPosition: false
-                })
-              }
-
-            ;}}
-            //large
-            icon={{name: 'my-location', color: (this.state.followPosition) ? THEMES.basic.backgroundWhite : THEMES.basic.backgroundDarkGrey}}
-            backgroundColor={(this.state.followPosition) ? THEMES.basic.backgroundLightColor : THEMES.basic.backgroundLightGrey}
-            color={(this.state.followPosition) ? THEMES.basic.backgroundWhite : THEMES.basic.backgroundDarkGrey}
-          />
         </View>
       </View>
     );
