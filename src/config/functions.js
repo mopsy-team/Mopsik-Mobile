@@ -3,7 +3,7 @@ import {
 } from 'react-native';
 
 MOPS = require('../config/mops');
-var _ = require('lodash');
+let _ = require('lodash');
 
 
 uploadFavourites = async (favourites) => {
