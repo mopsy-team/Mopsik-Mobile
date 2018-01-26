@@ -15,6 +15,7 @@ MOPS = require('mopsik_mobile/src/config/mops');
 FUNCTIONS = require('mopsik_mobile/src/config/functions');
 let _ = require('lodash');
 
+//unused variables!!!
 let width = Dimensions.get('window').width;
 let height = Dimensions.get('window').height * 0.8;
 
