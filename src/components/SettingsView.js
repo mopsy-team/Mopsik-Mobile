@@ -38,12 +38,12 @@ export default class SettingsView extends Component {
     MOPS.settings.main_vehicle = this.buttons[selectedIndex].text_id;
     MOPS.settings.main_vehicle_id = selectedIndex;
     AsyncStorage.setItem('settings', JSON.stringify(MOPS.settings));
-  }
+  };
 
   get_button = (icon_name, text, text_id) => {
     return (<View><Icon name={icon_name}
                         color={((MOPS.settings.main_vehicle_id !== -1) && (text_id === MOPS.settings.main_vehicle)) ? 'THEMES.basic.backgroundLightColor' : 'grey'}/><Text>{text}</Text></View>)
-  }
+  };
 
   car = () => this.get_button('directions-car', 'Samochód', 'car');
   truck = () => this.get_button('local-shipping', 'Ciężarówka', 'truck');

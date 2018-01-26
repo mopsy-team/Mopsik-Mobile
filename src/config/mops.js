@@ -1,6 +1,3 @@
-import {
-  AsyncStorage
-} from 'react-native';
 let _ = require('lodash');
 
 let settings = {
@@ -10,7 +7,7 @@ let settings = {
   car_selected: false,
   truck_selected: false,
   bus_selected: false
-}
+};
 
 let simple_legend = {
   35: {
@@ -29,7 +26,7 @@ let simple_legend = {
     background: 'red',
     text: 'white'
   }
-}
+};
 
 let get_color = (value, legend) => {
   for (let key in legend) {
@@ -40,7 +37,7 @@ let get_color = (value, legend) => {
     background: 'black',
     text: 'white'
   };
-}
+};
 
 let mops = [];
 let favouriteMOPs = [];
@@ -69,19 +66,19 @@ let updateMop = (marker) => {
       bus: get_color(usage_bus, simple_legend)
     }
   }
-}
+};
 
 let downloadMops = () => {
   fetch('http://reach.mimuw.edu.pl:8008/mops').then(response => (response) ? response.json() : {}).then((mops_dict) => {
     markers = [];
-    for (var key in mops_dict) {
+    for (let key in mops_dict) {
       markers.push(mops_dict[key]);
     }
     markers.map((marker) => {
       mops.push(updateMop(marker));
     });
   }).done();
-}
+};
 
 let downloadUsages = () => {
   fetch('http://reach.mimuw.edu.pl:8008/taken').then(response => (response) ? response.json() : {}).then((taken_dict) => {
@@ -90,11 +87,11 @@ let downloadUsages = () => {
       marker = updateMop(marker);
     });
   }).done();
-}
+};
 
 let refresh = () => {
   downloadUsages();
-}
+};
 
 
 module.exports = {
