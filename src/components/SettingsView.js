@@ -37,7 +37,7 @@ export default class SettingsView extends Component {
 
   get_button = (icon_name, text, text_id) => {
     return (<View><Icon name={icon_name}
-                        color={((MOPS.settings.main_vehicle_id !== -1) && (text_id === MOPS.settings.main_vehicle)) ? 'THEMES.basic.backgroundLightColor' : 'grey'}/><Text>{text}</Text></View>)
+                        color={((MOPS.settings.main_vehicle_id !== -1) && (text_id === MOPS.settings.main_vehicle)) ? THEMES.basic.backgroundLightColor : THEMES.basic.backgroundGrey}/><Text>{text}</Text></View>)
   };
 
   car = () => this.get_button('directions-car', 'Samochód', 'car');

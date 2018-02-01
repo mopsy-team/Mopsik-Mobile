@@ -4,6 +4,7 @@ light = {
   'backgroundDarkColor': '#3d6dcc',
   'backgroundWhite': 'white',
   'backgroundLightGrey': '#dae0e9',
+  'backgroundGrey': '#b2acb3',
   'backgroundDarkGrey': '#787e87',
   'backgroundLightColor': '#8aa8e3',
   'backgroundRed': 'red',
