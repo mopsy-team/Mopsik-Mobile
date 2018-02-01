@@ -11,7 +11,7 @@ MOPS = require('mopsik_mobile/src/config/mops');
 FUNCTIONS = require('mopsik_mobile/src/config/functions');
 let _ = require('lodash');
 
-export default class SettingsView extends Component {
+export default class SearchView extends Component {
 
   render() {
     return (
