@@ -88,7 +88,7 @@ export default class MapMopsView extends Component {
 
     });
     return mops;
-  }
+  };
 
   onRegionChange(region) {
     this.setState({region: region, followPosition: false});
@@ -127,7 +127,7 @@ export default class MapMopsView extends Component {
                 }}>
                   <View
                     style={{
-                      backgroundColor: 'THEMES.basic.backgroundWhite',
+                      backgroundColor: THEMES.basic.backgroundWhite,
                       height: 100,
                       width: 100,
                     }}
@@ -159,8 +159,6 @@ export default class MapMopsView extends Component {
                   followPosition: false
                 })
               }
-
-              ;
             }}
             //large
             icon={{
