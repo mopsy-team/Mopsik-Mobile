@@ -13,11 +13,9 @@ import Header from 'mopsik_mobile/src/components/Header';
 
 MOPS = require('mopsik_mobile/src/config/mops');
 FUNCTIONS = require('mopsik_mobile/src/config/functions');
+THEMES = require('mopsik_mobile/src/config/themes');
 let _ = require('lodash');
 
-//unused variables!!!
-let width = Dimensions.get('window').width;
-let height = Dimensions.get('window').height * 0.8;
 
 export default class FavouriteMopsView extends Component {
 
@@ -51,8 +49,8 @@ export default class FavouriteMopsView extends Component {
   swipeBtns = (id) => {
     return [{
       text: 'Delete',
-      backgroundColor: 'THEMES.basic.backgroundRed',
-      underlayColor: 'THEMES.basic.underlayWhite',
+      backgroundColor: THEMES.basic.backgroundRed,
+      underlayColor: THEMES.basic.underlayWhite,
       onPress: () => {
         this.deleteFav(id)
       }

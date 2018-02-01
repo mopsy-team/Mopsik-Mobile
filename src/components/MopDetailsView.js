@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {
   Text,
   View,
-  Dimensions,
   AsyncStorage
 } from 'react-native';
 
@@ -13,11 +12,8 @@ import styles from 'mopsik_mobile/src/config/styles'
 
 MOPS = require('mopsik_mobile/src/config/mops');
 FUNCTIONS = require('mopsik_mobile/src/config/functions');
+THEMES = require('mopsik_mobile/src/config/themes');
 let _ = require('lodash');
-
-let width = Dimensions.get('window').width;
-let height = Dimensions.get('window').height * 0.8;
-
 
 export default class MopDetailsView extends Component {
 
@@ -39,8 +35,8 @@ export default class MopDetailsView extends Component {
         }}
         //large
         icon={{name: 'favorite', color: 'THEMES.basic.backgroundWhite'}}
-        backgroundColor='THEMES.basic.backgroundRed'
-        color='THEMES.basic.backgroundWhite'
+        backgroundColor={THEMES.basic.backgroundRed}
+        color={THEMES.basic.backgroundWhite}
       />
     }
     else {
@@ -49,8 +45,8 @@ export default class MopDetailsView extends Component {
         onPress={() => this.addToFavourites(this.state.mop.id)}
         //large
         icon={{name: 'favorite-border', color: 'THEMES.basic.red'}}
-        backgroundColor='THEMES.basic.backgroundWhite'
-        color='THEMES.basic.red'
+        backgroundColor={THEMES.basic.backgroundWhite}
+        color={THEMES.basic.red}
       />
     }
   };
@@ -66,21 +62,19 @@ export default class MopDetailsView extends Component {
 
   addToFavourites = (id) => {
     AsyncStorage.getItem('favouriteMOPs').then((response) => {
+      let favourites = [];
       if (response) {
         favourites = JSON.parse(response);
       }
-      else {
-        favourites = [];
-      }
       favourites.push(id);
       AsyncStorage.setItem('favouriteMOPs', JSON.stringify(favourites));
-      var favourites_mapped = [];
+      let favourites_mapped = [];
       favourites.map((fav, i) => {
         favourites_mapped.push(_.find(MOPS.mops, {id: fav}));
       });
       MOPS.favouriteMOPs = favourites;
       MOPS.favouriteMOPsmapped = favourites_mapped;
-      inFavs = this.isInFavourites(this.state.mop.id);
+      let inFavs = this.isInFavourites(this.state.mop.id);
       this.setState({button: this.generateButton(inFavs)});
     }).done();
   };

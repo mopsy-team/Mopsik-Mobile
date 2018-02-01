@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {
   Text,
   View,
-  Dimensions,
   AsyncStorage
 } from 'react-native';
 
@@ -13,12 +12,8 @@ import styles from 'mopsik_mobile/src/config/styles';
 
 MOPS = require('mopsik_mobile/src/config/mops');
 FUNCTIONS = require('mopsik_mobile/src/config/functions');
+THEMES = require('mopsik_mobile/src/config/themes');
 let _ = require('lodash');
-
-//unused variables!!!
-let width = Dimensions.get('window').width;
-let height = Dimensions.get('window').height * 0.8;
-
 
 export default class SettingsView extends Component {
 
@@ -70,8 +65,8 @@ export default class SettingsView extends Component {
   };
 
   updateMultipleSelection = (vehicle_selected) => {
-    st = {...this.state};
-    v = !st[vehicle_selected];
+    let st = {...this.state};
+    let v = !st[vehicle_selected];
     st[vehicle_selected] = v;
     this.setState(st);
     MOPS.settings[vehicle_selected] = v;
@@ -106,19 +101,19 @@ export default class SettingsView extends Component {
             title='Samochód'
             checked={this.state.car_selected}
             onPress={() => this.updateMultipleSelection('car_selected')}
-            checkedColor='THEMES.basic.backgroundLightColor'
+            checkedColor={THEMES.basic.backgroundLightColor}
           />
           <CheckBox
             title='Ciężarówka'
             checked={this.state.truck_selected}
             onPress={() => this.updateMultipleSelection('truck_selected')}
-            checkedColor='THEMES.basic.backgroundLightColor'
+            checkedColor={THEMES.basic.backgroundLightColor}
           />
           <CheckBox
             title='Autobus'
             checked={this.state.bus_selected}
             onPress={() => this.updateMultipleSelection('bus_selected')}
-            checkedColor='THEMES.basic.backgroundLightColor'
+            checkedColor={THEMES.basic.backgroundLightColor}
           />
         </View>
         {ok}

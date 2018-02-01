@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {
   Text,
   View,
-  Dimensions,
   Image
 } from 'react-native';
 
@@ -15,10 +14,6 @@ import styles from 'mopsik_mobile/src/config/styles'
 MOPS = require('mopsik_mobile/src/config/mops');
 THEMES = require('mopsik_mobile/src/config/themes');
 let _ = require('lodash');
-
-let width = Dimensions.get('window').width;
-let height = Dimensions.get('window').height * 0.8;
-
 
 export default class MapMopsView extends Component {
 
@@ -76,7 +71,7 @@ export default class MapMopsView extends Component {
   }
 
   selectMops = () => {
-    mops = [];
+    let mops = [];
     MOPS.mops.map((mop, i) => {
       if (mop.coords.latitude > (this.state.region.latitude - this.state.region.latitudeDelta)
         && mop.coords.latitude < (this.state.region.latitude + this.state.region.latitudeDelta)

@@ -11,6 +11,8 @@ import LinkInBrowserView from 'mopsik_mobile/src/components/LinkInBrowserView'
 import Header from 'mopsik_mobile/src/components/Header';
 import styles from 'mopsik_mobile/src/config/styles'
 
+MOPS = require('mopsik_mobile/src/config/mops');
+
 let _ = require('lodash');
 
 export default class HomeView extends Component {
@@ -43,8 +45,7 @@ export default class HomeView extends Component {
   componentWillMount() {
     AsyncStorage.getItem('settings').then((response) => {
       if (response) {
-        settings = JSON.parse(response);
-        MOPS.settings = settings;
+        MOPS.settings = JSON.parse(response);
       }
       else {
         this.props.navigation.navigate('Settings', {first: true});
