@@ -1,7 +1,4 @@
-import {
-  AsyncStorage
-} from 'react-native';
-var _ = require('lodash');
+let _ = require('lodash');
 
 let settings = {
   set: false,
@@ -10,26 +7,26 @@ let settings = {
   car_selected: false,
   truck_selected: false,
   bus_selected: false
-}
+};
 
 let simple_legend = {
   35: {
-    background:'green',
-    text:'white'
+    background: 'green',
+    text: 'white'
   },
   50: {
-    background:'yellow',
-    text:'black'
+    background: 'yellow',
+    text: 'black'
   },
   75: {
-    background:'orange',
-    text:'black'
+    background: 'orange',
+    text: 'black'
   },
   100: {
-    background:'red',
-    text:'white'
+    background: 'red',
+    text: 'white'
   }
-}
+};
 
 let get_color = (value, legend) => {
   for (let key in legend) {
@@ -37,10 +34,10 @@ let get_color = (value, legend) => {
       return legend[key];
   }
   return {
-    background:'black',
-    text:'white'
+    background: 'black',
+    text: 'white'
   };
-}
+};
 
 let mops = [];
 let favouriteMOPs = [];
@@ -69,32 +66,32 @@ let updateMop = (marker) => {
       bus: get_color(usage_bus, simple_legend)
     }
   }
-}
+};
 
 let downloadMops = () => {
   fetch('http://reach.mimuw.edu.pl:8008/mops').then(response => (response) ? response.json() : {}).then((mops_dict) => {
-      markers = [];
-      for (var key in mops_dict) {
-        markers.push(mops_dict[key]);
-      }
-            markers.map((marker) => {
-        mops.push(updateMop(marker));
-      });
+    markers = [];
+    for (let key in mops_dict) {
+      markers.push(mops_dict[key]);
+    }
+    markers.map((marker) => {
+      mops.push(updateMop(marker));
+    });
   }).done();
-}
+};
 
 let downloadUsages = () => {
   fetch('http://reach.mimuw.edu.pl:8008/taken').then(response => (response) ? response.json() : {}).then((taken_dict) => {
-      mops.map((marker) => {
-        marker.taken = taken_dict[marker.id].taken;
-        marker = updateMop(marker);
-      });
-        }).done();
-}
+    mops.map((marker) => {
+      marker.taken = taken_dict[marker.id].taken;
+      marker = updateMop(marker);
+    });
+  }).done();
+};
 
 let refresh = () => {
-    downloadUsages();
-}
+  downloadUsages();
+};
 
 
 module.exports = {
