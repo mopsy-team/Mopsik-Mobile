@@ -1,29 +1,19 @@
-
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
-  Platform,
-  StyleSheet,
   Text,
   View,
-  Dimensions,
-  Image,
-  CustomCallout,
-  AsyncStorage
+  Image
 } from 'react-native';
+
 import MapView from 'react-native-maps';
-import { StackNavigator } from 'react-navigation';
-import Header from './Header';
-import MopDetailsView from './MopDetailsView';
-import { Icon } from 'react-native-elements'
-import styles from '../config/styles'
+import {Icon} from 'react-native-elements'
 
-MOPS = require('../config/mops');
-THEMES = require('../config/themes');
-var _ = require('lodash');
+import Header from 'mopsik_mobile/src/components/Header';
+import styles from 'mopsik_mobile/src/config/styles'
 
-let width = Dimensions.get('window').width
-let height = Dimensions.get('window').height * 0.8
-
+MOPS = require('mopsik_mobile/src/config/mops');
+THEMES = require('mopsik_mobile/src/config/themes');
+let _ = require('lodash');
 
 export default class MapMopsView extends Component {
 
@@ -48,11 +38,10 @@ export default class MapMopsView extends Component {
         };
         MOPS.savedLocation = r;
       },
-      (error) => this.state = { ...this.state, error: error.message },
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+      (error) => this.state = {...this.state, error: error.message},
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
     );
   }
-
 
 
   componentDidMount() {
@@ -76,8 +65,8 @@ export default class MapMopsView extends Component {
           MOPS.lastLocationUpdate = t;
       }
       },
-      (error) => this.setState({ error: error.message }),
-      { enableHighAccuracy: true, timeout: 20000, distanceFilter: 10 },
+      (error) => this.setState({error: error.message}),
+      {enableHighAccuracy: true, timeout: 20000, distanceFilter: 10},
     );
   }
 
@@ -86,19 +75,19 @@ export default class MapMopsView extends Component {
   }
 
   selectMops = () => {
-    mops = [];
+    let mops = [];
     MOPS.mops.map((mop, i) => {
-      if(mop.coords.latitude > (this.state.region.latitude - this.state.region.latitudeDelta)
+      if (mop.coords.latitude > (this.state.region.latitude - this.state.region.latitudeDelta)
         && mop.coords.latitude < (this.state.region.latitude + this.state.region.latitudeDelta)
         && mop.coords.longitude > (this.state.region.longitude - this.state.region.longitudeDelta)
         && mop.coords.longitude < (this.state.region.longitude + this.state.region.longitudeDelta)
-      ){
+      ) {
         mops.push(mop);
       }
 
     });
     return mops;
-  }
+  };
 
   onRegionChange(region) {
     this.setState({region: region, followPosition: false});
@@ -142,35 +131,37 @@ export default class MapMopsView extends Component {
         </View>
         <View style={styles.container_map}>
           <MapView
-          initialRegion={this.state.region}
-          region={this.state.region}
-          onRegionChange={this.onRegionChange.bind(this)}
-          showsUserLocation={true}
-          showsMyLocationButton={true}
-          style={styles.map}
+            initialRegion={this.state.region}
+            region={this.state.region}
+            onRegionChange={this.onRegionChange.bind(this)}
+            showsUserLocation={true}
+            showsMyLocationButton={true}
+            style={styles.map}
           >
             {mops.map((marker, i) => (
               <MapView.Marker
-              coordinate={marker.coords}
-              title={marker.title}
-              description={marker.description}
-              key={i}>
-              <Image
-              source={require('../images/parking_clear.png')}
-              style={{width: 25, height: 25}}
-              tintColor={marker.color[main_vehicle].background}
-              />
-                <MapView.Callout onPress={() => {this.props.navigation.navigate('MopDetails', {mop:marker})}}>
+                coordinate={marker.coords}
+                title={marker.title}
+                description={marker.description}
+                key={i}>
+                <Image
+                  source={require('mopsik_mobile/src/images/parking_clear.png')}
+                  style={{width: 25, height: 25}}
+                  tintColor={marker.color[main_vehicle].background}
+                />
+                <MapView.Callout onPress={() => {
+                  this.props.navigation.navigate('MopDetails', {mop: marker})
+                }}>
                   <View
-                  style={{
-                    backgroundColor: 'white',
-                    height: 100,
-                    width: 100,
-                  }}
+                    style={{
+                      backgroundColor: THEMES.basic.backgroundWhite,
+                      height: 100,
+                      width: 100,
+                    }}
                   >
                     <Text>{marker.title}</Text>
                     <Text>{marker.description}</Text>
-                    <Text>Usage: {marker.usage[main_vehicle]}%</Text>
+                    <Text>Zapełnienie MOPa: {marker.usage[main_vehicle]}%</Text>
                   </View>
                 </MapView.Callout>
               </MapView.Marker>
