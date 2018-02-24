@@ -1,40 +1,26 @@
-
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
-  Platform,
-  StyleSheet,
   Text,
-  View,
-  Dimensions,
-  Image,
-  CustomCallout,
-  AsyncStorage
+  View
 } from 'react-native';
-import MapView from 'react-native-maps';
-import { StackNavigator } from 'react-navigation';
-import Header from './Header';
-import styles from '../config/styles'
-import { Button } from 'react-native-elements'
 
-MOPS = require('../config/mops');
-FUNCTIONS = require('../config/functions');
-var _ = require('lodash');
+import Header from 'mopsik_mobile/src/components/Header';
+import styles from 'mopsik_mobile/src/config/styles';
 
-let width = Dimensions.get('window').width
-let height = Dimensions.get('window').height * 0.8
+MOPS = require('mopsik_mobile/src/config/mops');
+FUNCTIONS = require('mopsik_mobile/src/config/functions');
+let _ = require('lodash');
 
-
-export default class SettingsView extends Component {
-
+export default class SearchView extends Component {
 
   render() {
     return (
 
       <View style={styles.main}>
-      <Header navigation={this.props.navigation} title='Wyszukaj'/>
+        <Header navigation={this.props.navigation} title='Wyszukaj'/>
 
-      <Text>*** </Text>
-      <Text>Wyszukaj</Text>
+        <Text>*** </Text>
+        <Text>Wyszukaj</Text>
 
       </View>
     );
