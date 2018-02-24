@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import {
   Platform,
   StyleSheet,
-  Text,
   View,
   Dimensions,
   Image,
@@ -14,7 +13,7 @@ import MapView from 'react-native-maps';
 import { StackNavigator } from 'react-navigation';
 import Header from './Header';
 import styles from '../config/styles'
-import { Button, ButtonGroup, Icon, CheckBox } from 'react-native-elements'
+import { Button, ButtonGroup, Icon, CheckBox, Text } from 'react-native-elements'
 
 MOPS = require('../config/mops');
 FUNCTIONS = require('../config/functions');
@@ -96,15 +95,14 @@ st[vehicle_selected] = v;
       <View style={styles.main}>
       {header}
       <View>
-      <Text>Wybierz Twój główny typ pojazdu</Text>
-      <Text>{this.first}</Text>
+      <Text h4>Wybierz Twój główny typ pojazdu</Text>
       <ButtonGroup
         onPress={this.updateIndex}
         selectedIndex={selectedIndex}
         buttons={this.buttons}
         containerStyle={{height: 70}}
         />
-      <Text>Wybierz typy pojazdów, dla których chcesz wyświetlać dane</Text>
+      <Text h4>Wybierz typy pojazdów, dla których chcesz wyświetlać dane</Text>
       <CheckBox
         title='Samochód'
         checked={this.state.car_selected}
