@@ -1,29 +1,9 @@
 import React, {Component} from 'react';
 import {
-<<<<<<< HEAD
-  Platform,
-  StyleSheet,
-=======
   Text,
->>>>>>> 6923ab6cd42ce717f07009554da03d33d9f92424
   View,
   AsyncStorage
 } from 'react-native';
-<<<<<<< HEAD
-import MapView from 'react-native-maps';
-import { StackNavigator } from 'react-navigation';
-import Header from './Header';
-import styles from '../config/styles'
-import { Button, ButtonGroup, Icon, CheckBox, Text } from 'react-native-elements'
-
-MOPS = require('../config/mops');
-FUNCTIONS = require('../config/functions');
-var _ = require('lodash');
-
-let width = Dimensions.get('window').width
-let height = Dimensions.get('window').height * 0.8
-=======
->>>>>>> 6923ab6cd42ce717f07009554da03d33d9f92424
 
 import {Button, ButtonGroup, Icon, CheckBox} from 'react-native-elements';
 
@@ -115,7 +95,7 @@ export default class SettingsView extends Component {
         buttons={this.buttons}
         containerStyle={{height: 70}}
         />
-      <Text h4>Wybierz typy pojazdów, dla których chcesz wyświetlać dane</Text>
+      <Text h4>Wybierz typy pojazdów, dla których chcesz wyświetlać dane w szczegółowych informacjach o MOPie</Text>
       <CheckBox
         title='Samochód'
         checked={this.state.car_selected}
