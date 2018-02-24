@@ -72,9 +72,9 @@ let getFacilityIcon = (code, i) => {
   return (
   <Avatar
     onPress={() => {}}
-    icon={{name: fac.icon}}
+    icon={{name: fac.icon, color: THEMES.basic.backgroundWhite}}
     raised
-    color={THEMES.basic.backgroundLightColor}
+    overlayContainerStyle={{backgroundColor: THEMES.basic.backgroundDarkColor}}
     width={35}
     height={35}
     rounded

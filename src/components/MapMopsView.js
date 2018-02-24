@@ -5,8 +5,7 @@ import {
 } from 'react-native';
 
 import MapView from 'react-native-maps';
-import {Text, Icon} from 'react-native-elements'
-import Orientation from 'react-native-orientation'
+import {Text, Icon, Badge} from 'react-native-elements'
 
 import Header from 'mopsik_mobile/src/components/Header';
 import styles, {m} from 'mopsik_mobile/src/config/styles'
@@ -23,8 +22,7 @@ export default class MapMopsView extends Component {
     this.state = {
       region: MOPS.savedLocation,
       error: null,
-      followPosition: true,
-      orientation: Orientation.getInitialOrientation()
+      followPosition: true
     };
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -43,11 +41,6 @@ export default class MapMopsView extends Component {
       (error) => this.state = {...this.state, error: error.message},
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
     );
-    Orientation.addOrientationListener(this._updateOrientation.bind(this));
-  }
-
-  _updateOrientation(orientation){
-    this.setState({ orientation })
   }
 
   componentDidMount() {
@@ -115,10 +108,16 @@ export default class MapMopsView extends Component {
         <Text h4>{marker.title}</Text>
         <Text>{marker.description}</Text>
         {FACILITIES.getFacilitiesIcons(marker.facilities_short)}
-        <Text>Zapełnienie MOPa: <Text style={{
-          backgroundColor: marker.color[main_vehicle].background,
-          color: marker.color[main_vehicle].text
-        }}>{marker.usage[main_vehicle]}%</Text></Text>
+        <Text></Text>
+        <Text></Text>
+        <View style={{flex: 1, flexDirection: 'row'}}>
+          <Text>Zapełnienie:  </Text>
+          <Badge
+            value={marker.usage[main_vehicle] + '%'}
+            textStyle={{ color: marker.color[main_vehicle].text }}
+            containerStyle={{ backgroundColor: marker.color[main_vehicle].background}}
+          />
+        </View>
       </View>
     </MapView.Callout>
   )
