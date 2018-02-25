@@ -1,6 +1,7 @@
 let _ = require('lodash');
 import {facilities_codes, facilities_codes_short} from 'mopsik_mobile/src/config/facilities';
 
+FUNCTIONS = require('mopsik_mobile/src/config/functions');
 
 let settings = {
   set: false,
@@ -96,6 +97,9 @@ let downloadMops = () => {
     markers = [];
     for (let key in mops_dict) {
       mops.push(updateMop(processMop(mops_dict[key])));
+    }
+    if (favouriteMOPs.length === 0) {
+      FUNCTIONS.downloadFavourites();
     }
   }).done();
 };

@@ -51,17 +51,16 @@ export default class HomeView extends Component {
         this.props.navigation.navigate('Settings', {first: true});
       }
     }).done();
-
-    if (MOPS.favouriteMOPs.length === 0) {
-      FUNCTIONS.downloadFavourites();
-    }
-
     if (MOPS.mops.length === 0) {
       MOPS.downloadMops();
     }
     else {
       MOPS.refresh();
+      if (MOPS.favouriteMOPs.length === 0) {
+        FUNCTIONS.downloadFavourites();
+      }
     }
+
   }
 
   render() {
