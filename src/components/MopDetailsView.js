@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import {
-  Text,
   View,
   AsyncStorage
 } from 'react-native';
 
-import {Button} from 'react-native-elements'
+import {Button, Text, Icon, Badge} from 'react-native-elements'
 
 import Header from 'mopsik_mobile/src/components/Header';
 import styles from 'mopsik_mobile/src/config/styles'
@@ -81,13 +80,29 @@ export default class MopDetailsView extends Component {
 
 
   render() {
+    let {mop} = this.state;
+    let {main_vehicle} = MOPS.settings;
     return (
 
       <View style={styles.main}>
         <Header navigation={this.props.navigation} title={this.state.mop.title} stack/>
+        <View style={{margin: 5}}>
+          <Text h4 numberOfLines={2}>{mop.title}</Text>
+          <Text numberOfLines={1}>Kierunek: {mop.direction}</Text>
+          <Text>Opis: {mop.description} </Text>
+          {FACILITIES.getFacilitiesIcons(mop.facilities_short)}
+          <Text></Text>
+          <Text></Text>
+          <View style={{flex: 1, flexDirection: 'row'}}>
+            <Text>Zapełnienie:  </Text>
+            <Badge
+              value={mop.usage[main_vehicle] + '%'}
+              textStyle={{ color: mop.color[main_vehicle].text }}
+              containerStyle={{ backgroundColor: mop.color[main_vehicle].background}}
+            />
+          </View>
+        </View>
 
-        <Text>Detale mopa: {this.state.mop.title} </Text>
-        <Text>Opis: {this.state.mop.description} </Text>
         {this.state.button}
       </View>
     );
