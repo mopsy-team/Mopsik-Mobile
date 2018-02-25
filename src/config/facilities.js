@@ -4,6 +4,8 @@ import {View} from 'react-native';
 import {Avatar} from 'react-native-elements'
 
 
+let _ = require('lodash');
+
 export const facilities = {
   car_wash: {
     icon: 'local-car-wash',
@@ -67,7 +69,7 @@ export const facilities_codes_short = [
   'toilets'
 ];
 
-let getFacilityIcon = (code, i) => {
+let getFacilityIconShort = (code, i) => {
   let fac = facilities[code];
   return (
   <Avatar
@@ -83,11 +85,53 @@ let getFacilityIcon = (code, i) => {
   )
 }
 
-export const getFacilitiesIcons = (codes) => {
+export const getFacilitiesIconsShort = (codes) => {
   return (
     <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-start'}}>
     {codes.map((code, i) => (
-      getFacilityIcon(code, i)
+      getFacilityIconShort(code, i, true, () => {})
+    ))}
+    </View>
+  )
+}
+
+let getFacilityIconLong = (code, i, active, onPress) => {
+  let fac = facilities[code];
+  return (
+  <Avatar
+    onPress={onPress}
+    icon={{name: fac.icon, color: THEMES.basic.backgroundWhite}}
+    raised
+    overlayContainerStyle={{backgroundColor: active ? THEMES.basic.backgroundDarkColor : THEMES.basic.backgroundLightGrey}}
+    width={50}
+    height={50}
+    rounded
+    key={i}
+    containerStyle={{margin: 3}}
+  />
+  )
+}
+
+const chooseFacilityIconLong = (codes, code, i) =>{
+  if (_.includes(codes, code)){
+    return getFacilityIconLong(code, i, true, () => {})
+  }
+  else{
+    return getFacilityIconLong(code, i, false, () => {})
+  }
+}
+
+export const getFacilitiesIconsLong = (codes) => {
+  return (
+    <View style={{
+      flex: 1,
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      alignItems: 'flex-start',
+      width: 10
+    }}>
+    {facilities_codes.map((code, i) => (
+      chooseFacilityIconLong(codes, code, i)
     ))}
     </View>
   )

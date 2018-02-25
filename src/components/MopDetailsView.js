@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 import {
   View,
-  AsyncStorage
+  AsyncStorage,
+  ScrollView
 } from 'react-native';
 
 import {Button, Text, Icon, Badge} from 'react-native-elements'
 
 import Header from 'mopsik_mobile/src/components/Header';
 import styles from 'mopsik_mobile/src/config/styles'
+
 
 MOPS = require('mopsik_mobile/src/config/mops');
 FUNCTIONS = require('mopsik_mobile/src/config/functions');
@@ -32,7 +34,6 @@ export default class MopDetailsView extends Component {
           this.setState({button: this.generateButton(inFavs)})
           ;
         }}
-        //large
         icon={{name: 'favorite', color: THEMES.basic.backgroundWhite}}
         backgroundColor={THEMES.basic.backgroundRed}
         color={THEMES.basic.backgroundWhite}
@@ -42,7 +43,6 @@ export default class MopDetailsView extends Component {
       return <Button
         title='Dodaj to ulubionych'
         onPress={() => this.addToFavourites(this.state.mop.id)}
-        //large
         icon={{name: 'favorite-border', color: THEMES.basic.red}}
         backgroundColor={THEMES.basic.backgroundWhite}
         color={THEMES.basic.red}
@@ -83,14 +83,25 @@ export default class MopDetailsView extends Component {
     let {mop} = this.state;
     let {main_vehicle} = MOPS.settings;
     return (
-
+      <ScrollView>
       <View style={styles.main}>
         <Header navigation={this.props.navigation} title={this.state.mop.title} stack/>
-        <View style={{margin: 5}}>
-          <Text h4 numberOfLines={2}>{mop.title}</Text>
-          <Text numberOfLines={1}>Kierunek: {mop.direction}</Text>
-          <Text>Opis: {mop.description} </Text>
-          {FACILITIES.getFacilitiesIcons(mop.facilities_short)}
+        <View style={{margin: 10}}>
+          <Text h3 style={{textAlign: 'center'}}>{mop.title}</Text>
+          <View style={{margin: 10, flex: 1, flexDirection: 'row', alignItems: 'flex-start'}}>
+            <View style={{margin: 10}}>
+              <Text h4>Kierunek: {mop.direction}</Text>
+              <Text style={{marginTop: 5, marginBottom: 5}}>{mop.description} </Text>
+              <Text style={{marginTop: 5, marginBottom: 5}}>{mop.description} </Text>
+              <Text style={{marginTop: 5, marginBottom: 5}}>{mop.description} </Text>
+              <Text style={{marginTop: 5, marginBottom: 5}}>{mop.description} </Text>
+              <Text style={{marginTop: 5, marginBottom: 5}}>{mop.description} </Text>
+              <Text style={{marginTop: 5, marginBottom: 5}}>{mop.description} </Text>
+              <Text style={{marginTop: 5, marginBottom: 5}}>{mop.description} </Text>
+              <Text style={{marginTop: 5, marginBottom: 5}}>{mop.description} </Text>
+            </View>
+            {FACILITIES.getFacilitiesIconsLong(mop.facilities)}
+          </View>
           <Text></Text>
           <Text></Text>
           <View style={{flex: 1, flexDirection: 'row'}}>
@@ -104,7 +115,10 @@ export default class MopDetailsView extends Component {
         </View>
 
         {this.state.button}
+        <Text></Text>
+        <Text></Text>
       </View>
+      </ScrollView>
     );
   }
 }

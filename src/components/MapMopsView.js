@@ -107,7 +107,7 @@ export default class MapMopsView extends Component {
       >
         <Text h4 numberOfLines={2}>{marker.title}</Text>
         <Text numberOfLines={1}>Kierunek: {marker.direction}</Text>
-        {FACILITIES.getFacilitiesIcons(marker.facilities_short)}
+        {FACILITIES.getFacilitiesIconsShort(marker.facilities_short)}
         <Text></Text>
         <Text></Text>
         <View style={{flex: 1, flexDirection: 'row'}}>

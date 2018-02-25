@@ -56,9 +56,6 @@ export default class HomeView extends Component {
     }
     else {
       MOPS.refresh();
-      if (MOPS.favouriteMOPs.length === 0) {
-        FUNCTIONS.downloadFavourites();
-      }
     }
 
   }
