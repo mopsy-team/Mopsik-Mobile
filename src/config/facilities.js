@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View} from 'react-native';
+import {View, Alert} from 'react-native';
 
 import {Avatar} from 'react-native-elements'
 
@@ -114,10 +114,14 @@ let getFacilityIconLong = (code, i, active, onPress) => {
 
 const chooseFacilityIconLong = (codes, code, i) =>{
   if (_.includes(codes, code)){
-    return getFacilityIconLong(code, i, true, () => {})
+    return getFacilityIconLong(code, i, true, () => {
+      Alert.alert(facilities[code].name, 'dostępne', [/*{text: 'OK'}*/], { cancelable: true })
+    })
   }
   else{
-    return getFacilityIconLong(code, i, false, () => {})
+    return getFacilityIconLong(code, i, false, () => {
+      Alert.alert(facilities[code].name, 'brak', [/*{text: 'OK'}*/], { cancelable: true })
+    })
   }
 }
 
@@ -127,8 +131,7 @@ export const getFacilitiesIconsLong = (codes) => {
       flex: 1,
       flexDirection: 'row',
       flexWrap: 'wrap',
-      alignItems: 'flex-start',
-      width: 10
+      alignItems: 'flex-start'
     }}>
     {facilities_codes.map((code, i) => (
       chooseFacilityIconLong(codes, code, i)

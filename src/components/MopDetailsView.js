@@ -88,19 +88,29 @@ export default class MopDetailsView extends Component {
         <Header navigation={this.props.navigation} title={this.state.mop.title} stack/>
         <View style={{margin: 10}}>
           <Text h3 style={{textAlign: 'center'}}>{mop.title}</Text>
-          <View style={{margin: 10, flex: 1, flexDirection: 'row', alignItems: 'flex-start'}}>
-            <View style={{margin: 10}}>
+          <View style={{margin: 10, flex: 1, flexDirection: 'row', width: 360}}>
+            <View style={{margin: 10,
+      width: 240}}>
               <Text h4>Kierunek: {mop.direction}</Text>
-              <Text style={{marginTop: 5, marginBottom: 5}}>{mop.description} </Text>
-              <Text style={{marginTop: 5, marginBottom: 5}}>{mop.description} </Text>
-              <Text style={{marginTop: 5, marginBottom: 5}}>{mop.description} </Text>
-              <Text style={{marginTop: 5, marginBottom: 5}}>{mop.description} </Text>
-              <Text style={{marginTop: 5, marginBottom: 5}}>{mop.description} </Text>
-              <Text style={{marginTop: 5, marginBottom: 5}}>{mop.description} </Text>
-              <Text style={{marginTop: 5, marginBottom: 5}}>{mop.description} </Text>
-              <Text style={{marginTop: 5, marginBottom: 5}}>{mop.description} </Text>
+              <Text style={{marginTop: 5, marginBottom: 5}}>
+                <Text style={{marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>Droga: </Text>
+                {mop.road_number}
+              </Text>
+              <Text style={{marginTop: 5, marginBottom: 5}}>
+                <Text style={{marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>Operator: </Text>
+                {mop.operator_name}
+              </Text>
+              <Text style={{marginTop: 5, marginBottom: 5}}>
+                <Text style={{marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>Kontakt: </Text>
+                {mop.operator_email}
+              </Text>
+              <Text style={{marginTop: 5, marginBottom: 5}}>{mop.description}</Text>
             </View>
+            <View style={{
+            width: 120
+          }}>
             {FACILITIES.getFacilitiesIconsLong(mop.facilities)}
+            </View>
           </View>
           <Text></Text>
           <Text></Text>
