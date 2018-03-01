@@ -2,12 +2,14 @@ import React, {Component} from 'react';
 import {
   View,
   AsyncStorage,
-  ScrollView
+  ScrollView,
+  StyleSheet
 } from 'react-native';
 
 import {Button, Text, Icon, Badge} from 'react-native-elements'
 
 import Header from 'mopsik_mobile/src/components/Header';
+import UsageTable from 'mopsik_mobile/src/components/UsageTable';
 import styles from 'mopsik_mobile/src/config/styles'
 
 
@@ -15,6 +17,7 @@ MOPS = require('mopsik_mobile/src/config/mops');
 FUNCTIONS = require('mopsik_mobile/src/config/functions');
 THEMES = require('mopsik_mobile/src/config/themes');
 let _ = require('lodash');
+
 
 export default class MopDetailsView extends Component {
 
@@ -81,7 +84,8 @@ export default class MopDetailsView extends Component {
 
   render() {
     let {mop} = this.state;
-    let {main_vehicle} = MOPS.settings;
+    let {settings} = MOPS;
+    let {main_vehicle} = settings;
     return (
       <ScrollView>
       <View style={styles.main}>
@@ -104,7 +108,10 @@ export default class MopDetailsView extends Component {
                 <Text style={{marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>Kontakt: </Text>
                 {mop.operator_email}
               </Text>
-              <Text style={{marginTop: 5, marginBottom: 5}}>{mop.description}</Text>
+              <Text style={{marginTop: 5, marginBottom: 5}}>
+                <Text style={{marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>Pikietaż: </Text>
+                {mop.chainage}
+              </Text>
             </View>
             <View style={{
             width: 120
@@ -114,6 +121,7 @@ export default class MopDetailsView extends Component {
           </View>
           <Text></Text>
           <Text></Text>
+          <Text h4 style={{textAlign: 'center'}}>Zajętość miejsc parkingowych</Text>
           <View style={{flex: 1, flexDirection: 'row'}}>
             <Text>Zapełnienie:  </Text>
             <Badge
@@ -122,6 +130,7 @@ export default class MopDetailsView extends Component {
               containerStyle={{ backgroundColor: mop.color[main_vehicle].background}}
             />
           </View>
+          <UsageTable mop={mop}/>
         </View>
 
         {this.state.button}
