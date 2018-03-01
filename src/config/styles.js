@@ -10,7 +10,8 @@ export default styles = StyleSheet.create({
   },
   main: {
     flex: 1,
-    flexDirection: 'column'
+    flexDirection: 'column',
+    //backgroundColor: 'white'
   },
   map: {
     position: 'absolute',

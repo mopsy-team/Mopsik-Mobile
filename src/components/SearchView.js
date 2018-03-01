@@ -19,8 +19,8 @@ export default class SearchView extends Component {
       <View style={styles.main}>
         <Header navigation={this.props.navigation} title='Wyszukaj'/>
 
-        <Text>*** </Text>
-        <Text>Wyszukaj</Text>
+        <Text></Text>
+        <Text>TODO</Text>
 
       </View>
     );

@@ -4,7 +4,8 @@ import {
   View,
   Button,
   AsyncStorage,
-  TouchableOpacity
+  TouchableOpacity,
+  Image
 } from 'react-native';
 
 import LinkInBrowserView from 'mopsik_mobile/src/components/LinkInBrowserView'
@@ -69,12 +70,16 @@ export default class HomeView extends Component {
     return (
       <View style={styles.main}>
         <Header navigation={this.props.navigation} title='Home'/>
-        <View style={styles.container}>
-          <Text>HOME</Text>
+        <View style={{
+          alignItems: 'center',
+        }}>
+        <Text></Text>
+        <Image source={require('../images/logo_clear_all.png')}/>
           <Button
             onPress={() => AsyncStorage.clear()}
             title="Reset AsyncStorage - DEBUG"
           />
+        <Text></Text>
           <TouchableOpacity onPress={() => this.setState({link: true})}>
             <Text>Logo wygenerowane przy pomocy Logo Maker</Text>
           </TouchableOpacity>

@@ -60,7 +60,6 @@ let updateMop = (marker) => {
   usage_truck = (marker.available.truck > 0) ? Math.floor(marker.taken.truck * 100 / marker.available.truck) : 0;
   usage_bus = (marker.available.bus > 0) ? Math.floor(marker.taken.bus * 100 / marker.available.bus) : 0;
   return {
-    ...marker,
     usage: {
       car: usage_car,
       truck: usage_truck,
@@ -98,7 +97,11 @@ let downloadMops = () => {
   fetch('http://reach.mimuw.edu.pl:8008/mops').then(response => (response) ? response.json() : {}).then((mops_dict) => {
     markers = [];
     for (let key in mops_dict) {
-      mops.push(updateMop(processMop(mops_dict[key])));
+      marker = processMop(mops_dict[key]);
+      u = updateMop(marker);
+      marker.usage = u.usage;
+      marker.color = u.color;
+      mops.push(marker);
     }
     if (favouriteMOPs.length === 0) {
       FUNCTIONS.downloadFavourites();
@@ -110,7 +113,9 @@ let downloadUsages = () => {
   fetch('http://reach.mimuw.edu.pl:8008/taken').then(response => (response) ? response.json() : {}).then((taken_dict) => {
     mops.map((marker) => {
       marker.taken = taken_dict[marker.id].taken;
-      marker = updateMop(marker);
+      u = updateMop(marker);
+      marker.usage = u.usage;
+      marker.color = u.color;
     });
   }).done();
 };

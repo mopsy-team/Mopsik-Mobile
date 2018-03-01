@@ -34,8 +34,7 @@ export default class MopDetailsView extends Component {
         onPress={() => {
           FUNCTIONS.deleteFavourite(this.state.mop.id);
           inFavs = this.isInFavourites(this.state.mop.id);
-          this.setState({button: this.generateButton(inFavs)})
-          ;
+          this.setState({button: this.generateButton(inFavs)});
         }}
         icon={{name: 'favorite', color: THEMES.basic.backgroundWhite}}
         backgroundColor={THEMES.basic.backgroundRed}
@@ -112,6 +111,9 @@ export default class MopDetailsView extends Component {
                 <Text style={{marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>Pikietaż: </Text>
                 {mop.chainage}
               </Text>
+              <Text></Text>
+              <Text></Text>
+              {this.state.button}
             </View>
             <View style={{
             width: 120
@@ -120,13 +122,10 @@ export default class MopDetailsView extends Component {
             </View>
           </View>
           <Text></Text>
-          <Text></Text>
           <Text h4 style={{textAlign: 'center'}}>Zajętość miejsc parkingowych</Text>
+          <Text></Text>
           <UsageTable mop={mop}/>
         </View>
-
-        {this.state.button}
-        <Text></Text>
         <Text></Text>
       </ScrollView>
       </View>
