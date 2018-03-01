@@ -67,7 +67,6 @@ export default class FavouriteMopsView extends Component {
 
   render() {
     let {main_vehicle} = MOPS.settings;
-    console.log('favss', this.state.favouriteMOPsmapped);
     return (
 
       <View ref='favs'>

@@ -87,9 +87,9 @@ export default class MopDetailsView extends Component {
     let {settings} = MOPS;
     let {main_vehicle} = settings;
     return (
-      <ScrollView>
       <View style={styles.main}>
         <Header navigation={this.props.navigation} title={this.state.mop.title} stack/>
+        <ScrollView>
         <View style={{margin: 10}}>
           <Text h3 style={{textAlign: 'center'}}>{mop.title}</Text>
           <View style={{margin: 10, flex: 1, flexDirection: 'row', width: 360}}>
@@ -122,22 +122,14 @@ export default class MopDetailsView extends Component {
           <Text></Text>
           <Text></Text>
           <Text h4 style={{textAlign: 'center'}}>Zajętość miejsc parkingowych</Text>
-          <View style={{flex: 1, flexDirection: 'row'}}>
-            <Text>Zapełnienie:  </Text>
-            <Badge
-              value={mop.usage[main_vehicle] + '%'}
-              textStyle={{ color: mop.color[main_vehicle].text }}
-              containerStyle={{ backgroundColor: mop.color[main_vehicle].background}}
-            />
-          </View>
           <UsageTable mop={mop}/>
         </View>
 
         {this.state.button}
         <Text></Text>
         <Text></Text>
-      </View>
       </ScrollView>
+      </View>
     );
   }
 }

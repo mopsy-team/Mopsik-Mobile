@@ -7,9 +7,11 @@ let settings = {
   set: false,
   main_vehicle: 'car',
   main_vehicle_id: -1,
-  car_selected: false,
-  truck_selected: false,
-  bus_selected: false
+  vehicles_selected: {
+    car: false,
+    truck: false,
+    bus: false
+  }
 };
 
 let simple_legend = {

@@ -8,6 +8,7 @@ import {Button, ButtonGroup, Icon, CheckBox, Text, Divider} from 'react-native-e
 
 import Header from 'mopsik_mobile/src/components/Header';
 import styles from 'mopsik_mobile/src/config/styles';
+import {VEHICLES} from 'mopsik_mobile/src/config/vehicles';
 
 MOPS = require('mopsik_mobile/src/config/mops');
 FUNCTIONS = require('mopsik_mobile/src/config/functions');
@@ -20,9 +21,11 @@ export default class SettingsView extends Component {
     super();
     this.state = {
       selectedIndex: MOPS.settings.main_vehicle_id,
-      car_selected: MOPS.settings.car_selected,
-      truck_selected: MOPS.settings.truck_selected,
-      bus_selected: MOPS.settings.bus_selected,
+      vehicles_selected: {
+        car: MOPS.settings.vehicles_selected.car,
+        truck: MOPS.settings.vehicles_selected.truck,
+        bus: MOPS.settings.vehicles_selected.bus,
+      }
     };
     this.updateIndex = this.updateIndex.bind(this)
   }
@@ -34,14 +37,17 @@ export default class SettingsView extends Component {
     AsyncStorage.setItem('settings', JSON.stringify(MOPS.settings));
   };
 
-  get_button = (icon_name, text, text_id) => {
-    return (<View><Icon name={icon_name}
-                        color={((MOPS.settings.main_vehicle_id !== -1) && (text_id === MOPS.settings.main_vehicle)) ? THEMES.basic.backgroundLightColor : THEMES.basic.backgroundGrey}/><Text>{text}</Text></View>)
+  get_button = (text_id) => {
+    return (<View><Icon name={VEHICLES[text_id].icon}
+                        color={((MOPS.settings.main_vehicle_id !== -1) && (text_id === MOPS.settings.main_vehicle))
+                          ? THEMES.basic.backgroundLightColor
+                          : THEMES.basic.backgroundGrey}/>
+                          <Text>{VEHICLES[text_id].name}</Text></View>)
   };
 
-  car = () => this.get_button('directions-car', 'Samochód', 'car');
-  truck = () => this.get_button('local-shipping', 'Ciężarówka', 'truck');
-  bus = () => this.get_button('directions-bus', 'Autobus', 'bus');
+  car = () => this.get_button('car');
+  truck = () => this.get_button('truck');
+  bus = () => this.get_button('bus');
 
   buttons = [
     {element: this.car, text_id: 'car'},
@@ -65,12 +71,24 @@ export default class SettingsView extends Component {
 
   updateMultipleSelection = (vehicle_selected) => {
     let st = {...this.state};
-    let v = !st[vehicle_selected];
-    st[vehicle_selected] = v;
+    let v = !st.vehicles_selected[vehicle_selected];
+    st.vehicles_selected[vehicle_selected] = v;
     this.setState(st);
-    MOPS.settings[vehicle_selected] = v;
+    MOPS.settings.vehicles_selected[vehicle_selected] = v;
     AsyncStorage.setItem('settings', JSON.stringify(MOPS.settings));
   };
+
+  getCheckBox = (vehicle) => {
+    return (
+      <CheckBox
+        title={VEHICLES[vehicle].name}
+        textStyle={{fontSize: 16}}
+        checked={this.state.vehicles_selected[vehicle]}
+        onPress={() => this.updateMultipleSelection(vehicle)}
+        checkedColor='#8aa8e3'
+      />
+    )
+  }
 
   render() {
     let {params} = this.props.navigation.state;
@@ -98,27 +116,9 @@ export default class SettingsView extends Component {
       <Divider style={{ backgroundColor: THEMES.basic.backgroundLightGrey, height: 2 }} />
       <Text></Text>
       <Text style={{fontSize: 16, margin: 5, textAlign: 'center'}}>Wybierz typy pojazdów, dla których chcesz wyświetlać dane w szczegółowych informacjach o MOPie</Text>
-      <CheckBox
-        title='Samochód'
-        textStyle={{fontSize: 16}}
-        checked={this.state.car_selected}
-        onPress={() => this.updateMultipleSelection('car_selected')}
-        checkedColor='#8aa8e3'
-      />
-      <CheckBox
-        title='Ciężarówka'
-        textStyle={{fontSize: 16}}
-        checked={this.state.truck_selected}
-        onPress={() => this.updateMultipleSelection('truck_selected')}
-        checkedColor='#8aa8e3'
-      />
-      <CheckBox
-        title='Autobus'
-        textStyle={{fontSize: 16}}
-        checked={this.state.bus_selected}
-        onPress={() => this.updateMultipleSelection('bus_selected')}
-        checkedColor='#8aa8e3'
-      />
+      {this.getCheckBox('car')}
+      {this.getCheckBox('truck')}
+      {this.getCheckBox('bus')}
       </View>
       <Text></Text>
       {ok}
