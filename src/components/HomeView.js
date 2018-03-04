@@ -51,25 +51,24 @@ export default class HomeView extends Component {
         this.props.navigation.navigate('Settings', {first: true});
       }
     }).done();
-
-    if (MOPS.favouriteMOPs.length === 0) {
-      FUNCTIONS.downloadFavourites();
-    }
-
     if (MOPS.mops.length === 0) {
       MOPS.downloadMops();
     }
     else {
       MOPS.refresh();
+      if (MOPS.favouriteMOPs.length === 0) {
+        FUNCTIONS.downloadFavourites();
+      }
     }
+
   }
 
   render() {
 
     hyperlink = (this.state.link) ? <LinkInBrowserView src='https://logomakr.com/018RtM#'/> : <Text></Text>;
 
-
     const {navigate} = this.props.navigation;
+
     return (
       <View style={styles.main}>
         <Header navigation={this.props.navigation} title='Home'/>
