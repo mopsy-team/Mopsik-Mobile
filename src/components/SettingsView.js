@@ -8,7 +8,7 @@ import {Button, ButtonGroup, Icon, CheckBox, Text, Divider} from 'react-native-e
 
 import Header from 'mopsik_mobile/src/components/Header';
 import styles from 'mopsik_mobile/src/config/styles';
-import {VEHICLES} from 'mopsik_mobile/src/config/vehicles';
+import {VEHICLES, vehiclesCodes} from 'mopsik_mobile/src/config/vehicles';
 
 MOPS = require('mopsik_mobile/src/config/mops');
 FUNCTIONS = require('mopsik_mobile/src/config/functions');
@@ -40,8 +40,8 @@ export default class SettingsView extends Component {
   get_button = (text_id) => {
     return (<View><Icon name={VEHICLES[text_id].icon}
                         color={((MOPS.settings.main_vehicle_id !== -1) && (text_id === MOPS.settings.main_vehicle))
-                          ? THEMES.basic.backgroundLightColor
-                          : THEMES.basic.backgroundGrey}/>
+                          ? THEMES.basic.LightColor
+                          : THEMES.basic.Grey}/>
                           <Text>{VEHICLES[text_id].name}</Text></View>)
   };
 
@@ -78,7 +78,7 @@ export default class SettingsView extends Component {
     AsyncStorage.setItem('settings', JSON.stringify(MOPS.settings));
   };
 
-  getCheckBox = (vehicle) => {
+  getCheckBox = (vehicle, i) => {
     return (
       <CheckBox
         title={VEHICLES[vehicle].name}
@@ -86,6 +86,7 @@ export default class SettingsView extends Component {
         checked={this.state.vehicles_selected[vehicle]}
         onPress={() => this.updateMultipleSelection(vehicle)}
         checkedColor='#8aa8e3'
+        key={i}
       />
     )
   }
@@ -113,12 +114,12 @@ export default class SettingsView extends Component {
         containerStyle={{height: 70}}
         />
       <Text></Text>
-      <Divider style={{ backgroundColor: THEMES.basic.backgroundLightGrey, height: 2 }} />
+      <Divider style={{ backgroundColor: THEMES.basic.LightGrey, height: 2 }} />
       <Text></Text>
       <Text style={{fontSize: 16, margin: 5, textAlign: 'center'}}>Wybierz typy pojazdów, dla których chcesz wyświetlać dane w szczegółowych informacjach o MOPie</Text>
-      {this.getCheckBox('car')}
-      {this.getCheckBox('truck')}
-      {this.getCheckBox('bus')}
+      {vehiclesCodes.map((vehicle, i) => (
+        this.getCheckBox(vehicle, i)
+      ))}
       </View>
       <Text></Text>
       {ok}

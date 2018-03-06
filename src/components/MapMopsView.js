@@ -99,7 +99,7 @@ export default class MapMopsView extends Component {
     }}>
       <View
         style={{
-          backgroundColor: THEMES.basic.backgroundWhite,
+          backgroundColor: THEMES.basic.White,
           height: 150,
           width: 150,
           flex: 1
@@ -155,7 +155,7 @@ export default class MapMopsView extends Component {
           name='my-location'
           raised
           reverse={this.state.followPosition}
-          color={THEMES.basic.backgroundLightColor}
+          color={THEMES.basic.LightColor}
           size={30}
         />
         </View>
@@ -166,7 +166,7 @@ export default class MapMopsView extends Component {
             onRegionChange={this.onRegionChange.bind(this)}
             showsUserLocation={true}
             showsMyLocationButton={true}
-            style={m()}
+            style={styles.map}
           >
             {mops.map((marker, i) => (
               <MapView.Marker

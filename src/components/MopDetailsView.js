@@ -36,9 +36,9 @@ export default class MopDetailsView extends Component {
           inFavs = this.isInFavourites(this.state.mop.id);
           this.setState({button: this.generateButton(inFavs)});
         }}
-        icon={{name: 'favorite', color: THEMES.basic.backgroundWhite}}
-        backgroundColor={THEMES.basic.backgroundRed}
-        color={THEMES.basic.backgroundWhite}
+        icon={{name: 'favorite', color: THEMES.basic.White}}
+        backgroundColor={THEMES.basic.Red}
+        color={THEMES.basic.White}
       />
     }
     else {
@@ -46,7 +46,7 @@ export default class MopDetailsView extends Component {
         title='Dodaj to ulubionych'
         onPress={() => this.addToFavourites(this.state.mop.id)}
         icon={{name: 'favorite-border', color: THEMES.basic.red}}
-        backgroundColor={THEMES.basic.backgroundWhite}
+        backgroundColor={THEMES.basic.White}
         color={THEMES.basic.red}
       />
     }

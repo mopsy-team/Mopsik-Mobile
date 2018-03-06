@@ -8,7 +8,6 @@ import {
   Image
 } from 'react-native';
 
-import LinkInBrowserView from 'mopsik_mobile/src/components/LinkInBrowserView'
 import Header from 'mopsik_mobile/src/components/Header';
 import styles from 'mopsik_mobile/src/config/styles'
 
@@ -21,8 +20,7 @@ export default class HomeView extends Component {
   constructor() {
     super();
     this.state = {
-      toggled: false,
-      link: false
+      toggled: false
     }
 
   }
@@ -33,37 +31,25 @@ export default class HomeView extends Component {
     })
   }
 
-  uploadFavourites = async (favourites) => {
-    try {
-      await AsyncStorage.setItem('favouriteMOPs',
-        JSON.stringify(favourites));
-    }
-    catch (e) {
-    }
-  };
-
-
   componentWillMount() {
     AsyncStorage.getItem('settings').then((response) => {
-      if (response) {
+      if (response) { // settings are already saved in AsyncStorage
         MOPS.settings = JSON.parse(response);
       }
-      else {
+      else { // no setting saved, opening app configuration
         this.props.navigation.navigate('Settings', {first: true});
       }
     }).done();
-    if (MOPS.mops.length === 0) {
+    if (MOPS.mops.length === 0) { // first opening app, downloading mop data
       MOPS.downloadMops();
     }
-    else {
+    else { // only refresh
       MOPS.refresh();
     }
 
   }
 
   render() {
-
-    hyperlink = (this.state.link) ? <LinkInBrowserView src='https://logomakr.com/018RtM#'/> : <Text></Text>;
 
     const {navigate} = this.props.navigation;
 
@@ -77,13 +63,10 @@ export default class HomeView extends Component {
         <Image source={require('../images/logo_clear_all.png')}/>
           <Button
             onPress={() => AsyncStorage.clear()}
-            title="Reset AsyncStorage - DEBUG"
+            title="Reset AsyncStorage - DEBUG ONLY"
           />
         <Text></Text>
-          <TouchableOpacity onPress={() => this.setState({link: true})}>
-            <Text>Logo wygenerowane przy pomocy Logo Maker</Text>
-          </TouchableOpacity>
-          {hyperlink}
+        <Text>Logo wygenerowane przy pomocy Logo Maker</Text>
         </View>
       </View>
     );
