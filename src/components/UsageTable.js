@@ -16,6 +16,11 @@ MOPS = require('mopsik_mobile/src/config/mops');
 
 export default class UsageTable extends Component {
 
+  /*
+   * creates row and appends it to tableRow_
+   * for each type of vehicle that is to be displayed in MopDetails
+     creates a cell with content determined by function fun
+   */
   createRow = (tableRow_, fun) => {
     const tableRow = tableRow_;
     for (v of vehiclesCodes){
@@ -26,6 +31,7 @@ export default class UsageTable extends Component {
     return tableRow;
   }
 
+  /* Name of vehicle and icon */
   createHeader = (vehicle) => {
     return (
       <View>

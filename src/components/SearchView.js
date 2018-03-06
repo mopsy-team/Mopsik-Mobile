@@ -12,6 +12,7 @@ FUNCTIONS = require('mopsik_mobile/src/config/functions');
 let _ = require('lodash');
 
 export default class SearchView extends Component {
+//TODO
 
   render() {
     return (

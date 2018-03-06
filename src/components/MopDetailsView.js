@@ -21,12 +21,15 @@ let _ = require('lodash');
 
 export default class MopDetailsView extends Component {
 
+  /* checks if mop is in favourites */
   isInFavourites = (id) => {
     return MOPS.favouriteMOPs.find((el) => {
         return el === id
       }) !== undefined;
   };
 
+  /* depending of boolean parameter inFavs, function returns buttons
+    'Add to favourites' or 'Delete from favourites' */
   generateButton = (inFavs) => {
     if (inFavs) {
       return <Button
@@ -61,6 +64,7 @@ export default class MopDetailsView extends Component {
     };
   }
 
+//TODO - optimise
   addToFavourites = (id) => {
     AsyncStorage.getItem('favouriteMOPs').then((response) => {
       let favourites = [];
