@@ -32,11 +32,14 @@ export default class FavouriteMopsView extends Component {
   };
 
   componentWillMount() {
+    /* this listener makes sure that after deleting mop from favourites in details view,
+      mop disapears from favourites view */
     DeviceEventEmitter.addListener('refresh favourites', () => {
       if (this.refs.favs) {
         this.setState({favouriteMOPsmapped: MOPS.favouriteMOPsmapped});
       }
     });
+    /* download usages from API */
     MOPS.refresh();
   }
 
@@ -45,11 +48,11 @@ export default class FavouriteMopsView extends Component {
     this.setState({favouriteMOPsmapped: MOPS.favouriteMOPsmapped});
   };
 
-
+ /* buttons apearing when swiping left elements on favourites list */
   swipeBtns = (id) => {
     return [{
       text: 'Delete',
-      backgroundColor: THEMES.basic.backgroundRed,
+      backgroundColor: THEMES.basic.Red,
       underlayColor: THEMES.basic.underlayWhite,
       onPress: () => {
         this.deleteFav(id)
@@ -67,7 +70,6 @@ export default class FavouriteMopsView extends Component {
 
   render() {
     let {main_vehicle} = MOPS.settings;
-    console.log('favss', this.state.favouriteMOPsmapped);
     return (
 
       <View ref='favs'>
@@ -89,7 +91,7 @@ export default class FavouriteMopsView extends Component {
                 }
                 key={i}
                 title={fav.title}
-                subtitle={fav.id}
+                subtitle={'Droga: ' + fav.road_number + '; Kierunek: ' + fav.direction}
                 badge={{
                   value: fav.usage[main_vehicle] + "%",
                   textStyle: {color: fav.color[main_vehicle].text},
