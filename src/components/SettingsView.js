@@ -8,7 +8,7 @@ import {Button, ButtonGroup, Icon, CheckBox, Text, Divider} from 'react-native-e
 
 import Header from 'mopsik_mobile/src/components/Header';
 import styles from 'mopsik_mobile/src/config/styles';
-import {VEHICLES} from 'mopsik_mobile/src/config/vehicles';
+import {VEHICLES, vehiclesCodes} from 'mopsik_mobile/src/config/vehicles';
 
 MOPS = require('mopsik_mobile/src/config/mops');
 FUNCTIONS = require('mopsik_mobile/src/config/functions');
@@ -30,6 +30,7 @@ export default class SettingsView extends Component {
     this.updateIndex = this.updateIndex.bind(this)
   }
 
+  /* update settings with new chosen 'main vehicle' */
   updateIndex = (selectedIndex) => {
     this.setState({selectedIndex: selectedIndex});
     MOPS.settings.main_vehicle = this.buttons[selectedIndex].text_id;
@@ -37,14 +38,16 @@ export default class SettingsView extends Component {
     AsyncStorage.setItem('settings', JSON.stringify(MOPS.settings));
   };
 
+  /* return button for main vehicle ButtonGroup */
   get_button = (text_id) => {
     return (<View><Icon name={VEHICLES[text_id].icon}
                         color={((MOPS.settings.main_vehicle_id !== -1) && (text_id === MOPS.settings.main_vehicle))
-                          ? THEMES.basic.backgroundLightColor
-                          : THEMES.basic.backgroundGrey}/>
+                          ? THEMES.basic.LightColor
+                          : THEMES.basic.Grey}/>
                           <Text>{VEHICLES[text_id].name}</Text></View>)
   };
 
+  /* main vehicle ButtonGroup */
   car = () => this.get_button('car');
   truck = () => this.get_button('truck');
   bus = () => this.get_button('bus');
@@ -55,6 +58,7 @@ export default class SettingsView extends Component {
     {element: this.bus, text_id: 'bus'}
   ];
 
+  /* OK button gets activated once main vehicle is chosen */
   get_ok_button = () => {
     let dis = (this.state.selectedIndex === -1);
     let icon = dis ? {name: 'block', color: 'red'} : {name: 'done', color: 'green'};
@@ -69,16 +73,18 @@ export default class SettingsView extends Component {
     />);
   };
 
+  /* handles changes in multiple selection of vehicles (to be shown in mop details) */
   updateMultipleSelection = (vehicle_selected) => {
     let st = {...this.state};
     let v = !st.vehicles_selected[vehicle_selected];
     st.vehicles_selected[vehicle_selected] = v;
-    this.setState(st);
     MOPS.settings.vehicles_selected[vehicle_selected] = v;
     AsyncStorage.setItem('settings', JSON.stringify(MOPS.settings));
+    this.setState(st);
   };
 
-  getCheckBox = (vehicle) => {
+  /* returns checkbox with icon */
+  getCheckBox = (vehicle, i) => {
     return (
       <CheckBox
         title={VEHICLES[vehicle].name}
@@ -86,12 +92,14 @@ export default class SettingsView extends Component {
         checked={this.state.vehicles_selected[vehicle]}
         onPress={() => this.updateMultipleSelection(vehicle)}
         checkedColor='#8aa8e3'
+        key={i}
       />
     )
   }
 
   render() {
     let {params} = this.props.navigation.state;
+    /* first = False => app already configured */
     let first = (params) ? params.first : false;
     let header = (first)
       ? (<Header navigation={this.props.navigation} firstSettings/>)
@@ -113,12 +121,12 @@ export default class SettingsView extends Component {
         containerStyle={{height: 70}}
         />
       <Text></Text>
-      <Divider style={{ backgroundColor: THEMES.basic.backgroundLightGrey, height: 2 }} />
+      <Divider style={{ backgroundColor: THEMES.basic.LightGrey, height: 2 }} />
       <Text></Text>
       <Text style={{fontSize: 16, margin: 5, textAlign: 'center'}}>Wybierz typy pojazdów, dla których chcesz wyświetlać dane w szczegółowych informacjach o MOPie</Text>
-      {this.getCheckBox('car')}
-      {this.getCheckBox('truck')}
-      {this.getCheckBox('bus')}
+      {vehiclesCodes.map((vehicle, i) => (
+        this.getCheckBox(vehicle, i)
+      ))}
       </View>
       <Text></Text>
       {ok}

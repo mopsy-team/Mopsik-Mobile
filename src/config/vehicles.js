@@ -1,3 +1,4 @@
+/* types of vehicles with coresponding icon names and polish names */
 export const VEHICLES = {
   'car': {
     name: 'Samochód',
@@ -12,3 +13,8 @@ export const VEHICLES = {
     icon: 'directions-bus'
   }
 }
+
+/* order of vehicles types */
+export const vehiclesCodes = [
+  'car', 'truck', 'bus'
+]

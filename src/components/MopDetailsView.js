@@ -21,12 +21,15 @@ let _ = require('lodash');
 
 export default class MopDetailsView extends Component {
 
+  /* checks if mop is in favourites */
   isInFavourites = (id) => {
     return MOPS.favouriteMOPs.find((el) => {
         return el === id
       }) !== undefined;
   };
 
+  /* depending of boolean parameter inFavs, function returns buttons
+    'Add to favourites' or 'Delete from favourites' */
   generateButton = (inFavs) => {
     if (inFavs) {
       return <Button
@@ -36,9 +39,9 @@ export default class MopDetailsView extends Component {
           inFavs = this.isInFavourites(this.state.mop.id);
           this.setState({button: this.generateButton(inFavs)});
         }}
-        icon={{name: 'favorite', color: THEMES.basic.backgroundWhite}}
-        backgroundColor={THEMES.basic.backgroundRed}
-        color={THEMES.basic.backgroundWhite}
+        icon={{name: 'favorite', color: THEMES.basic.White}}
+        backgroundColor={THEMES.basic.Red}
+        color={THEMES.basic.White}
       />
     }
     else {
@@ -46,7 +49,7 @@ export default class MopDetailsView extends Component {
         title='Dodaj to ulubionych'
         onPress={() => this.addToFavourites(this.state.mop.id)}
         icon={{name: 'favorite-border', color: THEMES.basic.red}}
-        backgroundColor={THEMES.basic.backgroundWhite}
+        backgroundColor={THEMES.basic.White}
         color={THEMES.basic.red}
       />
     }
@@ -61,6 +64,7 @@ export default class MopDetailsView extends Component {
     };
   }
 
+//TODO - optimise
   addToFavourites = (id) => {
     AsyncStorage.getItem('favouriteMOPs').then((response) => {
       let favourites = [];
