@@ -19,3 +19,5 @@ Uruchomienie:
 2. W folderze z projektem:
 	1. react-native run-android
 	2. react-native log-android (opcjonalnie, w nowych oknie, wyswietla wszystkie console.log() z apki)
+
+![Szczegóły](https://ibb.co/iONXiS)
