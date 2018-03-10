@@ -4,7 +4,6 @@ import {
   Text
 } from 'react-native';
 
-import {Badge} from 'react-native-elements';
 import {CircularProgress} from 'mopsik_mobile/src/components/CircularProgress';
 
 export default class UsageCircle extends Component {
@@ -29,8 +28,5 @@ export default class UsageCircle extends Component {
               </CircularProgress>
             </View>
         )
-
-
     }
-
 }
