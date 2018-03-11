@@ -3,19 +3,6 @@ import {facilitiesCodes, facilitiesCodesShort} from 'mopsik_mobile/src/config/fa
 
 FUNCTIONS = require('mopsik_mobile/src/config/functions');
 
-/////// TODO
-// move to separate file
-let settings = {
-  set: false,
-  main_vehicle: 'car',
-  main_vehicle_id: -1,
-  vehicles_selected: {
-    car: false,
-    truck: false,
-    bus: false
-  }
-};
-
 /*
  * simple color scale for usage of parking spots
  * <0, 35> => green
@@ -154,7 +141,6 @@ let refresh = () => {
 
 module.exports = {
   mops: mops,
-  settings: settings,
   downloadMops: downloadMops,
   refresh: refresh,
   favouriteMOPs: favouriteMOPs,
