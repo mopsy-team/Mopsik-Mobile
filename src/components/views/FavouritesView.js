@@ -9,7 +9,7 @@ import {
 import {List, ListItem} from 'react-native-elements'
 import Swipeout from 'react-native-swipeout';
 
-import Header from 'mopsik_mobile/src/components/Header';
+import Header from 'mopsik_mobile/src/components/tools/Header';
 
 MOPS = require('mopsik_mobile/src/config/mops');
 FUNCTIONS = require('mopsik_mobile/src/config/functions');
@@ -17,7 +17,7 @@ THEMES = require('mopsik_mobile/src/config/themes');
 let _ = require('lodash');
 
 
-export default class FavouriteMopsView extends Component {
+export default class FavouritesView extends Component {
 
 
   constructor() {
@@ -51,7 +51,7 @@ export default class FavouriteMopsView extends Component {
  /* buttons apearing when swiping left elements on favourites list */
   swipeBtns = (id) => {
     return [{
-      text: 'Delete',
+      text: 'Usuń',
       backgroundColor: THEMES.basic.Red,
       underlayColor: THEMES.basic.underlayWhite,
       onPress: () => {

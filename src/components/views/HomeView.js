@@ -8,7 +8,7 @@ import {
   Image
 } from 'react-native';
 
-import Header from 'mopsik_mobile/src/components/Header';
+import Header from 'mopsik_mobile/src/components/tools/Header';
 import styles from 'mopsik_mobile/src/config/styles'
 
 MOPS = require('mopsik_mobile/src/config/mops');
@@ -61,7 +61,7 @@ export default class HomeView extends Component {
           alignItems: 'center',
         }}>
         <Text></Text>
-        <Image source={require('../images/logo_clear_all.png')}/>
+        <Image source={require('mopsik_mobile/src/images/logo_clear_all.png')}/>
           <Button
             onPress={() => AsyncStorage.clear()}
             title="Reset AsyncStorage - DEBUG ONLY"

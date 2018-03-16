@@ -6,7 +6,7 @@ import {
 
 import {Button, ButtonGroup, Icon, CheckBox, Text, Divider} from 'react-native-elements';
 
-import Header from 'mopsik_mobile/src/components/Header';
+import Header from 'mopsik_mobile/src/components/tools/Header';
 import styles from 'mopsik_mobile/src/config/styles';
 import {VEHICLES, vehiclesCodes} from 'mopsik_mobile/src/config/vehicles';
 

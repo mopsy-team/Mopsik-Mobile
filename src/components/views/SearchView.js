@@ -4,7 +4,7 @@ import {
   View
 } from 'react-native';
 
-import Header from 'mopsik_mobile/src/components/Header';
+import Header from 'mopsik_mobile/src/components/tools/Header';
 import styles from 'mopsik_mobile/src/config/styles';
 
 MOPS = require('mopsik_mobile/src/config/mops');

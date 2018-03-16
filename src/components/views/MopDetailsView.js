@@ -8,8 +8,8 @@ import {
 
 import {Button, Text, Icon, Badge} from 'react-native-elements'
 
-import Header from 'mopsik_mobile/src/components/Header';
-import UsageTable from 'mopsik_mobile/src/components/UsageTable';
+import Header from 'mopsik_mobile/src/components/tools/Header';
+import UsageTable from 'mopsik_mobile/src/components/tools/UsageTable';
 import styles from 'mopsik_mobile/src/config/styles'
 
 

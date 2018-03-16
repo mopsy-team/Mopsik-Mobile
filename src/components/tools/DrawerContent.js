@@ -39,7 +39,7 @@ export default DrawerContent = (props) => {
           justifyContent: 'center',
         }}
       >
-        <Image source={require('../images/logo_clear_all.png')} style={{
+        <Image source={require('mopsik_mobile/src/images/logo_clear_all.png')} style={{
           flex: 1,
           width: 250,
           resizeMode: 'contain'
