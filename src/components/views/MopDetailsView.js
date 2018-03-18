@@ -98,9 +98,8 @@ export default class MopDetailsView extends Component {
         <ScrollView>
         <View style={{margin: 10}}>
           <Text h3 style={{textAlign: 'center'}}>{mop.title}</Text>
-          <View style={{margin: 10, flex: 1, flexDirection: 'row', width: 360}}>
-            <View style={{margin: 10,
-      width: 240}}>
+          <View style={{margin: 10, flex: 1, flexDirection: 'row', justifyContent: 'space-around',}}>
+            <View style={{margin: 10}}>
               <Text h4>Kierunek: {mop.direction}</Text>
               <Text style={{marginTop: 5, marginBottom: 5}}>
                 <Text style={{marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>Droga: </Text>
@@ -118,13 +117,15 @@ export default class MopDetailsView extends Component {
                 <Text style={{marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>Pikietaż: </Text>
                 {mop.chainage}
               </Text>
+              <Text style={{marginTop: 5, marginBottom: 5}}>
+                <Text style={{marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>Miejscowość: </Text>
+                {mop.town}
+              </Text>
               <Text></Text>
               <Text></Text>
               {this.state.button}
             </View>
-            <View style={{
-            width: 120
-          }}>
+            <View style={{width: 120}}>
             {FACILITIES.getFacilitiesIconsLong(mop.facilities)}
             </View>
           </View>
