@@ -3,7 +3,8 @@ import {
   View,
   AsyncStorage,
   ScrollView,
-  StyleSheet
+  StyleSheet,
+  Dimensions
 } from 'react-native';
 
 import {Button, Text, Icon, Badge} from 'react-native-elements'
@@ -42,6 +43,7 @@ export default class MopDetailsView extends Component {
         icon={{name: 'favorite', color: THEMES.basic.White}}
         backgroundColor={THEMES.basic.Red}
         color={THEMES.basic.White}
+        buttonStyle={{width: 190}}
       />
     }
     else {
@@ -51,6 +53,7 @@ export default class MopDetailsView extends Component {
         icon={{name: 'favorite-border', color: THEMES.basic.red}}
         backgroundColor={THEMES.basic.White}
         color={THEMES.basic.red}
+        buttonStyle={{width: 190}}
       />
     }
   };
@@ -60,7 +63,8 @@ export default class MopDetailsView extends Component {
     let {mop} = this.props.navigation.state.params;
     this.state = {
       button: this.generateButton(this.isInFavourites(mop.id)),
-      mop: mop
+      mop: mop,
+      width: Dimensions.get('window').width
     };
   }
 
@@ -84,8 +88,13 @@ export default class MopDetailsView extends Component {
     }).done();
   };
 
+
   reload = () => {
     this.setState({reload: true});
+  }
+
+  changeWidth = () => {
+    this.setState({width: Dimensions.get('window').width})
   }
 
   render() {
@@ -93,13 +102,13 @@ export default class MopDetailsView extends Component {
     let {settings} = SETTINGS;
     let {main_vehicle} = settings;
     return (
-      <View style={styles.main}>
+      <View style={styles.main} onLayout={this.changeWidth}>
         <Header navigation={this.props.navigation} title={this.state.mop.title} stack reload={this.reload}/>
         <ScrollView>
         <View style={{margin: 10}}>
           <Text h3 style={{textAlign: 'center'}}>{mop.title}</Text>
-          <View style={{margin: 10, flex: 1, flexDirection: 'row', justifyContent: 'space-around',}}>
-            <View style={{margin: 10}}>
+          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around',}}>
+            <View style={{margin: 10, width: (this.state.width - 140)}}>
               <Text h4>Kierunek: {mop.direction}</Text>
               <Text style={{marginTop: 5, marginBottom: 5}}>
                 <Text style={{marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>Droga: </Text>
