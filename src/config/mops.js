@@ -99,7 +99,7 @@ let processMop = (mop) => {
   * saves to variables
  * called in HomeView
  */
-let downloadMops = () => {
+downloadMops = (turnOffSplash) => {
   fetch('http://reach.mimuw.edu.pl:8008/mops').then(response => (response) ? response.json() : {}).then((mops_dict) => {
     markers = [];
     for (let key in mops_dict) {
@@ -107,13 +107,15 @@ let downloadMops = () => {
       u = updateMop(marker);
       marker.usage = u.usage;
       marker.color = u.color;
-      mops.push(marker);
+      MOPS.mops.push(marker);
     }
     if (favouriteMOPs.length === 0) {
       FAVOURITES.downloadFavourites();
     }
+    turnOffSplash();
   }).done();
 };
+
 
 /*
  * downloads number of taken spaces for all mops

@@ -66,7 +66,7 @@ export default DrawerContent = (props) => {
         }}
       >
         <Text style={{color: THEMES.basic.textLight, fontSize: 15}}>
-          Mopsy Team® 2018
+          Mopsy Team 2018
         </Text>
       </View>
       </View>
