@@ -62,6 +62,7 @@ export default DrawerContent = (props) => {
           backgroundColor: THEMES.basic.LightColor,
           height: 45,
           alignItems: 'center',
+          justifyContent: 'center'
         }}
       >
         <Text style={{color: THEMES.basic.textLight, fontSize: 15}}>

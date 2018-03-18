@@ -132,6 +132,9 @@ export default class MapView extends Component {
   )
   }
 
+  reload = () => {
+    this.setState({reload: true});
+  }
 
   render() {
     let {main_vehicle} = SETTINGS.settings;
@@ -139,7 +142,7 @@ export default class MapView extends Component {
 
     return (
       <View style={styles.main}>
-        <Header navigation={this.props.navigation} title='Mapa'/>
+        <Header navigation={this.props.navigation} title='Mapa' reload={this.reload}/>
         <View style={{zIndex: 10}}>
         <Icon
           onPress={() => {

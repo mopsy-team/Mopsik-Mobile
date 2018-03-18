@@ -50,13 +50,17 @@ export default class HomeView extends Component {
 
   }
 
+  reload = () => {
+    this.setState({reload: true});
+  }
+
   render() {
 
     const {navigate} = this.props.navigation;
 
     return (
       <View style={styles.main}>
-        <Header navigation={this.props.navigation} title='Home'/>
+        <Header navigation={this.props.navigation} title='Home' reload={this.reload}/>
         <View style={{
           alignItems: 'center',
         }}>
