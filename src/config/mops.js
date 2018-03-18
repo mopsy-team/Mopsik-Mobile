@@ -100,7 +100,7 @@ let processMop = (mop) => {
  * called in HomeView
  */
 downloadMops = (turnOffSplash) => {
-  fetch('http://reach.mimuw.edu.pl:8008/mops').then(response => (response) ? response.json() : {}).then((mops_dict) => {
+  fetch(SETTINGS.constants.api_mops).then(response => (response) ? response.json() : {}).then((mops_dict) => {
     markers = [];
     for (let key in mops_dict) {
       marker = processMop(mops_dict[key]);
@@ -125,7 +125,7 @@ downloadMops = (turnOffSplash) => {
  * called when refresh is pressed and on rendering views
  */
 let downloadUsages = () => {
-  fetch('http://reach.mimuw.edu.pl:8008/taken').then(response => (response) ? response.json() : {}).then((taken_dict) => {
+  fetch(SETTINGS.constants.api_taken).then(response => (response) ? response.json() : {}).then((taken_dict) => {
     mops.map((marker) => {
       marker.taken = taken_dict[marker.id].taken;
       u = updateMop(marker);

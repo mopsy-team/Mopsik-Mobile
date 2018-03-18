@@ -8,7 +8,7 @@ import {
 
 import {Button, Text} from 'react-native-elements'
 
-import SplashView from 'mopsik_mobile/src/components/views/SplashView';
+import SplashScreen from 'mopsik_mobile/src/components/tools/SplashScreen';
 import Header from 'mopsik_mobile/src/components/tools/Header';
 import styles from 'mopsik_mobile/src/config/styles'
 
@@ -44,7 +44,7 @@ export default class HomeView extends Component {
   }
 
   getSplashScreen = () => {
-    return (<SplashView />)
+    return (<SplashScreen />)
   }
 
   constructor() {

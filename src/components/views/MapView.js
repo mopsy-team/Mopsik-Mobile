@@ -187,7 +187,7 @@ export default class MapView extends Component {
                 description={marker.description}
                 key={i}>
                 <Image
-                  source={require('mopsik_mobile/src/images/parking_clear.png')}
+                  source={SETTINGS.constants.parking_icon_small}
                   style={{width: 25, height: 25}}
                   tintColor={marker.color[main_vehicle].background}
                 />

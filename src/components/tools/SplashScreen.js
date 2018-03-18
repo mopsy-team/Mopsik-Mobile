@@ -13,7 +13,7 @@ SETTINGS = require('mopsik_mobile/src/config/settings');
 
 let _ = require('lodash');
 
-export default class SplashView extends Component {
+export default class SplashScreen extends Component {
 
   render() {
 
@@ -22,7 +22,7 @@ export default class SplashView extends Component {
         flex: 1, flexDirection: 'column', justifyContent: 'space-around',
         alignItems: 'center', backgroundColor: THEMES.basic.white
       }}>
-        <Image source={require('mopsik_mobile/src/images/logo_clear_all.png')}/>
+        <Image source={SETTINGS.constants.logo}/>
         <Text style={{fontSize: 25}}>
           Mopsy Team 2018
         </Text>
