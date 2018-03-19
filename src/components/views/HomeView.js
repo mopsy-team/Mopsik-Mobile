@@ -62,8 +62,7 @@ export default class HomeView extends Component {
     })
   }
 
-
-  componentWillMount() {
+  getSettings = () => {
     AsyncStorage.getItem('settings').then((response) => {
       if (response) { // settings are already saved in AsyncStorage
         SETTINGS.settings = JSON.parse(response);
@@ -72,9 +71,13 @@ export default class HomeView extends Component {
         this.props.navigation.navigate('Settings', {first: true});
       }
     }).done();
+  }
+
+
+  componentWillMount() {
     if (MOPS.mops.length === 0) { // first opening app, downloading mop data
       this.setState({contents: this.getSplashScreen()})
-      MOPS.downloadMops(() => {this.generateContents()});
+      MOPS.downloadMops(() => {this.getSettings(); this.generateContents()});
     }
     else { // only refresh
       this.generateContents();
