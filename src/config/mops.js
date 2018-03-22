@@ -76,12 +76,12 @@ let processMop = (mop) => {
   let fac = [];
   let fac_short = [];
   for (let code of facilitiesCodes) {
-    if (mop[code]){
+    if (mop.facilities[code]){
       fac.push(code);
     }
   }
   for (let code of facilitiesCodesShort) {
-    if (mop[code]){
+    if (mop.facilites[code]){
       fac_short.push(code);
     }
   }
