@@ -81,7 +81,7 @@ let processMop = (mop) => {
     }
   }
   for (let code of facilitiesCodesShort) {
-    if (mop.facilites[code]){
+    if (mop.facilities[code]){
       fac_short.push(code);
     }
   }
