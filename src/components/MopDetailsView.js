@@ -112,11 +112,11 @@ export default class MopDetailsView extends Component {
               </Text>
               <Text style={{marginTop: 5, marginBottom: 5}}>
                 <Text style={{marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>Operator: </Text>
-                {mop.operator_name}
+                {mop.operator.name}
               </Text>
               <Text style={{marginTop: 5, marginBottom: 5}}>
                 <Text style={{marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>Kontakt: </Text>
-                {mop.operator_email}
+                {mop.operator.email}
               </Text>
               <Text style={{marginTop: 5, marginBottom: 5}}>
                 <Text style={{marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>Pikietaż: </Text>
