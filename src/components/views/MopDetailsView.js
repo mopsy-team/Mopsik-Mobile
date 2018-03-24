@@ -9,13 +9,13 @@ import {
 
 import {Button, Text, Icon, Badge} from 'react-native-elements'
 
-import Header from 'mopsik_mobile/src/components/Header';
-import UsageTable from 'mopsik_mobile/src/components/UsageTable';
+import Header from 'mopsik_mobile/src/components/tools/Header';
+import UsageTable from 'mopsik_mobile/src/components/tools/UsageTable';
 import styles from 'mopsik_mobile/src/config/styles'
 
 
 MOPS = require('mopsik_mobile/src/config/mops');
-FUNCTIONS = require('mopsik_mobile/src/config/functions');
+FAVOURITES = require('mopsik_mobile/src/config/favourites');
 THEMES = require('mopsik_mobile/src/config/themes');
 let _ = require('lodash');
 
@@ -36,7 +36,7 @@ export default class MopDetailsView extends Component {
       return <Button
         title='Usuń z ulubionych'
         onPress={() => {
-          FUNCTIONS.deleteFavourite(this.state.mop.id);
+          FAVOURITES.deleteFavourite(this.state.mop.id);
           inFavs = this.isInFavourites(this.state.mop.id);
           this.setState({button: this.generateButton(inFavs)});
         }}
@@ -88,10 +88,14 @@ export default class MopDetailsView extends Component {
     }).done();
   };
 
+
+  reload = () => {
+    this.setState({reload: true});
+  }
+
   changeWidth = () => {
     this.setState({width: Dimensions.get('window').width})
   }
-
 
   render() {
     let {mop} = this.state;
@@ -99,7 +103,7 @@ export default class MopDetailsView extends Component {
     let {main_vehicle} = settings;
     return (
       <View style={styles.main} onLayout={this.changeWidth}>
-        <Header navigation={this.props.navigation} title={this.state.mop.title} stack/>
+        <Header navigation={this.props.navigation} title={this.state.mop.title} stack reload={this.reload}/>
         <ScrollView>
         <View style={{margin: 10}}>
           <Text h3 style={{textAlign: 'center'}}>{mop.title}</Text>

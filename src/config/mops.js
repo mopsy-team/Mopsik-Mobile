@@ -1,7 +1,7 @@
 let _ = require('lodash');
 import {facilitiesCodes, facilitiesCodesShort} from 'mopsik_mobile/src/config/facilities';
 
-FUNCTIONS = require('mopsik_mobile/src/config/functions');
+FAVOURITES = require('mopsik_mobile/src/config/favourites');
 
 /*
  * simple color scale for usage of parking spots
@@ -81,7 +81,7 @@ let processMop = (mop) => {
     }
   }
   for (let code of facilitiesCodesShort) {
-    if (mop.facilites[code]){
+    if (mop.facilities[code]){
       fac_short.push(code);
     }
   }
@@ -99,21 +99,23 @@ let processMop = (mop) => {
   * saves to variables
  * called in HomeView
  */
-let downloadMops = () => {
-  fetch('http://reach.mimuw.edu.pl:8008/mops').then(response => (response) ? response.json() : {}).then((mops_dict) => {
+downloadMops = (turnOffSplash) => {
+  fetch(SETTINGS.constants.api_mops).then(response => (response) ? response.json() : {}).then((mops_dict) => {
     markers = [];
     for (let key in mops_dict) {
       marker = processMop(mops_dict[key]);
       u = updateMop(marker);
       marker.usage = u.usage;
       marker.color = u.color;
-      mops.push(marker);
+      MOPS.mops.push(marker);
     }
     if (favouriteMOPs.length === 0) {
-      FUNCTIONS.downloadFavourites();
+      FAVOURITES.downloadFavourites();
     }
+    turnOffSplash();
   }).done();
 };
+
 
 /*
  * downloads number of taken spaces for all mops
@@ -123,7 +125,7 @@ let downloadMops = () => {
  * called when refresh is pressed and on rendering views
  */
 let downloadUsages = () => {
-  fetch('http://reach.mimuw.edu.pl:8008/taken').then(response => (response) ? response.json() : {}).then((taken_dict) => {
+  fetch(SETTINGS.constants.api_taken).then(response => (response) ? response.json() : {}).then((taken_dict) => {
     mops.map((marker) => {
       marker.taken = taken_dict[marker.id].taken;
       u = updateMop(marker);
