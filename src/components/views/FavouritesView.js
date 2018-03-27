@@ -76,6 +76,12 @@ export default class FavouritesView extends Component {
 
   render() {
     let {main_vehicle} = SETTINGS.settings;
+    console.log('favs', MOPS.favouriteMOPs);
+    MOPS.favouriteMOPsmapped.map((fav, i) => {
+      console.log(fav.id)
+    });
+//console.log(this.state.favouriteMOPsmapped);
+
     return (
 
       <View ref='favs'>

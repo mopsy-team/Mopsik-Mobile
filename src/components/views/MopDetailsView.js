@@ -76,13 +76,16 @@ export default class MopDetailsView extends Component {
         favourites = JSON.parse(response);
       }
       favourites.push(id);
-      AsyncStorage.setItem('favouriteMOPs', JSON.stringify(favourites));
       let favourites_mapped = [];
+      console.log(MOPS.mops.length)
+      console.log(MOPS.mops[0])
       favourites.map((fav, i) => {
+        //console.log(fav, _.find(MOPS.mops, {id: fav}))
         favourites_mapped.push(_.find(MOPS.mops, {id: fav}));
       });
       MOPS.favouriteMOPs = favourites;
       MOPS.favouriteMOPsmapped = favourites_mapped;
+      AsyncStorage.setItem('favouriteMOPs', JSON.stringify(favourites));
       let inFavs = this.isInFavourites(this.state.mop.id);
       this.setState({button: this.generateButton(inFavs)});
     }).done();
