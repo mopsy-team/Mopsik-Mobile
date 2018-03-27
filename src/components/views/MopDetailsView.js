@@ -77,10 +77,7 @@ export default class MopDetailsView extends Component {
       }
       favourites.push(id);
       let favourites_mapped = [];
-      console.log(MOPS.mops.length)
-      console.log(MOPS.mops[0])
       favourites.map((fav, i) => {
-        //console.log(fav, _.find(MOPS.mops, {id: fav}))
         favourites_mapped.push(_.find(MOPS.mops, {id: fav}));
       });
       MOPS.favouriteMOPs = favourites;
