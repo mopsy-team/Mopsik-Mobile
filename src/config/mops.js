@@ -75,6 +75,7 @@ let updateMop = (marker) => {
 let processMop = (mop) => {
   let fac = [];
   let fac_short = [];
+  let fac_dict = mop.facilities;
   for (let code of facilitiesCodes) {
     if (mop.facilities[code]){
       fac.push(code);
@@ -88,7 +89,8 @@ let processMop = (mop) => {
   return {
     ...mop,
     facilities: fac,
-    facilities_short: fac_short
+    facilities_short: fac_short,
+    facilities_dict: fac_dict
   };
 }
 

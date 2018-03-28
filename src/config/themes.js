@@ -15,4 +15,5 @@ let basic = light;
 
 module.exports = {
   basic: basic,
+  roundedIcons: true
 };
