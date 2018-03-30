@@ -8,6 +8,7 @@ import {
 
 import {Button, Text} from 'react-native-elements'
 
+import LastViewedMops from 'mopsik_mobile/src/components/tools/LastViewedMops';
 import SplashScreen from 'mopsik_mobile/src/components/tools/SplashScreen';
 import Header from 'mopsik_mobile/src/components/tools/Header';
 import styles from 'mopsik_mobile/src/config/styles'
@@ -21,8 +22,10 @@ export default class HomeView extends Component {
 
   getContents = () => {
     return (
-      <View>
+      <View style={styles.main}>
         <Header navigation={this.props.navigation} title='Home' reload={this.reload}/>
+        <View style={styles.main}>
+        <LastViewedMops/>
         <View style={{
           alignItems: 'center',
         }}>
@@ -34,6 +37,7 @@ export default class HomeView extends Component {
         />
         <Text></Text>
         <Text>Logo wygenerowane przy pomocy Logo Maker</Text>
+        </View>
         </View>
       </View>
     )
@@ -87,13 +91,13 @@ export default class HomeView extends Component {
   }
 
   reload = () => {
-    this.setState({reload: true});
+    this.setState({reload: !this.state.reload});
+    console.log('reload', this.state.reload)
   }
 
   render() {
 
     const {navigate} = this.props.navigation;
-
     return (
       <View style={styles.main}>
         {this.state.contents}

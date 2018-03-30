@@ -1,4 +1,9 @@
 let _ = require('lodash');
+
+import {
+  AsyncStorage
+} from 'react-native';
+
 import {facilitiesCodes, facilitiesCodesShort} from 'mopsik_mobile/src/config/facilities';
 
 FAVOURITES = require('mopsik_mobile/src/config/favourites');
@@ -114,7 +119,15 @@ downloadMops = (turnOffSplash) => {
     if (favouriteMOPs.length === 0) {
       FAVOURITES.downloadFavourites();
     }
-    turnOffSplash();
+    AsyncStorage.getItem('lastViewedMops').then((response) => {
+        if(response){
+          MOPS.lastViewedMops = JSON.parse(response);
+        }
+        else{
+          MOPS.lastViewedMops = [];
+        }
+        turnOffSplash();
+    }).done();
   }).done();
 };
 
@@ -142,6 +155,8 @@ let refresh = () => {
   downloadUsages();
 };
 
+let lastViewedMops = [];
+
 
 module.exports = {
   mops: mops,
@@ -150,5 +165,6 @@ module.exports = {
   favouriteMOPs: favouriteMOPs,
   favouriteMOPsmapped: favouriteMOPsmapped,
   savedLocation: savedLocation,
-  lastLocationUpdate: lastLocationUpdate
+  lastLocationUpdate: lastLocationUpdate,
+  lastViewedMops: lastViewedMops
 };

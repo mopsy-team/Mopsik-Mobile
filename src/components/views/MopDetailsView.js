@@ -58,9 +58,19 @@ export default class MopDetailsView extends Component {
     }
   };
 
+  addToLastViewedMops = async (mop) => {
+    if(!MOPS.lastViewedMops.includes(mop)){
+      MOPS.lastViewedMops.unshift(mop);
+      MOPS.lastViewedMops = MOPS.lastViewedMops.slice(0, 3);
+      await AsyncStorage.setItem('lastViewedMops', JSON.stringify(MOPS.lastViewedMops))
+    }
+  };
+
   constructor(props) {
     super(props);
     let {mop} = this.props.navigation.state.params;
+    this.addToLastViewedMops(mop.id);
+    console.log("det",MOPS.lastViewedMops)
     this.state = {
       button: this.generateButton(this.isInFavourites(mop.id)),
       mop: mop,

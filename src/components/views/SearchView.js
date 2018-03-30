@@ -127,7 +127,7 @@ export default class SearchView extends Component {
           flex: 1,
           flexDirection: 'row',
           flexWrap: 'wrap',
-          justifyContent: 'space-around'
+          justifyContent: 'center'
         }}>
         {fac_codes.map((f, i) => {
           return (
