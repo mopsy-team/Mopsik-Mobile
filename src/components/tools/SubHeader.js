@@ -12,16 +12,20 @@ let _ = require('lodash');
 export default class SubHeader extends Component {
 
     render() {
+      let outer = {backgroundColor: THEMES.basic.LightColor, height: 45};
+      let center = {text: this.props.text, style: {color: 'white', fontSize: 16}};
+        if(!this.props.rightComponent){
+          return (
+            <Header
+              centerComponent={center}
+              outerContainerStyles={outer} />
+          )
+        }
         return (
           <Header
-            centerComponent={{text: this.props.text, style: {color: 'white', fontSize: 16}}}
-            rightComponent={{
-              icon: 'clear',
-              color: 'white',
-              onPress: this.props.onPress,
-              underlayColor: THEMES.basic.LightColor
-            }}
-            outerContainerStyles={{backgroundColor: THEMES.basic.LightColor, height: 45}} />
+            centerComponent={center}
+            rightComponent={this.props.rightComponent}
+            outerContainerStyles={outer} />
         )
     }
 }

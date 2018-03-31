@@ -70,7 +70,6 @@ export default class MopDetailsView extends Component {
     super(props);
     let {mop} = this.props.navigation.state.params;
     this.addToLastViewedMops(mop.id);
-    console.log("det",MOPS.lastViewedMops)
     this.state = {
       button: this.generateButton(this.isInFavourites(mop.id)),
       mop: mop,

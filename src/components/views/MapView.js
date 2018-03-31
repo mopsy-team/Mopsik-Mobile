@@ -46,7 +46,6 @@ export default class MapView extends Component {
   }
 
   componentDidMount() {
-    //MOPS.refresh();
     /* location change listener */
     this.watchId = navigator.geolocation.watchPosition(
       (position) => {
@@ -147,7 +146,6 @@ export default class MapView extends Component {
         <Icon
           onPress={() => {
             if(!this.state.followPosition){
-              console.log('follow');
               this.setState({
                 followPosition: true,
                 region: {
@@ -158,7 +156,6 @@ export default class MapView extends Component {
               })
             }
             else{
-              console.log('unfollow');
               this.setState({
                 followPosition: false
               })
@@ -184,7 +181,7 @@ export default class MapView extends Component {
               <ReactNativeMaps_MapView.Marker
                 coordinate={marker.coords}
                 title={marker.title}
-                description={marker.description}
+                description={marker.direction}
                 key={i}>
                 <Image
                   source={SETTINGS.constants.parking_icon_small}

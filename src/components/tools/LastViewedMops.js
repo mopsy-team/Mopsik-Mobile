@@ -38,7 +38,12 @@ export default class LastViewedMops extends Component {
 
     render() {
         let top = (
-              <SubHeader text={'Ostatnio wyświetlane MOP-y'} onPress={() => {this.clearLastViewedMops()}}/>
+              <SubHeader text={'Ostatnio wyświetlane MOP-y'} rightComponent={{
+                icon: 'clear',
+                color: 'white',
+                onPress: this.clearLastViewedMops,
+                underlayColor: THEMES.basic.LightColor
+              }} />
             );
 
         if(MOPS.lastViewedMops.length === 0){
@@ -53,7 +58,7 @@ export default class LastViewedMops extends Component {
         return (
           <View>
           {top}
-          <List containerStyle={{marginBottom: 100}}>
+          <List containerStyle={{marginBottom: 15}}>
             {this.getLast().map((l, i) => (
               <MopListItem mop={l} key={i} navigation={this.props.navigation}/>
             ))}

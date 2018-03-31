@@ -44,7 +44,6 @@ export default class SearchView extends Component {
   }
 
   matchFacilities = (mop, facs) => {
-    console.log(mop.facilities_dict)
     for (f in facs){
       if(facs[f] && !mop.facilities_dict[f]){
         return false;
@@ -92,11 +91,10 @@ export default class SearchView extends Component {
     });
 }
 
-  check = (fac) => {
+  checkFacility = (fac) => {
     var f = this.state.facilities;
     f[fac] = !f[fac];
     var found_filtered = this.filterMops(this.state.found, f);
-    console.log(f);
     this.setState({
       found_filtered: found_filtered,
       found_trimmed: found_filtered.slice(0, ITEMS_PER_PAGE),
@@ -111,7 +109,7 @@ export default class SearchView extends Component {
     var fac_codes = FACILITIES.filterFacilitiesCodes;
     return (
       <View style={styles.main}>
-        <Header navigation={this.props.navigation} title='Wyszukaj' reload={this.reload}/>
+        <Header navigation={this.props.navigation} title='Wyszukaj MOPa' reload={this.reload}/>
         <SearchBar
           round
           lightTheme
@@ -132,7 +130,7 @@ export default class SearchView extends Component {
         {fac_codes.map((f, i) => {
           return (
           <Avatar
-            onPress={() => this.check(f)}
+            onPress={() => this.checkFacility(f)}
             icon={{name: facs[f].icon, color: THEMES.basic.White}}
             raised
             overlayContainerStyle={{backgroundColor: this.state.facilities[f] ? THEMES.basic.DarkColor : THEMES.basic.LightGrey}}

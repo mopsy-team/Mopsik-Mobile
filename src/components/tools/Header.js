@@ -17,7 +17,7 @@ export default class MyHeader extends Component {
 
   openMenu = () => this.props.navigation.navigate('DrawerToggle');
   goBack = () => {
-    DeviceEventEmitter.emit('refresh favourites', {});
+    DeviceEventEmitter.emit('refresh', {});
     this.props.navigation.goBack();
   };
 
