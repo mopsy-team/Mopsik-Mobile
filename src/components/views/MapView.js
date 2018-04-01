@@ -181,9 +181,8 @@ export default class MapView extends Component {
         </View>
         <View style={styles.container_map}>
           <ReactNativeMaps_MapView
-            initialRegion={this.state.region}
             region={this.state.region}
-            onRegionChange={this.onRegionChange.bind(this)}
+            onRegionChangeComplete={this.onRegionChange.bind(this)}
             showsUserLocation={true}
             showsMyLocationButton={false}
             style={{
