@@ -17,13 +17,17 @@ pythagorasEquirectangular = (lat1, lon1, lat2, lon2) => {
 }
 
 export const findNearestMop = (latitude, longitude) => {
- let mindif1 = 99999;
- let closest1 = 0;
+  let mindif1 = 99999;
+  let closest1 = 0;
   let mindif2 = 99999;
   let closest2 = 0;
 
- for (index = 0; index < MOPS.mops.length; ++index) {
-   let mop = MOPS.mops[index]
+  if (MOPS.mops.length < 2){
+    return null
+  }
+
+  for (index = 0; index < MOPS.mops.length; ++index) {
+    let mop = MOPS.mops[index]
     const dif = this.pythagorasEquirectangular(latitude, longitude, mop.coords.latitude, mop.coords.longitude);
     if (dif < mindif2) {
       if (dif < mindif1){

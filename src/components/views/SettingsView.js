@@ -60,7 +60,19 @@ export default class SettingsView extends Component {
   /* OK button gets activated once main vehicle is chosen */
   get_ok_button = () => {
     let dis = (this.state.selectedIndex === -1);
-    let icon = dis ? {name: 'block', color: 'red'} : {name: 'done', color: 'green'};
+    let icon =
+    dis ?
+      <Icon
+        name='block'
+        size={15}
+        color='red'
+      />
+    :
+      <Icon
+        name='done'
+        size={15}
+        color='green'
+      />;
     return (<Button
       onPress={() => {
         this.props.navigation.state.params.first = false;
@@ -69,6 +81,7 @@ export default class SettingsView extends Component {
       title="OK"
       disabled={dis}
       icon={icon}
+      buttonStyle={{backgroundColor: THEMES.basic.LightColor, width: 140}}
     />);
   };
 
@@ -122,6 +135,8 @@ export default class SettingsView extends Component {
         selectedIndex={selectedIndex}
         buttons={this.buttons}
         containerStyle={{height: 70}}
+        selectedButtonStyle={{backgroundColor: THEMES.basic.White}}
+        buttonStyle={{backgroundColor: THEMES.basic.DisabledGrey}}
         />
       <Text></Text>
       <Divider style={{ backgroundColor: THEMES.basic.LightGrey, height: 2 }} />

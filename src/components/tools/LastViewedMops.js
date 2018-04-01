@@ -45,24 +45,23 @@ export default class LastViewedMops extends Component {
                 underlayColor: THEMES.basic.LightColor
               }} />
             );
-
-        if(MOPS.lastViewedMops.length === 0){
-          return (
-            <View>
-            {top}
-            <Text style={{fontSize: 18, textAlign: 'center'}}>Brak danych</Text>
-            </View>
-          )
+        let contents = (
+          <Text style={{fontSize: 18, textAlign: 'center'}}>Brak danych</Text>
+        );
+        if(MOPS.lastViewedMops.length > 0){
+          contents = (
+            <List containerStyle={{marginBottom: 15}}>
+              {this.getLast().map((l, i) => (
+                <MopListItem mop={l} key={i} navigation={this.props.navigation}/>
+              ))}
+            </List>
+          );
         }
 
         return (
           <View>
           {top}
-          <List containerStyle={{marginBottom: 15}}>
-            {this.getLast().map((l, i) => (
-              <MopListItem mop={l} key={i} navigation={this.props.navigation}/>
-            ))}
-          </List>
+          {contents}
           </View>
         )
     }

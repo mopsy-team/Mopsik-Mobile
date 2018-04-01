@@ -11,7 +11,7 @@ import {
 import {Button, Text, Divider} from 'react-native-elements'
 
 import LastViewedMops from 'mopsik_mobile/src/components/tools/LastViewedMops';
-import NearestMop from 'mopsik_mobile/src/components/tools/NearestMop';
+import NearestMops from 'mopsik_mobile/src/components/tools/NearestMops';
 import SplashScreen from 'mopsik_mobile/src/components/tools/SplashScreen';
 import Header from 'mopsik_mobile/src/components/tools/Header';
 import styles from 'mopsik_mobile/src/config/styles'
@@ -144,21 +144,21 @@ export default class HomeView extends Component {
         <Header navigation={this.props.navigation} title='Home' reload={this.reload}/>
         <View style={styles.main}>
         <ScrollView>
-        <LastViewedMops navigation={this.props.navigation}/>
+        <NearestMops nearestMops={nearestMops} navigation={this.props.navigation}/>
         <Text></Text>
-        <NearestMop nearestMops={nearestMops} navigation={this.props.navigation}/>
+        <LastViewedMops navigation={this.props.navigation}/>
+        <Divider style={{ backgroundColor: THEMES.basic.DarkGrey, height: 0.8 }} />
         <View style={{
           alignItems: 'center',
         }}>
         <Text></Text>
-        <Divider style={{ backgroundColor: THEMES.basic.DarkGrey, height: 0.8 }} />
         <Text></Text>
         <Button
           onPress={() => AsyncStorage.clear()}
           title="Reset AsyncStorage - DEBUG ONLY"
         />
         <Text></Text>
-        <Text>Logo wygenerowane przy pomocy Logo Maker</Text>
+        <Text style={{marginBottom: 20}}>Logo wygenerowane przy pomocy Logo Maker</Text>
         </View>
         </ScrollView>
         </View>

@@ -5,13 +5,13 @@ import {
 
 export default styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f5fcff',
+    backgroundColor: THEMES.basic.BackgroundGrey,
     alignItems: 'center',
   },
   main: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: 'white'
+    backgroundColor: THEMES.basic.White
   },
   map: {
     position: 'absolute',

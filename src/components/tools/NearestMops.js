@@ -6,14 +6,15 @@ import {
   ActivityIndicator
 } from 'react-native';
 
-import {List, Button, Text, Card} from 'react-native-elements'
+import {List, Button, Text, Card, Badge, Icon} from 'react-native-elements'
 
+import UsageCircle from 'mopsik_mobile/src/components/tools/UsageCircle';
 import SubHeader from 'mopsik_mobile/src/components/tools/SubHeader';
 import MopListItem from 'mopsik_mobile/src/components/tools/MopListItem';
 
 let _ = require('lodash');
 
-export default class LastViewedMops extends Component {
+export default class NearestMops extends Component {
     constructor(props){
       super();
       this.state = {
@@ -31,22 +32,42 @@ export default class LastViewedMops extends Component {
       return (
         <Card
           title={mop.title}
-          key={i}>
-          <Text style={{marginBottom: 10}}>
-            Kierunek: {mop.direction}
+          key={i}
+          titleStyle={{fontSize: 20}}
+          titleNumberOfLines={1}>
+          <View style={{
+            alignItems: 'center',
+          }}>
+          <View>
+          <Text style={{marginBottom: 10, fontSize: 18}}>
+            <Text style={{marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>Kierunek: </Text>
+            {mop.direction}
           </Text>
-          <Text style={{marginBottom: 10}}>
-            {distance} km
+          <Text style={{marginBottom: 10, fontSize: 18}}>
+            <Text style={{marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>Droga: </Text>
+            {mop.road_number}
           </Text>
+          </View>
+          <Badge containerStyle={{backgroundColor: THEMES.basic.LightColor}}>
+            <Text style={{color: 'black', fontSize: 18}}>{distance} km</Text>
+          </Badge>
           <Button
-            icon={{name: 'info-outline'}}
+            icon={
+              <Icon
+                name='info-outline'
+                size={15}
+                color='white'
+              />
+            }
             backgroundColor={THEMES.basic.DarkColor}
-            fontFamily='Lato'
             buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
             title='Szczegóły'
             onPress={() => {
               this.props.navigation.navigate('MopDetails', {mop: mop})
             }} />
+            <UsageCircle mop={mop} vehicle={SETTINGS.settings.main_vehicle}/>
+            {FACILITIES.getFacilitiesIconsShort(mop.facilities_short)}
+            </View>
         </Card>
       )
     }
