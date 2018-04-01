@@ -108,7 +108,7 @@ export default class SearchView extends Component {
     var facs = FACILITIES.facilities;
     var fac_codes = FACILITIES.filterFacilitiesCodes;
     return (
-      <View style={styles.main}>
+      <View>
         <Header navigation={this.props.navigation} title='Wyszukaj MOPa' reload={this.reload}/>
         <SearchBar
           round
@@ -125,7 +125,8 @@ export default class SearchView extends Component {
           flex: 1,
           flexDirection: 'row',
           flexWrap: 'wrap',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          backgroundColor: THEMES.basic.White
         }}>
         {fac_codes.map((f, i) => {
           return (
@@ -150,6 +151,7 @@ export default class SearchView extends Component {
           keyExtractor={item => item.id}
           renderItem={({ item, index }) => (<MopListItem mop={item} key={index} navigation={this.props.navigation}/>)}
           onEndReached={this.loadMore}
+          style={{backgroundColor: THEMES.basic.White}}
         />
       </View>
         </ScrollView>

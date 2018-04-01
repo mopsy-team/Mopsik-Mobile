@@ -3,10 +3,11 @@ import {
   View,
   Image,
   AsyncStorage,
-  ActivityIndicator
+  ActivityIndicator,
+  Dimensions
 } from 'react-native';
 
-import {List, Button, Text, Card, Badge, Icon} from 'react-native-elements'
+import {List, Button, Text, Card, Badge, Icon, Divider} from 'react-native-elements'
 
 import UsageCircle from 'mopsik_mobile/src/components/tools/UsageCircle';
 import SubHeader from 'mopsik_mobile/src/components/tools/SubHeader';
@@ -18,7 +19,9 @@ export default class NearestMops extends Component {
     constructor(props){
       super();
       this.state = {
-        nearestMops: props.nearestMops
+        nearestMops: props.nearestMops,
+        width: Dimensions.get('window').width,
+        distanceWidth: 0
       }
     }
 
@@ -28,46 +31,74 @@ export default class NearestMops extends Component {
       })
     }
 
+    changeWidth = () => {
+      this.setState({width: Dimensions.get('window').width})
+    }
+
+    changeDistanceWidth = (event) => {
+      this.setState({distanceWidth: event.nativeEvent.layout.width})
+    }
+
+
     getCard = (mop, distance, i) =>{
       return (
-        <Card
-          title={mop.title}
-          key={i}
-          titleStyle={{fontSize: 20}}
-          titleNumberOfLines={1}>
+        <Card key={i}>
           <View style={{
-            alignItems: 'center',
-          }}>
-          <View>
-          <Text style={{marginBottom: 10, fontSize: 18}}>
-            <Text style={{marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>Kierunek: </Text>
-            {mop.direction}
-          </Text>
-          <Text style={{marginBottom: 10, fontSize: 18}}>
-            <Text style={{marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>Droga: </Text>
-            {mop.road_number}
-          </Text>
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}>
+            <Text numberOfLines={1} style={{
+              fontSize: 20,
+              fontWeight: 'bold',
+              width: (this.state.width - this.state.distanceWidth - 70)
+            }}>{mop.title}</Text>
+            <Badge containerStyle={{backgroundColor: THEMES.basic.LightColor}} onLayout={this.changeDistanceWidth}>
+              <Text style={{color: 'black', fontSize: 18}}>{distance} km</Text>
+            </Badge>
           </View>
-          <Badge containerStyle={{backgroundColor: THEMES.basic.LightColor}}>
-            <Text style={{color: 'black', fontSize: 18}}>{distance} km</Text>
-          </Badge>
-          <Button
-            icon={
-              <Icon
-                name='info-outline'
-                size={15}
-                color='white'
-              />
-            }
-            backgroundColor={THEMES.basic.DarkColor}
-            buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-            title='Szczegóły'
-            onPress={() => {
-              this.props.navigation.navigate('MopDetails', {mop: mop})
-            }} />
-            <UsageCircle mop={mop} vehicle={SETTINGS.settings.main_vehicle}/>
-            {FACILITIES.getFacilitiesIconsShort(mop.facilities_short)}
+          <Divider style={{backgroundColor: THEMES.basic.LightGrey, marginTop: 10, marginBottom: 10}}/>
+          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View style={{
+              width: (this.state.width - 70 - 155)
+            }}>
+              <View>
+                <Text style={{marginBottom: 10, fontSize: 18}}>
+                  <Text style={{marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>Kierunek: </Text>
+                  {mop.direction}
+                </Text>
+                <Text style={{marginBottom: 10, fontSize: 18}}>
+                  <Text style={{marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>Droga: </Text>
+                  {mop.road_number}
+                </Text>
+              </View>
+              <Button
+                icon={
+                  <Icon
+                    name='info-outline'
+                    size={15}
+                    color='white'
+                  />
+                }
+                buttonStyle={{backgroundColor: THEMES.basic.DarkColor, width: 140, marginBottom: 5}}
+                title='Szczegóły'
+                onPress={() => {
+                  this.props.navigation.navigate('MopDetails', {mop: mop})
+                }} />
             </View>
+            <View style={{
+              alignItems: 'center',
+              width: 155,
+              flex: 1,
+              flexDirection: 'column',
+              justifyContent: 'space-around'
+            }}>
+              <UsageCircle mop={mop} vehicle={SETTINGS.settings.main_vehicle}/>
+              <View style={{height: 40, marginTop: 5}}>
+              {FACILITIES.getFacilitiesIconsShort(mop.facilities_short)}
+              </View>
+            </View>
+          </View>
         </Card>
       )
     }
@@ -95,7 +126,7 @@ export default class NearestMops extends Component {
         console.log(this.state.nearestMop)
 
         return (
-          <View>
+          <View onLayout={this.changeWidth} style={{marginBottom: 10}}>
           {top}
           {nearestMops.map((n, i) => (
             this.getCard(n.nearest, n.distance, i)

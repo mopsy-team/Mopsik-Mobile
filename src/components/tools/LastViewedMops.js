@@ -31,7 +31,7 @@ export default class LastViewedMops extends Component {
 
     clearLastViewedMops = async () => {
       MOPS.lastViewedMops = [];
-      AsyncStorage.setItem('lastViewedMops', JSON.stringify([])).then(() => {
+      AsyncStorage.setItem('mopsik_lastViewedMops', JSON.stringify([])).then(() => {
         this.setState({reload: !this.state.reload});
       }).done();
     }
@@ -46,7 +46,9 @@ export default class LastViewedMops extends Component {
               }} />
             );
         let contents = (
-          <Text style={{fontSize: 18, textAlign: 'center'}}>Brak danych</Text>
+          <View style={{backgroundColor: THEMES.basic.White}}>
+          <Text style={{fontSize: 18, textAlign: 'center', margin: 10}}>Brak danych</Text>
+          </View>
         );
         if(MOPS.lastViewedMops.length > 0){
           contents = (

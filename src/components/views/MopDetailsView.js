@@ -50,7 +50,8 @@ export default class MopDetailsView extends Component {
         }}
         buttonStyle={{
           width: 190,
-          backgroundColor: THEMES.basic.Red
+          backgroundColor: THEMES.basic.Red,
+          marginBottom: 5
         }}
       />
     }
@@ -68,7 +69,8 @@ export default class MopDetailsView extends Component {
         }}
         buttonStyle={{
           width: 190,
-          backgroundColor: THEMES.basic.LightPink
+          backgroundColor: THEMES.basic.LightPink,
+          marginBottom: 5
         }}
       />
     }
@@ -78,7 +80,7 @@ export default class MopDetailsView extends Component {
     if(!MOPS.lastViewedMops.includes(mop)){
       MOPS.lastViewedMops.unshift(mop);
       MOPS.lastViewedMops = MOPS.lastViewedMops.slice(0, 3);
-      await AsyncStorage.setItem('lastViewedMops', JSON.stringify(MOPS.lastViewedMops))
+      await AsyncStorage.setItem('mopsik_lastViewedMops', JSON.stringify(MOPS.lastViewedMops))
     }
   };
 
@@ -95,7 +97,7 @@ export default class MopDetailsView extends Component {
 
 //TODO - optimise
   addToFavourites = (id) => {
-    AsyncStorage.getItem('favouriteMOPs').then((response) => {
+    AsyncStorage.getItem('mopsik_favouriteMOPs').then((response) => {
       let favourites = [];
       if (response) {
         favourites = JSON.parse(response);
@@ -107,7 +109,7 @@ export default class MopDetailsView extends Component {
       });
       MOPS.favouriteMOPs = favourites;
       MOPS.favouriteMOPsmapped = favourites_mapped;
-      AsyncStorage.setItem('favouriteMOPs', JSON.stringify(favourites));
+      AsyncStorage.setItem('mopsik_favouriteMOPs', JSON.stringify(favourites));
       let inFavs = this.isInFavourites(this.state.mop.id);
       this.setState({button: this.generateButton(inFavs)});
     }).done();
@@ -127,7 +129,7 @@ export default class MopDetailsView extends Component {
     let {settings} = SETTINGS;
     let {main_vehicle} = settings;
     return (
-      <View style={styles.main} onLayout={this.changeWidth}>
+      <View style={styles.mainWhite} onLayout={this.changeWidth}>
         <Header navigation={this.props.navigation} title={this.state.mop.title} stack reload={this.reload}/>
         <ScrollView>
         <View style={{margin: 10}}>

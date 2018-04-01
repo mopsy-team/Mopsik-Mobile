@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
 import { DrawerNavigator, StackNavigator, DrawerItems, SafeAreaView } from 'react-navigation';
-import { List, ListItem, Icon } from 'react-native-elements'
+
+import {Icon} from 'react-native-elements'
 
 import DrawerContent from 'mopsik_mobile/src/components/tools/DrawerContent';
 

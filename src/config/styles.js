@@ -5,10 +5,15 @@ import {
 
 export default styles = StyleSheet.create({
   container: {
-    backgroundColor: THEMES.basic.BackgroundGrey,
+    backgroundColor: THEMES.basic.LightGrey,
     alignItems: 'center',
   },
   main: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: 'transparent'
+  },
+  mainWhite: {
     flex: 1,
     flexDirection: 'column',
     backgroundColor: THEMES.basic.White

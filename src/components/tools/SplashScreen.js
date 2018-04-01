@@ -20,7 +20,7 @@ export default class SplashScreen extends Component {
     return (
       <View style={{
         flex: 1, flexDirection: 'column', justifyContent: 'space-around',
-        alignItems: 'center', backgroundColor: THEMES.basic.white
+        alignItems: 'center', backgroundColor: THEMES.basic.White
       }}>
         <Image source={SETTINGS.constants.logo}/>
         <Text style={{fontSize: 25}}>

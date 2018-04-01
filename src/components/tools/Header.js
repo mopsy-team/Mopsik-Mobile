@@ -36,6 +36,7 @@ export default class MyHeader extends Component {
       /* while configuring the app header displays only title, no buttons */
       return (
         <Header
+          placement="left"
           centerComponent={{text: 'Konfiguracja aplikacji', style: {color: this.txt, fontSize: 16}}}
           outerContainerStyles={{backgroundColor: this.bkg}}
         />
@@ -43,6 +44,7 @@ export default class MyHeader extends Component {
     }
     return (
       <Header
+        placement="left"
         leftComponent={this.leftButton()}
         centerComponent={{text: this.props.title, style: {color: this.txt, fontSize: 16}}}
         rightComponent={{

@@ -119,7 +119,7 @@ downloadMops = (turnOffSplash) => {
     if (favouriteMOPs.length === 0) {
       FAVOURITES.downloadFavourites();
     }
-    AsyncStorage.getItem('lastViewedMops').then((response) => {
+    AsyncStorage.getItem('mopsik_lastViewedMops').then((response) => {
         if(response){
           MOPS.lastViewedMops = JSON.parse(response);
         }

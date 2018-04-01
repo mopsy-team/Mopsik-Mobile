@@ -107,7 +107,7 @@ export default class HomeView extends Component {
   }
 
   getSettings = () => {
-    AsyncStorage.getItem('settings').then((response) => {
+    AsyncStorage.getItem('mopsik_settings').then((response) => {
       if (response) { // settings are already saved in AsyncStorage
         SETTINGS.settings = JSON.parse(response);
       }
@@ -145,20 +145,12 @@ export default class HomeView extends Component {
         <View style={styles.main}>
         <ScrollView>
         <NearestMops nearestMops={nearestMops} navigation={this.props.navigation}/>
-        <Text></Text>
         <LastViewedMops navigation={this.props.navigation}/>
-        <Divider style={{ backgroundColor: THEMES.basic.DarkGrey, height: 0.8 }} />
+        <Divider style={{ backgroundColor: THEMES.basic.LightGrey, height: 0.8 }} />
         <View style={{
           alignItems: 'center',
         }}>
-        <Text></Text>
-        <Text></Text>
-        <Button
-          onPress={() => AsyncStorage.clear()}
-          title="Reset AsyncStorage - DEBUG ONLY"
-        />
-        <Text></Text>
-        <Text style={{marginBottom: 20}}>Logo wygenerowane przy pomocy Logo Maker</Text>
+        <Text style={{marginBottom: 15, marginTop: 5}}>Logo wygenerowane przy pomocy Logo Maker</Text>
         </View>
         </ScrollView>
         </View>
