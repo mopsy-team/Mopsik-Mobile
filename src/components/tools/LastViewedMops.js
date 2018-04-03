@@ -2,10 +2,11 @@ import React, {Component} from 'react'
 import {
   View,
   Image,
-  AsyncStorage
+  AsyncStorage,
+  FlatList
 } from 'react-native';
 
-import {List, Button, Text, Header} from 'react-native-elements'
+import {Button, Text, Header} from 'react-native-elements'
 
 import SubHeader from 'mopsik_mobile/src/components/tools/SubHeader';
 import MopListItem from 'mopsik_mobile/src/components/tools/MopListItem';
@@ -52,11 +53,12 @@ export default class LastViewedMops extends Component {
         );
         if(MOPS.lastViewedMops.length > 0){
           contents = (
-            <List containerStyle={{marginBottom: 15}}>
-              {this.getLast().map((l, i) => (
-                <MopListItem mop={l} key={i} navigation={this.props.navigation}/>
-              ))}
-            </List>
+            <FlatList
+              data={this.getLast()}
+              keyExtractor={item => item.id}
+              renderItem={({ item, index }) => (<MopListItem mop={item} key={index} navigation={this.props.navigation}/>)}
+              style={{backgroundColor: THEMES.basic.White}}
+            />
           );
         }
 

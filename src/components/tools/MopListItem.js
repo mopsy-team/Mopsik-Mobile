@@ -15,7 +15,6 @@ export default class MopListItem extends Component {
 
         return (
           <ListItem
-              roundAvatar
               avatar={
                 <View style={{width: 40, alignItems: 'center'}}>
                 <Text

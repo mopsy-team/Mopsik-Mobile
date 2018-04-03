@@ -4,10 +4,10 @@ import {
   Dimensions,
   Image,
   DeviceEventEmitter,
-  ScrollView
+  ScrollView,
+  FlatList
 } from 'react-native';
 
-import {List, ListItem} from 'react-native-elements'
 import Swipeout from 'react-native-swipeout';
 
 import MopListItem from 'mopsik_mobile/src/components/tools/MopListItem';
@@ -74,16 +74,18 @@ export default class FavouritesView extends Component {
       <View ref='favs'>
         <Header navigation={this.props.navigation} title='Ulubione MOPy' reload={this.reload}/>
         <ScrollView>
-        <List containerStyle={{marginBottom: 100}}>
-          {this.state.favouriteMOPsmapped.map((fav, i) => (
-            <Swipeout right={this.swipeBtns(fav.id)}
-                      autoClose
-                      backgroundColor='transparent'
-                      key={i}>
-              <MopListItem mop={fav} key={i} navigation={this.props.navigation}/>
-            </Swipeout>
-          ))}
-        </List>
+        <FlatList
+          data={this.state.favouriteMOPsmapped}
+          keyExtractor={item => item.id}
+          renderItem={({ item, index }) => (
+            <Swipeout right={this.swipeBtns(item.id)}
+                    autoClose
+                    backgroundColor='transparent'
+                    key={index}>
+            <MopListItem mop={item} navigation={this.props.navigation}/>
+          </Swipeout>)}
+          style={{backgroundColor: THEMES.basic.White, marginBottom: 100}}
+        />
         </ScrollView>
       </View>
     );
