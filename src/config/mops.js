@@ -1,4 +1,9 @@
 let _ = require('lodash');
+
+import {
+  AsyncStorage
+} from 'react-native';
+
 import {facilitiesCodes, facilitiesCodesShort} from 'mopsik_mobile/src/config/facilities';
 
 FAVOURITES = require('mopsik_mobile/src/config/favourites');
@@ -75,6 +80,7 @@ let updateMop = (marker) => {
 let processMop = (mop) => {
   let fac = [];
   let fac_short = [];
+  let fac_dict = mop.facilities;
   for (let code of facilitiesCodes) {
     if (mop.facilities[code]){
       fac.push(code);
@@ -88,7 +94,8 @@ let processMop = (mop) => {
   return {
     ...mop,
     facilities: fac,
-    facilities_short: fac_short
+    facilities_short: fac_short,
+    facilities_dict: fac_dict
   };
 }
 
@@ -112,7 +119,15 @@ downloadMops = (turnOffSplash) => {
     if (favouriteMOPs.length === 0) {
       FAVOURITES.downloadFavourites();
     }
-    turnOffSplash();
+    AsyncStorage.getItem('mopsik_lastViewedMops').then((response) => {
+        if(response){
+          MOPS.lastViewedMops = JSON.parse(response);
+        }
+        else{
+          MOPS.lastViewedMops = [];
+        }
+        turnOffSplash();
+    }).done();
   }).done();
 };
 
@@ -140,6 +155,8 @@ let refresh = () => {
   downloadUsages();
 };
 
+let lastViewedMops = [];
+
 
 module.exports = {
   mops: mops,
@@ -148,5 +165,6 @@ module.exports = {
   favouriteMOPs: favouriteMOPs,
   favouriteMOPsmapped: favouriteMOPsmapped,
   savedLocation: savedLocation,
-  lastLocationUpdate: lastLocationUpdate
+  lastLocationUpdate: lastLocationUpdate,
+  lastViewedMops: lastViewedMops
 };
