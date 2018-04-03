@@ -1,8 +1,6 @@
 let _ = require('lodash');
 
-import {
-  AsyncStorage
-} from 'react-native';
+import {AsyncStorage} from 'react-native';
 
 import {facilitiesCodes, facilitiesCodesShort} from 'mopsik_mobile/src/config/facilities';
 
@@ -82,12 +80,12 @@ let processMop = (mop) => {
   let fac_short = [];
   let fac_dict = mop.facilities;
   for (let code of facilitiesCodes) {
-    if (mop.facilities[code]){
+    if (mop.facilities[code]) {
       fac.push(code);
     }
   }
   for (let code of facilitiesCodesShort) {
-    if (mop.facilities[code]){
+    if (mop.facilities[code]) {
       fac_short.push(code);
     }
   }
@@ -97,7 +95,7 @@ let processMop = (mop) => {
     facilities_short: fac_short,
     facilities_dict: fac_dict
   };
-}
+};
 
 /*
  * downloads all parameters for all mops
@@ -106,7 +104,7 @@ let processMop = (mop) => {
   * saves to variables
  * called in HomeView
  */
-downloadMops = (turnOffSplash) => {
+let downloadMops = (turnOffSplash) => {
   fetch(SETTINGS.constants.api_mops).then(response => (response) ? response.json() : {}).then((mops_dict) => {
     markers = [];
     for (let key in mops_dict) {
@@ -120,13 +118,13 @@ downloadMops = (turnOffSplash) => {
       FAVOURITES.downloadFavourites();
     }
     AsyncStorage.getItem('mopsik_lastViewedMops').then((response) => {
-        if(response){
-          MOPS.lastViewedMops = JSON.parse(response);
-        }
-        else{
-          MOPS.lastViewedMops = [];
-        }
-        turnOffSplash();
+      if (response) {
+        MOPS.lastViewedMops = JSON.parse(response);
+      }
+      else {
+        MOPS.lastViewedMops = [];
+      }
+      turnOffSplash();
     }).done();
   }).done();
 };

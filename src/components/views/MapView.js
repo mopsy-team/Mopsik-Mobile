@@ -1,12 +1,8 @@
 import React, {Component} from 'react';
-import {
-  View,
-  Image,
-  Dimensions
-} from 'react-native';
+import {Dimensions, Image, View} from 'react-native';
 
 import ReactNativeMaps_MapView from 'react-native-maps';
-import {Text, Icon, Badge} from 'react-native-elements'
+import {Badge, Icon, Text} from 'react-native-elements'
 
 import Header from 'mopsik_mobile/src/components/tools/Header';
 import styles from 'mopsik_mobile/src/config/styles'
@@ -62,16 +58,16 @@ export default class MapView extends Component {
         };
         /* update region at most every 2 seconds */
         /* updating state rerenders view with new location */
-        var t = new Date().getTime();
-        if((t - MOPS.lastLocationUpdate) >= 2000){
-          if(this.state.followPosition){
+        let t = new Date().getTime();
+        if ((t - MOPS.lastLocationUpdate) >= 2000) {
+          if (this.state.followPosition) {
             this.setState({
               region: r
             });
           }
           MOPS.savedLocation = r;
           MOPS.lastLocationUpdate = t;
-      }
+        }
       },
       (error) => this.setState({error: error.message}),
       {enableHighAccuracy: true, timeout: 20000, distanceFilter: 10},
@@ -107,32 +103,32 @@ export default class MapView extends Component {
   getCallout = (marker, main_vehicle) => {
     return (
       <ReactNativeMaps_MapView.Callout onPress={() => {
-      this.props.navigation.navigate('MopDetails', {mop: marker})
-    }}>
-      <View
-        style={{
-          backgroundColor: THEMES.basic.White,
-          height: 150,
-          width: 150,
-          flex: 1
-        }}
-      >
-        <Text h4 numberOfLines={2}>{marker.title}</Text>
-        <Text numberOfLines={1}>Kierunek: {marker.direction}</Text>
-        {FACILITIES.getFacilitiesIconsShort(marker.facilities_short)}
-        <Text></Text>
-        <Text></Text>
-        <View style={{flex: 1, flexDirection: 'row'}}>
-          <Text>Zapełnienie:  </Text>
-          <Badge
-            value={marker.usage[main_vehicle] + '%'}
-            textStyle={{ color: marker.color[main_vehicle].text }}
-            containerStyle={{ backgroundColor: marker.color[main_vehicle].background}}
-          />
+        this.props.navigation.navigate('MopDetails', {mop: marker})
+      }}>
+        <View
+          style={{
+            backgroundColor: THEMES.basic.White,
+            height: 150,
+            width: 150,
+            flex: 1
+          }}
+        >
+          <Text h4 numberOfLines={2}>{marker.title}</Text>
+          <Text numberOfLines={1}>Kierunek: {marker.direction}</Text>
+          {FACILITIES.getFacilitiesIconsShort(marker.facilities_short)}
+          <Text></Text>
+          <Text></Text>
+          <View style={{flex: 1, flexDirection: 'row'}}>
+            <Text>Zapełnienie: </Text>
+            <Badge
+              value={marker.usage[main_vehicle] + '%'}
+              textStyle={{color: marker.color[main_vehicle].text}}
+              containerStyle={{backgroundColor: marker.color[main_vehicle].background}}
+            />
+          </View>
         </View>
-      </View>
-    </ReactNativeMaps_MapView.Callout>
-  )
+      </ReactNativeMaps_MapView.Callout>
+    )
   }
 
   reload = () => {
@@ -154,30 +150,31 @@ export default class MapView extends Component {
       <View style={styles.main} onLayout={this.changeMeasures}>
         <Header navigation={this.props.navigation} title='Mapa' reload={this.reload}/>
         <View style={{zIndex: 10}}>
-        <Icon
-          onPress={() => {
-            if(!this.state.followPosition){
-              this.setState({
-                followPosition: true,
-                region: {
-                  ...this.state.region,
-                  longitude: MOPS.savedLocation.longitude,
-                  latitude: MOPS.savedLocation.latitude
-                }
-              })
-            }
-            else{
-              this.setState({
-                followPosition: false
-              })
-            }
-          ;}}
-          name='my-location'
-          raised
-          reverse={this.state.followPosition}
-          color={THEMES.basic.LightColor}
-          size={30}
-        />
+          <Icon
+            onPress={() => {
+              if (!this.state.followPosition) {
+                this.setState({
+                  followPosition: true,
+                  region: {
+                    ...this.state.region,
+                    longitude: MOPS.savedLocation.longitude,
+                    latitude: MOPS.savedLocation.latitude
+                  }
+                })
+              }
+              else {
+                this.setState({
+                  followPosition: false
+                })
+              }
+              ;
+            }}
+            name='my-location'
+            raised
+            reverse={this.state.followPosition}
+            color={THEMES.basic.LightColor}
+            size={30}
+          />
         </View>
         <View style={styles.container_map}>
           <ReactNativeMaps_MapView

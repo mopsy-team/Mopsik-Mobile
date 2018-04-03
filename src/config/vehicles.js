@@ -12,9 +12,9 @@ export const VEHICLES = {
     name: 'Autobus',
     icon: 'directions-bus'
   }
-}
+};
 
 /* order of vehicles types */
 export const vehiclesCodes = [
   'car', 'truck', 'bus'
-]
+];
