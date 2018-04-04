@@ -12,19 +12,6 @@ let _ = require('lodash');
 const ITEMS_PER_PAGE = 25;
 
 export default class SearchView extends Component {
-  constructor() {
-    super();
-    this.state = {
-      searchPhrase: "",
-      found: MOPS.mops,
-      found_filtered: MOPS.mops,
-      reload: false,
-      found_trimmed: MOPS.mops.slice(0, ITEMS_PER_PAGE),
-      page: 1,
-      facilities: this.getInitialChecks()
-    }
-  }
-
   getInitialChecks = () => {
     let facs = {};
     FACILITIES.filterFacilitiesCodes.map((f, i) => {
@@ -32,13 +19,11 @@ export default class SearchView extends Component {
     });
     return facs;
   };
-
   findMops = (txt, param) => {
     return MOPS.mops.filter((mop) => {
       return mop[param].toLowerCase().match(txt)
     })
   };
-
   matchFacilities = (mop, facs) => {
     for (f in facs) {
       if (facs[f] && !mop.facilities_dict[f]) {
@@ -47,13 +32,11 @@ export default class SearchView extends Component {
     }
     return true;
   };
-
   filterMops = (mops, facs) => {
     return mops.filter((mop) => {
       return this.matchFacilities(mop, facs)
     })
   };
-
   changeSearchPhrase = (t) => {
     this.setState({searchPhrase: t});
     let txt = (t && t !== "") ? t.toLowerCase() : "";
@@ -71,11 +54,9 @@ export default class SearchView extends Component {
       page: 1
     });
   };
-
   reload = () => {
     this.setState({reload: true});
   };
-
   loadMore = () => {
     const {page, found_trimmed} = this.state;
     const start = page * ITEMS_PER_PAGE;
@@ -87,7 +68,6 @@ export default class SearchView extends Component {
       page: page + 1
     });
   };
-
   checkFacility = (fac) => {
     let f = this.state.facilities;
     f[fac] = !f[fac];
@@ -100,6 +80,18 @@ export default class SearchView extends Component {
     });
   };
 
+  constructor() {
+    super();
+    this.state = {
+      searchPhrase: "",
+      found: MOPS.mops,
+      found_filtered: MOPS.mops,
+      reload: false,
+      found_trimmed: MOPS.mops.slice(0, ITEMS_PER_PAGE),
+      page: 1,
+      facilities: this.getInitialChecks()
+    }
+  }
 
   render() {
     let facs = FACILITIES.facilities;
