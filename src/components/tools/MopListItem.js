@@ -23,12 +23,16 @@ export default class MopListItem extends Component {
                 </Text>
                 </View>
               }
-              title={mop.title}
+              chevron
+              topDivider
+              bottomDivider
+              title={mop.title.replace(/  +/g, ' ')}
+              titleProps={{numberOfLines: 1}}
               subtitle={'Kierunek: ' + mop.direction}
               badge={{
                 value: mop.usage[main_vehicle] + "%",
                 textStyle: {color: mop.color[main_vehicle].text, fontSize: 15},
-                containerStyle: {marginTop: 10, backgroundColor: mop.color[main_vehicle].background, width:65}
+                containerStyle: {backgroundColor: mop.color[main_vehicle].background, width:65}
               }}
               onPress={() => {
                 this.props.navigation.navigate('MopDetails', {mop: mop})

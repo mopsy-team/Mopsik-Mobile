@@ -50,9 +50,11 @@ export default class HomeView extends Component {
           ...MOPS.savedLocation,
           ...r
         };;
+        //let nearest = findNearestMop(r.latitude, r.longitude);
         this.state = {
           ...this.state,
           region: r,
+          //nearestMops: nearest,
         };
       },
       (error) => {},

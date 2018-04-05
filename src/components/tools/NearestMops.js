@@ -52,7 +52,7 @@ export default class NearestMops extends Component {
               fontSize: 20,
               fontWeight: 'bold',
               width: (this.state.width - this.state.distanceWidth - 70)
-            }}>{mop.title}</Text>
+            }}>{mop.title.replace(/  +/g, ' ')}</Text>
             <Badge containerStyle={{backgroundColor: THEMES.basic.LightColor}} onLayout={this.changeDistanceWidth}>
               <Text style={{color: 'black', fontSize: 18}}>{distance} km</Text>
             </Badge>
