@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {
   View,
-  Image
+  Image,
+  Dimensions
 } from 'react-native';
 
 import ReactNativeMaps_MapView from 'react-native-maps';
@@ -23,7 +24,10 @@ export default class MapView extends Component {
     this.state = {
       region: MOPS.savedLocation,
       error: null,
-      followPosition: true
+      followPosition: true,
+      width: Dimensions.get('window').width,
+      height: Dimensions.get('window').height
+
     };
     MOPS.refresh();
     navigator.geolocation.getCurrentPosition(
@@ -41,12 +45,11 @@ export default class MapView extends Component {
         MOPS.savedLocation = r;
       },
       (error) => this.state = {...this.state, error: error.message},
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
+      {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000},
     );
   }
 
   componentDidMount() {
-    //MOPS.refresh();
     /* location change listener */
     this.watchId = navigator.geolocation.watchPosition(
       (position) => {
@@ -71,7 +74,7 @@ export default class MapView extends Component {
       }
       },
       (error) => this.setState({error: error.message}),
-      {enableHighAccuracy: true, timeout: 20000, distanceFilter: 10},
+      {enableHighAccuracy: false, timeout: 20000, distanceFilter: 10},
     );
   }
 
@@ -111,15 +114,15 @@ export default class MapView extends Component {
           backgroundColor: THEMES.basic.White,
           height: 150,
           width: 150,
-          flex: 1
+          flex: 1,
+          flexDirection: 'column',
+          justifyContent: 'space-around'
         }}
       >
-        <Text h4 numberOfLines={2}>{marker.title}</Text>
+        <Text numberOfLines={2} style={{fontSize: 20, fontWeight: 'bold'}}>{marker.title}</Text>
         <Text numberOfLines={1}>Kierunek: {marker.direction}</Text>
         {FACILITIES.getFacilitiesIconsShort(marker.facilities_short)}
-        <Text></Text>
-        <Text></Text>
-        <View style={{flex: 1, flexDirection: 'row'}}>
+        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text>Zapełnienie:  </Text>
           <Badge
             value={marker.usage[main_vehicle] + '%'}
@@ -136,18 +139,24 @@ export default class MapView extends Component {
     this.setState({reload: true});
   }
 
+  changeMeasures = () => {
+    this.setState({
+      width: Dimensions.get('window').width,
+      height: Dimensions.get('window').height
+    })
+  }
+
   render() {
     let {main_vehicle} = SETTINGS.settings;
     let mops = this.selectMops();
 
     return (
-      <View style={styles.main}>
+      <View style={styles.main} onLayout={this.changeMeasures}>
         <Header navigation={this.props.navigation} title='Mapa' reload={this.reload}/>
         <View style={{zIndex: 10}}>
         <Icon
           onPress={() => {
             if(!this.state.followPosition){
-              console.log('follow');
               this.setState({
                 followPosition: true,
                 region: {
@@ -158,7 +167,6 @@ export default class MapView extends Component {
               })
             }
             else{
-              console.log('unfollow');
               this.setState({
                 followPosition: false
               })
@@ -173,18 +181,26 @@ export default class MapView extends Component {
         </View>
         <View style={styles.container_map}>
           <ReactNativeMaps_MapView
-            initialRegion={this.state.region}
             region={this.state.region}
-            onRegionChange={this.onRegionChange.bind(this)}
+            onRegionChangeComplete={this.onRegionChange.bind(this)}
             showsUserLocation={true}
-            showsMyLocationButton={true}
-            style={styles.map}
+            showsMyLocationButton={false}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              flex: 1,
+              width: this.state.width,
+              height: this.state.height - 120
+            }}
           >
             {mops.map((marker, i) => (
               <ReactNativeMaps_MapView.Marker
                 coordinate={marker.coords}
                 title={marker.title}
-                description={marker.description}
+                description={marker.direction}
                 key={i}>
                 <Image
                   source={SETTINGS.constants.parking_icon_small}

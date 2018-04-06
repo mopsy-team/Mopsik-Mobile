@@ -14,7 +14,7 @@ export const facilities = {
   },
   dangerous_cargo_places: {
     icon: 'warning',
-    name: 'Myjnia'
+    name: 'Miejsce dla pojazdów z ładunkiem niebezpiecznym'
   },
   garage: {
     icon: 'build',
@@ -72,18 +72,31 @@ export const facilitiesCodesShort = [
   'toilets'
 ];
 
+/* keys (codes) of facilities to be displayed in search view */
+export const filterFacilitiesCodes = [
+  'car_wash',
+  'dangerous_cargo_places',
+  'garage',
+  'lighting',
+  'monitoring',
+  'petrol_station',
+  'restaurant',
+  'security',
+  'sleeping_places',
+  'toilets'
+];
+
 /* facility icon for callouts */
 let getFacilityIconShort = (code, i) => {
   let fac = facilities[code];
   return (
   <Avatar
-    onPress={() => {}}
     icon={{name: fac.icon, color: THEMES.basic.White}}
     raised
     overlayContainerStyle={{backgroundColor: THEMES.basic.DarkColor}}
     width={35}
     height={35}
-    rounded
+    rounded={THEMES.roundedIcons}
     key={i}
   />
   )
@@ -94,7 +107,7 @@ export const getFacilitiesIconsShort = (codes) => {
   return (
     <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-start'}}>
     {codes.map((code, i) => (
-      getFacilityIconShort(code, i, true, () => {})
+      getFacilityIconShort(code, i)
     ))}
     </View>
   )
@@ -111,7 +124,7 @@ let getFacilityIconLong = (code, i, active, onPress) => {
     overlayContainerStyle={{backgroundColor: active ? THEMES.basic.DarkColor : THEMES.basic.LightGrey}}
     width={50}
     height={50}
-    rounded
+    rounded={THEMES.roundedIcons}
     key={i}
     containerStyle={{margin: 3}}
   />
