@@ -141,8 +141,7 @@ export default class HomeView extends Component {
     return (
       <View style={styles.main}>
         <Header navigation={this.props.navigation} title='Home' reload={this.reload}/>
-        <View style={styles.main}>
-          <ScrollView>
+        <ScrollView style={styles.main}>
             <NearestMops nearestMops={nearestMops} navigation={this.props.navigation}/>
             <LastViewedMops navigation={this.props.navigation}/>
             <Divider style={{backgroundColor: THEMES.basic.LightGrey, height: 0.8}}/>
@@ -151,8 +150,7 @@ export default class HomeView extends Component {
             }}>
               <Text style={{marginBottom: 15, marginTop: 5}}>Logo wygenerowane przy pomocy Logo Maker</Text>
             </View>
-          </ScrollView>
-        </View>
+        </ScrollView>
       </View>
     )
   };

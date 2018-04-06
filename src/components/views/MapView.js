@@ -129,18 +129,18 @@ export default class MapView extends Component {
         </View>
       </ReactNativeMaps_MapView.Callout>
     )
-  }
+  };
 
   reload = () => {
     this.setState({reload: true});
-  }
+  };
 
   changeMeasures = () => {
     this.setState({
       width: Dimensions.get('window').width,
       height: Dimensions.get('window').height
     })
-  }
+  };
 
   render() {
     let {main_vehicle} = SETTINGS.settings;

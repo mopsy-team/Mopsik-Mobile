@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {DeviceEventEmitter, FlatList, ScrollView, View} from 'react-native';
+import {DeviceEventEmitter, FlatList, View} from 'react-native';
 
 import Swipeout from 'react-native-swipeout';
 
@@ -66,20 +66,18 @@ export default class FavouritesView extends Component {
 
       <View ref='favs'>
         <Header navigation={this.props.navigation} title='Ulubione MOPy' reload={this.reload}/>
-        <ScrollView>
-          <FlatList
-            data={this.state.favouriteMOPsmapped}
-            keyExtractor={item => item.id}
-            renderItem={({item, index}) => (
-              <Swipeout right={this.swipeBtns(item.id)}
-                        autoClose
-                        backgroundColor='transparent'
-                        key={index}>
-                <MopListItem mop={item} navigation={this.props.navigation}/>
-              </Swipeout>)}
-            style={{backgroundColor: THEMES.basic.White, marginBottom: 100}}
-          />
-        </ScrollView>
+        <FlatList
+          data={this.state.favouriteMOPsmapped}
+          keyExtractor={item => item.id}
+          renderItem={({item, index}) => (
+            <Swipeout right={this.swipeBtns(item.id)}
+                      autoClose
+                      backgroundColor='transparent'
+                      key={index}>
+              <MopListItem mop={item} navigation={this.props.navigation}/>
+            </Swipeout>)}
+          style={{backgroundColor: THEMES.basic.White, marginBottom: 100}}
+        />
       </View>
     );
   }

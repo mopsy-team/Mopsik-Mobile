@@ -9,9 +9,20 @@ import {Avatar, Divider, SearchBar} from 'react-native-elements'
 MOPS = require('mopsik_mobile/src/config/mops');
 let _ = require('lodash');
 
-const ITEMS_PER_PAGE = 25;
 
 export default class SearchView extends Component {
+  constructor() {
+    super();
+    this.state = {
+      searchPhrase: "",
+      found: MOPS.mops,
+      found_filtered: MOPS.mops,
+      reload: false,
+      page: 1,
+      facilities: this.getInitialChecks()
+    }
+  }
+
   getInitialChecks = () => {
     let facs = {};
     FACILITIES.filterFacilitiesCodes.map((f, i) => {
@@ -19,11 +30,13 @@ export default class SearchView extends Component {
     });
     return facs;
   };
+
   findMops = (txt, param) => {
     return MOPS.mops.filter((mop) => {
       return mop[param].toLowerCase().match(txt)
     })
   };
+
   matchFacilities = (mop, facs) => {
     for (f in facs) {
       if (facs[f] && !mop.facilities_dict[f]) {
@@ -32,11 +45,13 @@ export default class SearchView extends Component {
     }
     return true;
   };
+
   filterMops = (mops, facs) => {
     return mops.filter((mop) => {
       return this.matchFacilities(mop, facs)
     })
   };
+
   changeSearchPhrase = (t) => {
     this.setState({searchPhrase: t});
     let txt = (t && t !== "") ? t.toLowerCase() : "";
@@ -50,48 +65,25 @@ export default class SearchView extends Component {
     this.setState({
       found_filtered: found_filtered,
       found: found,
-      found_trimmed: found_filtered.slice(0, ITEMS_PER_PAGE),
       page: 1
     });
   };
+
   reload = () => {
     this.setState({reload: true});
   };
-  loadMore = () => {
-    const {page, found_trimmed} = this.state;
-    const start = page * ITEMS_PER_PAGE;
-    const end = (page + 1) * ITEMS_PER_PAGE - 1;
 
-    const newData = this.state.found_filtered.slice(start, end);
-    this.setState({
-      found_trimmed: [...found_trimmed, ...newData],
-      page: page + 1
-    });
-  };
   checkFacility = (fac) => {
     let f = this.state.facilities;
     f[fac] = !f[fac];
     let found_filtered = this.filterMops(this.state.found, f);
     this.setState({
       found_filtered: found_filtered,
-      found_trimmed: found_filtered.slice(0, ITEMS_PER_PAGE),
       page: 1,
       facilities: f
     });
   };
 
-  constructor() {
-    super();
-    this.state = {
-      searchPhrase: "",
-      found: MOPS.mops,
-      found_filtered: MOPS.mops,
-      reload: false,
-      found_trimmed: MOPS.mops.slice(0, ITEMS_PER_PAGE),
-      page: 1,
-      facilities: this.getInitialChecks()
-    }
-  }
 
   render() {
     let facs = FACILITIES.facilities;
@@ -136,10 +128,9 @@ export default class SearchView extends Component {
           <Divider style={{backgroundColor: THEMES.basic.DarkGrey, height: 0.8}}/>
           <View>
             <FlatList
-              data={this.state.found_trimmed}
+              data={this.state.found_filtered}
               keyExtractor={item => item.id}
               renderItem={({item, index}) => (<MopListItem mop={item} key={index} navigation={this.props.navigation}/>)}
-              onEndReached={this.loadMore}
               style={{backgroundColor: THEMES.basic.White}}
             />
           </View>
