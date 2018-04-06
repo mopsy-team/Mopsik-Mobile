@@ -50,15 +50,15 @@ export default class HomeView extends Component {
           ...MOPS.savedLocation,
           ...r
         };;
-        //let nearest = findNearestMop(r.latitude, r.longitude);
+        let nearest = findNearestMop(r.latitude, r.longitude);
         this.state = {
           ...this.state,
           region: r,
-          //nearestMops: nearest,
+          nearestMops: nearest,
         };
       },
       (error) => {},
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
+      {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000},
     );
 
   }
@@ -94,7 +94,7 @@ export default class HomeView extends Component {
       }
       },
       (error) => {console.log('error', error)},
-      {enableHighAccuracy: true, timeout: 20000, distanceFilter: 10},
+      {enableHighAccuracy: false, timeout: 20000, distanceFilter: 10},
     );
   }
 
@@ -143,12 +143,12 @@ export default class HomeView extends Component {
   getContents = (nearestMops) => {
     return (
       <View style={styles.main}>
-        <Header navigation={this.props.navigation} title='Home' reload={this.reload}/>
+        <Header navigation={this.props.navigation} title='Panel główny' reload={this.reload}/>
         <View style={styles.main}>
         <ScrollView>
         <NearestMops nearestMops={nearestMops} navigation={this.props.navigation}/>
         <LastViewedMops navigation={this.props.navigation}/>
-        <Divider style={{ backgroundColor: THEMES.basic.LightGrey, height: 0.8 }} />
+        <Divider style={{backgroundColor: THEMES.basic.LightGrey, height: 0.8}} />
         <View style={{
           alignItems: 'center',
         }}>

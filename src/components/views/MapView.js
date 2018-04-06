@@ -45,7 +45,7 @@ export default class MapView extends Component {
         MOPS.savedLocation = r;
       },
       (error) => this.state = {...this.state, error: error.message},
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
+      {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000},
     );
   }
 
@@ -74,7 +74,7 @@ export default class MapView extends Component {
       }
       },
       (error) => this.setState({error: error.message}),
-      {enableHighAccuracy: true, timeout: 20000, distanceFilter: 10},
+      {enableHighAccuracy: false, timeout: 20000, distanceFilter: 10},
     );
   }
 
@@ -114,15 +114,15 @@ export default class MapView extends Component {
           backgroundColor: THEMES.basic.White,
           height: 150,
           width: 150,
-          flex: 1
+          flex: 1,
+          flexDirection: 'column',
+          justifyContent: 'space-around'
         }}
       >
-        <Text h4 numberOfLines={2}>{marker.title}</Text>
+        <Text numberOfLines={2} style={{fontSize: 20, fontWeight: 'bold'}}>{marker.title}</Text>
         <Text numberOfLines={1}>Kierunek: {marker.direction}</Text>
         {FACILITIES.getFacilitiesIconsShort(marker.facilities_short)}
-        <Text></Text>
-        <Text></Text>
-        <View style={{flex: 1, flexDirection: 'row'}}>
+        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text>Zapełnienie:  </Text>
           <Badge
             value={marker.usage[main_vehicle] + '%'}

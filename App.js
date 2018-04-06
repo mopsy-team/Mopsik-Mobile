@@ -21,9 +21,8 @@ let _ = require('lodash');
 export default App = DrawerNavigator({
   Home: { screen: HomeStack,
     navigationOptions : {
-      drawerLabel: 'Home',
+      drawerLabel: 'Panel główny',
       drawerIcon: <Icon name='home' />,
-      title: 'Home'
     }
    },
   MapMopsStack: { screen: MapStack,
@@ -50,6 +49,6 @@ export default App = DrawerNavigator({
   drawerOpenRoute: 'DrawerOpen',
   drawerCloseRoute: 'DrawerClose',
   drawerToggleRoute: 'DrawerToggle',
-  contentComponent: DrawerContent
+  contentComponent: DrawerContent,
 }
 );

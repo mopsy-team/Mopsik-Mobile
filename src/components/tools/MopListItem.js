@@ -15,10 +15,10 @@ export default class MopListItem extends Component {
 
         return (
           <ListItem
-              avatar={
+              leftAvatar={
                 <View style={{width: 40, alignItems: 'center'}}>
                 <Text
-                  style={{marginTop: 9, fontSize: 17, color: THEMES.basic.DarkGrey, textAlign: 'center'}}>
+                  style={{fontSize: 17, color: THEMES.basic.DarkGrey, textAlign: 'center'}}>
                   {mop.road_number}
                 </Text>
                 </View>

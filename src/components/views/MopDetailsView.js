@@ -130,7 +130,7 @@ export default class MopDetailsView extends Component {
     let {main_vehicle} = settings;
     return (
       <View style={styles.mainWhite} onLayout={this.changeWidth}>
-        <Header navigation={this.props.navigation} title={this.state.mop.title} stack reload={this.reload}/>
+        <Header navigation={this.props.navigation} title={this.state.mop.title.replace(/  +/g, ' ')} stack reload={this.reload}/>
         <ScrollView>
         <View style={{margin: 10}}>
           <Text h3 style={{textAlign: 'center'}}>{mop.title}</Text>
