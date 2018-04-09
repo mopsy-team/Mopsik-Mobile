@@ -57,7 +57,7 @@ export default class MopDetailsView extends Component {
     }
     else {
       return <Button
-        title='Dodaj to ulubionych'
+        title='Dodaj do ulubionych'
         onPress={() => this.addToFavourites(this.state.mop.id)}
         icon={<Icon
           name='favorite-border'
