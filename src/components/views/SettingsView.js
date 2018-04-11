@@ -1,12 +1,7 @@
 import React, {Component} from 'react';
-import {
-  View,
-  AsyncStorage,
-  ScrollView,
-  Alert
-} from 'react-native';
+import {Alert, AsyncStorage, ScrollView, View} from 'react-native';
 
-import {Button, ButtonGroup, Icon, CheckBox, Text, Divider} from 'react-native-elements';
+import {Button, ButtonGroup, CheckBox, Divider, Icon, Text} from 'react-native-elements';
 import RNRestart from 'react-native-restart';
 
 import Header from 'mopsik_mobile/src/components/tools/Header';
@@ -47,7 +42,7 @@ export default class SettingsView extends Component {
                         color={((SETTINGS.settings.main_vehicle_id !== -1) && (text_id === SETTINGS.settings.main_vehicle))
                           ? THEMES.basic.LightColor
                           : THEMES.basic.Grey}/>
-                          <Text>{VEHICLES[text_id].name}</Text></View>)
+      <Text>{VEHICLES[text_id].name}</Text></View>)
   };
 
   /* main vehicle ButtonGroup */
@@ -65,18 +60,18 @@ export default class SettingsView extends Component {
   get_ok_button = () => {
     let dis = (this.state.selectedIndex === -1);
     let icon =
-    dis ?
-      <Icon
-        name='block'
-        size={20}
-        color='red'
-      />
-    :
-      <Icon
-        name='done'
-        size={20}
-        color='green'
-      />;
+      dis ?
+        <Icon
+          name='block'
+          size={20}
+          color='red'
+        />
+        :
+        <Icon
+          name='done'
+          size={20}
+          color='green'
+        />;
     return (<Button
       onPress={() => {
         this.props.navigation.state.params.first = false;
@@ -107,15 +102,15 @@ export default class SettingsView extends Component {
         textStyle={{fontSize: 16}}
         checked={this.state.vehicles_selected[vehicle]}
         onPress={() => this.updateMultipleSelection(vehicle)}
-        checkedColor='#8aa8e3'
+        checkedColor={THEMES.basic.LightColor}
         key={i}
       />
     )
-  }
+  };
 
   reload = () => {
     this.setState({reload: true});
-  }
+  };
 
   resetApp = () => {
     AsyncStorage.removeItem('mopsik_settings').then(() => {
@@ -126,7 +121,7 @@ export default class SettingsView extends Component {
       }).done();
     }).done();
 
-  }
+  };
 
   render() {
     let {params} = this.props.navigation.state;
@@ -136,19 +131,24 @@ export default class SettingsView extends Component {
       ? (<Header navigation={this.props.navigation} firstSettings/>)
       : (<Header navigation={this.props.navigation} title='Ustawienia' reload={this.reload}/>);
     let button = (first)
-    ?
+      ?
       this.get_ok_button()
-    :
+      :
       (<Button
-        onPress={() => {Alert.alert(
-          'Czy na pewno chcesz kontynuować?',
-          'Zresetowanie ustawień wymaże wszystkie dane zapisane przez aplikację i uruchomi ją ponownie.',
-          [
-            {text: 'Anuluj', onPress: () => {}, style: 'cancel'},
-            {text: 'Zresetuj', onPress: this.resetApp},
-          ],
-          { cancelable: false }
-        )}}
+        onPress={() => {
+          Alert.alert(
+            'Czy na pewno chcesz kontynuować?',
+            'Zresetowanie ustawień wymaże wszystkie dane zapisane przez aplikację i uruchomi ją ponownie.',
+            [
+              {
+                text: 'Anuluj', onPress: () => {
+                }, style: 'cancel'
+              },
+              {text: 'Zresetuj', onPress: this.resetApp},
+            ],
+            {cancelable: false}
+          )
+        }}
         title="Zresetuj ustawienia"
         buttonStyle={{marginBottom: 20, backgroundColor: THEMES.basic.Red, height: 40}}
         icon={<Icon
@@ -163,30 +163,30 @@ export default class SettingsView extends Component {
     return (
 
       <View style={styles.main}>
-      {header}
-      <ScrollView style={{marginTop: 10}}>
-      <Text style={{fontSize: 16, margin: 5, textAlign: 'center'}}>
-        Wybierz Twój główny typ pojazdu
-      </Text>
-      <ButtonGroup
-        onPress={this.updateIndex}
-        selectedIndex={selectedIndex}
-        buttons={this.buttons}
-        containerStyle={{height: 70}}
-        selectedButtonStyle={{backgroundColor: THEMES.basic.White}}
-        buttonStyle={{backgroundColor: THEMES.basic.DisabledGrey}}
-        />
-      <Divider style={{ backgroundColor: THEMES.basic.LightGrey, height: 1.5, margin: 10 }} />
-      <Text style={{fontSize: 16, margin: 10, textAlign: 'center'}}>
-        Wybierz typy pojazdów, dla których chcesz wyświetlać dane w szczegółowych informacjach o MOPie
-      </Text>
-      {vehiclesCodes.map((vehicle, i) => (
-        this.getCheckBox(vehicle, i)
-      ))}
-      <View style={{margin: 20, height: 50}}>
-        {button}
-      </View>
-      </ScrollView>
+        {header}
+        <ScrollView style={{marginTop: 10}}>
+          <Text style={{fontSize: 16, margin: 5, textAlign: 'center'}}>
+            Wybierz Twój główny typ pojazdu
+          </Text>
+          <ButtonGroup
+            onPress={this.updateIndex}
+            selectedIndex={selectedIndex}
+            buttons={this.buttons}
+            containerStyle={{height: 70}}
+            selectedButtonStyle={{backgroundColor: THEMES.basic.White}}
+            buttonStyle={{backgroundColor: THEMES.basic.DisabledGrey}}
+          />
+          <Divider style={{backgroundColor: THEMES.basic.LightGrey, height: 1.5, margin: 10}}/>
+          <Text style={{fontSize: 16, margin: 10, textAlign: 'center'}}>
+            Wybierz typy pojazdów, dla których chcesz wyświetlać dane w szczegółowych informacjach o MOPie
+          </Text>
+          {vehiclesCodes.map((vehicle, i) => (
+            this.getCheckBox(vehicle, i)
+          ))}
+          <View style={{margin: 20, height: 50}}>
+            {button}
+          </View>
+        </ScrollView>
       </View>
     );
   }
