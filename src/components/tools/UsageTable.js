@@ -108,11 +108,11 @@ export default class UsageTable extends Component {
                textStyle={styles_.text}/>
           <TableWrapper style={{flexDirection: 'row'}}>
             <Col data={['Zapełnienie']} style={styles_.title} textStyle={styles_.text} heightArr={[80]}/>
-            <Rows data={usageTableData} flexArr={new Array(tableHead.length - 1).fill(1)} style={styles_.row_usage}/>
+            <Rows data={usageTableData} flexArr={new Array(tableHead.length - 1).fill(1)} heightArr={[80]}/>
           </TableWrapper>
           <TableWrapper style={{flexDirection: 'row'}}>
-            <Col data={tableTitle} style={styles_.title} heightArr={[40, 40, 40]} textStyle={styles_.text}/>
-            <Rows data={tableData} flexArr={new Array(tableHead.length - 1).fill(1)} style={styles_.row}/>
+            <Col data={tableTitle} style={styles_.title} heightArr={[40, 40, 60]} textStyle={styles_.text}/>
+            <Rows data={tableData} flexArr={new Array(tableHead.length - 1).fill(1)} heightArr={[40, 40, 60]}/>
           </TableWrapper>
         </Table>
       </View>
@@ -121,9 +121,7 @@ export default class UsageTable extends Component {
 }
 
 const styles_ = StyleSheet.create({
-  head: {height: 50, backgroundColor: '#f1f8ff'},
+  head: {backgroundColor: '#f1f8ff'},
   title: {flex: 1, backgroundColor: '#f6f8fa'},
-  row: {height: 40},
-  row_usage: {height: 80},
   text: {textAlign: 'center', fontSize: 15}
 });

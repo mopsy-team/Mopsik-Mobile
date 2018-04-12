@@ -1,7 +1,7 @@
 /* types of vehicles with corresponding icon names and polish names */
 export const VEHICLES = {
   'car': {
-    name: 'Samochód',
+    name: 'Samochód osobowy',
     icon: 'directions-car'
   },
   'truck': {

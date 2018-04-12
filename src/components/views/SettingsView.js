@@ -42,7 +42,7 @@ export default class SettingsView extends Component {
                         color={((SETTINGS.settings.main_vehicle_id !== -1) && (text_id === SETTINGS.settings.main_vehicle))
                           ? THEMES.basic.LightColor
                           : THEMES.basic.Grey}/>
-      <Text>{VEHICLES[text_id].name}</Text></View>)
+      <Text style={{textAlign: 'center'}}>{VEHICLES[text_id].name}</Text></View>)
   };
 
   /* main vehicle ButtonGroup */
@@ -172,7 +172,7 @@ export default class SettingsView extends Component {
             onPress={this.updateIndex}
             selectedIndex={selectedIndex}
             buttons={this.buttons}
-            containerStyle={{height: 70}}
+            containerStyle={{height: 90}}
             selectedButtonStyle={{backgroundColor: THEMES.basic.White}}
             buttonStyle={{backgroundColor: THEMES.basic.DisabledGrey}}
           />
