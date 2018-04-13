@@ -5,7 +5,7 @@ export const VEHICLES = {
     icon: 'directions-car'
   },
   'truck': {
-    name: 'Ciężarówka',
+    name: 'Samochód ciężarowy',
     icon: 'local-shipping'
   },
   'bus': {
