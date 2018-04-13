@@ -95,21 +95,22 @@ export default class MopDetailsView extends Component {
     };
   }
 
-//TODO - optimise
   addToFavourites = (id) => {
     AsyncStorage.getItem('mopsik_favouriteMOPs').then((response) => {
       let favourites = [];
       if (response) {
         favourites = JSON.parse(response);
       }
-      favourites.push(id);
-      let favourites_mapped = [];
-      favourites.map((fav, i) => {
-        favourites_mapped.push(_.find(MOPS.mops, {id: fav}));
-      });
-      MOPS.favouriteMOPs = favourites;
-      MOPS.favouriteMOPsmapped = favourites_mapped;
-      AsyncStorage.setItem('mopsik_favouriteMOPs', JSON.stringify(favourites));
+      if (!favourites.includes(id)){
+        favourites.push(id);
+        let favourites_mapped = [];
+        favourites.map((fav, i) => {
+          favourites_mapped.push(_.find(MOPS.mops, {id: fav}));
+        });
+        MOPS.favouriteMOPs = favourites;
+        MOPS.favouriteMOPsmapped = favourites_mapped;
+        AsyncStorage.setItem('mopsik_favouriteMOPs', JSON.stringify(favourites));
+      }
       let inFavs = this.isInFavourites(this.state.mop.id);
       this.setState({button: this.generateButton(inFavs)});
     }).done();
