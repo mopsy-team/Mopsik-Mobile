@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {Alert, AsyncStorage, ScrollView, View} from 'react-native';
 
-import {Button, ButtonGroup, CheckBox, Divider, Icon, Text} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import {Button, ButtonGroup, CheckBox, Divider, Text} from 'react-native-elements';
 import RNRestart from 'react-native-restart';
 
 import Header from 'mopsik_mobile/src/components/tools/Header';
@@ -38,11 +39,22 @@ export default class SettingsView extends Component {
 
   /* return button for main vehicle ButtonGroup */
   get_button = (text_id) => {
-    return (<View><Icon name={VEHICLES[text_id].icon}
-                        color={((SETTINGS.settings.main_vehicle_id !== -1) && (text_id === SETTINGS.settings.main_vehicle))
-                          ? THEMES.basic.LightColor
-                          : THEMES.basic.Grey}/>
-      <Text style={{textAlign: 'center'}}>{VEHICLES[text_id].name}</Text></View>)
+    return (
+      <View>
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Icon
+            name={VEHICLES[text_id].icon}
+            color={((SETTINGS.settings.main_vehicle_id !== -1) && (text_id === SETTINGS.settings.main_vehicle))
+              ? THEMES.basic.LightColor
+              : THEMES.basic.Grey}
+            size={35}
+          />
+        </View>
+        <View style={{flex: 1, justifyContent: 'center'}}>
+          <Text style={{textAlign: 'center', padding: 2}}>{VEHICLES[text_id].name}</Text>
+        </View>
+      </View>
+    )
   };
 
   /* main vehicle ButtonGroup */

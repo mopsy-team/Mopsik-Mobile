@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {StyleSheet, View} from 'react-native';
 
-
-import {Icon, Text} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import {Text} from 'react-native-elements';
 import {Col, Row, Rows, Table, TableWrapper} from 'react-native-table-component';
 
 import UsageCircle from 'mopsik_mobile/src/components/tools/UsageCircle';
@@ -30,9 +30,18 @@ export default class UsageTable extends Component {
   /* Name of vehicle and icon */
   createHeader = (vehicle) => {
     return (
-      <View>
-        <Icon name={vehicle.icon} color={THEMES.basic.LightColor}/>
-        <Text style={{textAlign: 'center'}}>{vehicle.name}</Text>
+      <View style={{
+        flex: 1,
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        padding: 5
+      }}>
+          <Icon
+            name={vehicle.icon}
+            color={THEMES.basic.LightColor}
+            size={25}
+          />
+          <Text style={{textAlign: 'center', padding: 2}}>{vehicle.name}</Text>
       </View>
     )
   };
@@ -111,8 +120,8 @@ export default class UsageTable extends Component {
             <Rows data={usageTableData} flexArr={new Array(tableHead.length - 1).fill(1)} heightArr={[80]}/>
           </TableWrapper>
           <TableWrapper style={{flexDirection: 'row'}}>
-            <Col data={tableTitle} style={styles_.title} heightArr={[40, 40, 60]} textStyle={styles_.text}/>
-            <Rows data={tableData} flexArr={new Array(tableHead.length - 1).fill(1)} heightArr={[40, 40, 60]}/>
+            <Col data={tableTitle} style={styles_.title} heightArr={[60, 60, 60]} textStyle={styles_.text}/>
+            <Rows data={tableData} flexArr={new Array(tableHead.length - 1).fill(1)} heightArr={[60, 60, 60]}/>
           </TableWrapper>
         </Table>
       </View>
