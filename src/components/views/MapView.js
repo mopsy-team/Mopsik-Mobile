@@ -22,8 +22,8 @@ export default class MapView extends Component {
       error: null,
       followPosition: true,
       width: Dimensions.get('window').width,
-      height: Dimensions.get('window').height
-
+      height: Dimensions.get('window').height,
+      initialized: false,
     };
     MOPS.refresh();
     navigator.geolocation.getCurrentPosition(
@@ -96,7 +96,7 @@ export default class MapView extends Component {
 
   /* dragging a map disables followingPosition */
   onRegionChange(region) {
-    this.setState({region: region, followPosition: false});
+    this.setState({region: region, followPosition: false, initialized: false});
   }
 
   /* callouts when pressed on marker */
@@ -132,14 +132,18 @@ export default class MapView extends Component {
   };
 
   reload = () => {
-    this.setState({reload: true});
-  };
+    this.setState({reload: true, initialized: false});
+  }
 
   changeMeasures = () => {
     this.setState({
       width: Dimensions.get('window').width,
       height: Dimensions.get('window').height
     })
+  };
+
+  onMapReady = () => {
+    this.setState({ initialized: true });
   };
 
   render() {
@@ -181,6 +185,8 @@ export default class MapView extends Component {
             onRegionChangeComplete={this.onRegionChange.bind(this)}
             showsUserLocation={true}
             showsMyLocationButton={false}
+            onMapReady={this.onMapReady}
+            moveOnMarkerPress={false}
             style={{
               position: 'absolute',
               top: 0,
@@ -197,6 +203,7 @@ export default class MapView extends Component {
                 coordinate={marker.coords}
                 title={marker.title}
                 description={marker.direction}
+                tracksViewChanges={!this.state.initialized}
                 key={i}>
                 <Image
                   source={SETTINGS.constants.parking_icon_small}

@@ -12,15 +12,17 @@ uploadFavourites = async (favourites) => {
 /* deletes mop with id=id from favourites (in AsyncStorage and global variables) */
 deleteFavourite = (id) => {
   favs = MOPS.favouriteMOPs;
-  idx = favs.indexOf(id);
-  favs.splice(idx, 1);
-  uploadFavourites(favs);
-  let favourites_mapped = [];
-  favs.map((fav, i) => {
-    favourites_mapped.push(_.find(MOPS.mops, {id: fav}));
-  });
-  MOPS.favouriteMOPs = favs;
-  MOPS.favouriteMOPsmapped = favourites_mapped;
+  if (favs.includes(id)){
+    idx = favs.indexOf(id);
+    favs.splice(idx, 1);
+    uploadFavourites(favs);
+    let favourites_mapped = [];
+    favs.map((fav, i) => {
+       favourites_mapped.push(_.find(MOPS.mops, { id: fav }));
+     });
+     MOPS.favouriteMOPs = favs;
+     MOPS.favouriteMOPsmapped = favourites_mapped;
+   }
 };
 
 /*
