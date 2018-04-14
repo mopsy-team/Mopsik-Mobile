@@ -207,8 +207,7 @@ export default class MapView extends Component {
                 key={i}>
                 <Image
                   source={SETTINGS.constants.parking_icon_small}
-                  style={{width: 25, height: 25}}
-                  tintColor={marker.color[main_vehicle].background}
+                  style={{width: 25, height: 25, tintColor: marker.color[main_vehicle].background}}
                 />
                 {this.getCallout(marker, main_vehicle)}
               </ReactNativeMaps_MapView.Marker>

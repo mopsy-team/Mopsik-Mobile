@@ -148,7 +148,7 @@ export default class SearchView extends Component {
               keyExtractor={item => item.id}
               renderItem={({item, index}) => (<MopListItem mop={item} key={index} navigation={this.props.navigation}/>)}
               onEndReached={this.loadMore}
-              style={{backgroundColor: THEMES.basic.White}}
+              style={{backgroundColor: THEMES.basic.White, marginBottom: 130}}
             />
           </View>
         </ScrollView>

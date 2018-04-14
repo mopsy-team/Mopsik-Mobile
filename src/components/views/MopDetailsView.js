@@ -43,9 +43,8 @@ export default class MopDetailsView extends Component {
           color: THEMES.basic.LightPink
         }}
         buttonStyle={{
-          width: 190,
           backgroundColor: THEMES.basic.Red,
-          marginBottom: 5
+          margin: 10
         }}
       />
     }
@@ -62,9 +61,8 @@ export default class MopDetailsView extends Component {
           color: THEMES.basic.Red
         }}
         buttonStyle={{
-          width: 190,
           backgroundColor: THEMES.basic.LightPink,
-          marginBottom: 5
+          margin: 10
         }}
       />
     }
@@ -130,7 +128,7 @@ export default class MopDetailsView extends Component {
         <ScrollView>
           <View style={{margin: 10}}>
             <Text h3 style={{textAlign: 'center'}}>{mop.title}</Text>
-            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around',}}>
+            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around'}}>
               <View style={{margin: 10, width: (this.state.width - 140)}}>
                 <Text h4>Kierunek: {mop.direction}</Text>
                 <Text style={{marginTop: 5, marginBottom: 5}}>
