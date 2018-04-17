@@ -15,6 +15,16 @@ let _ = require('lodash');
 
 
 export default class MopDetailsView extends Component {
+  constructor(props) {
+    super(props);
+    let {mop} = this.props.navigation.state.params;
+    this.addToLastViewedMops(mop.id);
+    this.state = {
+      button: this.generateButton(this.isInFavourites(mop.id)),
+      mop: mop,
+      width: Dimensions.get('window').width
+    };
+  }
 
   /* checks if mop is in favourites */
   isInFavourites = (id) => {
@@ -36,7 +46,7 @@ export default class MopDetailsView extends Component {
         }}
         icon={<Icon
           name='favorite'
-          size={15}
+          size={20}
           color={THEMES.basic.LightPink}
         />}
         titleStyle={{
@@ -54,7 +64,7 @@ export default class MopDetailsView extends Component {
         onPress={() => this.addToFavourites(this.state.mop.id)}
         icon={<Icon
           name='favorite-border'
-          size={15}
+          size={20}
           color={THEMES.basic.Red}
         />}
         titleStyle={{
@@ -75,17 +85,6 @@ export default class MopDetailsView extends Component {
       await AsyncStorage.setItem('mopsik_lastViewedMops', JSON.stringify(MOPS.lastViewedMops))
     }
   };
-
-  constructor(props) {
-    super(props);
-    let {mop} = this.props.navigation.state.params;
-    this.addToLastViewedMops(mop.id);
-    this.state = {
-      button: this.generateButton(this.isInFavourites(mop.id)),
-      mop: mop,
-      width: Dimensions.get('window').width
-    };
-  }
 
   addToFavourites = (id) => {
     AsyncStorage.getItem('mopsik_favouriteMOPs').then((response) => {
@@ -117,10 +116,32 @@ export default class MopDetailsView extends Component {
     this.setState({width: Dimensions.get('window').width})
   };
 
+  getShowOnMapButton = () => {
+    return (
+      <Button
+        title='Pokaż na mapie'
+        onPress={() => this.props.navigation.navigate('MapMops', {focused: this.state.mop})}
+        icon={<Icon
+          name='map'
+          size={20}
+          color={THEMES.basic.White}
+        />}
+        titleStyle={{
+          color: THEMES.basic.White
+        }}
+        buttonStyle={{
+          backgroundColor: THEMES.basic.DarkColor,
+          margin: 10
+        }}
+      />
+    )
+  }
+
   render() {
     let {mop} = this.state;
     let {settings} = SETTINGS;
     let {main_vehicle} = settings;
+    let showOnMap = (this.props.navigation.state.params.showOnMap) ? this.getShowOnMapButton() : undefined;
     return (
       <View style={styles.mainWhite} onLayout={this.changeWidth}>
         <Header navigation={this.props.navigation} title={this.state.mop.title.replace(/  +/g, ' ')} stack
@@ -129,7 +150,7 @@ export default class MopDetailsView extends Component {
           <View style={{margin: 10}}>
             <Text h3 style={{textAlign: 'center'}}>{mop.title}</Text>
             <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around'}}>
-              <View style={{margin: 10, width: (this.state.width - 140)}}>
+              <View style={{margin: 10, width: (this.state.width - 160)}}>
                 <Text h4>Kierunek: {mop.direction}</Text>
                 <Text style={{marginTop: 5, marginBottom: 5}}>
                   <Text style={{marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>Droga: </Text>
@@ -154,9 +175,12 @@ export default class MopDetailsView extends Component {
                 <Text></Text>
                 <Text></Text>
                 {this.state.button}
+                {showOnMap}
               </View>
-              <View style={{width: 120}}>
-                {FACILITIES.getFacilitiesIconsLong(mop.facilities)}
+              <View style={{flex: 1, justifyContent: 'center', flexDirection: 'column'}}>
+                <View style={{width: 120}}>
+                  {FACILITIES.getFacilitiesIconsLong(mop.facilities)}
+                </View>
               </View>
             </View>
             <Text></Text>

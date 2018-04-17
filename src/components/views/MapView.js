@@ -17,15 +17,18 @@ export default class MapView extends Component {
   /* when creating component */
   constructor(props) {
     super(props);
+    let focused = (this.props.navigation.state.params) ? this.props.navigation.state.params.focused : undefined;
     this.state = {
-      region: MOPS.savedLocation,
+      region: (focused) ? {...MOPS.savedLocation, ...focused.coords} : MOPS.savedLocation,
       error: null,
-      followPosition: true,
+      followPosition: (focused) ? false : true,
       width: Dimensions.get('window').width,
       height: Dimensions.get('window').height,
       initialized: false,
+      focused: focused
     };
     MOPS.refresh();
+
     navigator.geolocation.getCurrentPosition(
       (position) => {
         r = {
@@ -33,11 +36,13 @@ export default class MapView extends Component {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude
         };
-        this.state = {
-          ...this.state,
-          region: r,
-          error: null,
-        };
+        if (!focused){
+          this.state = {
+            ...this.state,
+            region: r,
+            error: null,
+          };
+        }
         MOPS.savedLocation = r;
       },
       (error) => this.state = {...this.state, error: error.message},
@@ -103,7 +108,7 @@ export default class MapView extends Component {
   getCallout = (marker, main_vehicle) => {
     return (
       <ReactNativeMaps_MapView.Callout onPress={() => {
-        this.props.navigation.navigate('MopDetails', {mop: marker})
+        this.props.navigation.navigate('MopDetails', {mop: marker, showOnMap: false})
       }}>
         <View
           style={{
@@ -143,8 +148,19 @@ export default class MapView extends Component {
   };
 
   onMapReady = () => {
+    if(this.state.focused && this.marker && this.marker.showCallout){
+      setTimeout(() => this.marker.showCallout(), 0);
+    }
     this.setState({ initialized: true });
   };
+
+  setMarkerRef = (ref) => {
+    this.marker = ref
+  }
+
+  empty = () => {
+
+  }
 
   render() {
     let {main_vehicle} = SETTINGS.settings;
@@ -152,7 +168,12 @@ export default class MapView extends Component {
 
     return (
       <View style={styles.main} onLayout={this.changeMeasures}>
-        <Header navigation={this.props.navigation} title='Mapa' reload={this.reload}/>
+        <Header
+          navigation={this.props.navigation}
+          title={(this.state.focused) ? ('Pokaż na mapie: ' + this.state.focused.title) : 'Mapa'}
+          reload={this.reload}
+          stack={this.state.focused !== undefined}
+        />
         <View style={{zIndex: 10}}>
           <Icon
             onPress={() => {
@@ -204,6 +225,7 @@ export default class MapView extends Component {
                 title={marker.title}
                 description={marker.direction}
                 tracksViewChanges={!this.state.initialized}
+                ref={(this.state.focused && marker.id == this.state.focused.id) ? this.setMarkerRef : this.empty}
                 key={i}>
                 <Image
                   source={SETTINGS.constants.parking_icon_small}
