@@ -33,9 +33,22 @@ export default class SearchView extends Component {
     return facs;
   };
 
-  findMops = (txt, param) => {
+  checkParam = (txt, mop, param) =>{
+    return mop[param].toLowerCase().match(txt)
+  }
+
+  checkParams = (txt, mop) => {
+    return (
+         this.checkParam(txt, mop, 'title')
+      || this.checkParam(txt, mop, 'road_number')
+      || this.checkParam(txt, mop, 'town')
+      || this.checkParam(txt, mop, 'direction')
+    )
+  }
+
+  findMops = (txt) => {
     return MOPS.mops.filter((mop) => {
-      return mop[param].toLowerCase().match(txt)
+      return this.checkParams(txt, mop)
     })
   };
 
@@ -48,20 +61,30 @@ export default class SearchView extends Component {
     return true;
   };
 
+  allFacsOff = (facs) => {
+    console.log(facs);
+    for (f in facs) {
+      if (facs[f]) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   filterMops = (mops, facs) => {
+    if(this.allFacsOff(facs)){
+      console.log('true')
+      return mops;
+    }
     return mops.filter((mop) => {
-      return this.matchFacilities(mop, facs)
+      return this.matchFacilities(mop, facs);
     })
   };
 
   changeSearchPhrase = (t) => {
     this.setState({searchPhrase: t});
     let txt = (t && t !== "") ? t.toLowerCase() : "";
-    let found_name = this.findMops(txt, 'title');
-    let found_road = this.findMops(txt, 'road_number');
-    let found_town = this.findMops(txt, 'town');
-    let found_direction = this.findMops(txt, 'direction');
-    let found = _.union(found_direction, found_name, found_road, found_town);
+    let found = this.findMops(txt);
     let found_filtered = this.filterMops(found, this.state.facilities);
 
     this.setState({
