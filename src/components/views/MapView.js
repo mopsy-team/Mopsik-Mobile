@@ -21,7 +21,7 @@ export default class MapView extends Component {
     this.state = {
       region: (focused) ? {...MOPS.savedLocation, ...focused.coords} : MOPS.savedLocation,
       error: null,
-      followPosition: (focused) ? false : true,
+      followPosition: (!focused),
       width: Dimensions.get('window').width,
       height: Dimensions.get('window').height,
       initialized: false,
@@ -36,7 +36,7 @@ export default class MapView extends Component {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude
         };
-        if (!focused){
+        if (this.state.followPosition) {
           this.state = {
             ...this.state,
             region: r,
@@ -87,11 +87,8 @@ export default class MapView extends Component {
   selectMops = () => {
     let mops = [];
     MOPS.mops.map((mop, i) => {
-      if (mop.coords.latitude > (this.state.region.latitude - this.state.region.latitudeDelta)
-        && mop.coords.latitude < (this.state.region.latitude + this.state.region.latitudeDelta)
-        && mop.coords.longitude > (this.state.region.longitude - this.state.region.longitudeDelta)
-        && mop.coords.longitude < (this.state.region.longitude + this.state.region.longitudeDelta)
-      ) {
+      if (Math.abs(mop.coords.latitude - this.state.region.latitude) < this.state.region.latitudeDelta
+        && Math.abs(mop.coords.longitude - this.state.region.longitude) < this.state.region.longitudeDelta) {
         mops.push(mop);
       }
 
@@ -138,7 +135,7 @@ export default class MapView extends Component {
 
   reload = () => {
     this.setState({reload: true, initialized: false});
-  }
+  };
 
   changeMeasures = () => {
     this.setState({
@@ -148,19 +145,19 @@ export default class MapView extends Component {
   };
 
   onMapReady = () => {
-    if(this.state.focused && this.marker && this.marker.showCallout){
+    if (this.state.focused && this.marker && this.marker.showCallout) {
       setTimeout(() => this.marker.showCallout(), 0);
     }
-    this.setState({ initialized: true });
+    this.setState({initialized: true});
   };
 
   setMarkerRef = (ref) => {
     this.marker = ref
-  }
+  };
 
   empty = () => {
 
-  }
+  };
 
   render() {
     let {main_vehicle} = SETTINGS.settings;
@@ -172,7 +169,7 @@ export default class MapView extends Component {
           navigation={this.props.navigation}
           title={(this.state.focused) ? ('Pokaż na mapie: ' + this.state.focused.title) : 'Mapa'}
           reload={this.reload}
-          stack={this.state.focused !== undefined}
+          stack={this.state.focused}
         />
         <View style={{zIndex: 10}}>
           <Icon
@@ -225,7 +222,7 @@ export default class MapView extends Component {
                 title={marker.title}
                 description={marker.direction}
                 tracksViewChanges={!this.state.initialized}
-                ref={(this.state.focused && marker.id == this.state.focused.id) ? this.setMarkerRef : this.empty}
+                ref={(this.state.focused && marker.id === this.state.focused.id) ? this.setMarkerRef : this.empty}
                 key={i}>
                 <Image
                   source={SETTINGS.constants.parking_icon_small}
