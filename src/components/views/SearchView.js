@@ -123,10 +123,27 @@ export default class SearchView extends Component {
     });
   };
 
+  getFacilityIcon = (f, i, facs) => {
+    return (
+      <Avatar
+        onPress={() => this.checkFacility(f)}
+        icon={{name: facs[f].icon, color: THEMES.basic.White}}
+        raised
+        overlayContainerStyle={{backgroundColor: this.state.facilities[f] ? THEMES.basic.DarkColor : THEMES.basic.LightGrey}}
+        width={50}
+        height={50}
+        rounded={THEMES.roundedIcons}
+        key={i}
+        containerStyle={{margin: 3}}
+      />
+    )
+  }
+
 
   render() {
     const facs = FACILITIES.facilities;
-    const fac_codes = FACILITIES.filterFacilitiesCodes;
+    const facCodes = FACILITIES.filterFacilitiesCodes;
+    const fHalfLength = Math.ceil(facCodes.length / 2);
     return (
       <View>
         <Header navigation={this.props.navigation} title='Wyszukaj MOPa' reload={this.reload}/>
@@ -141,28 +158,23 @@ export default class SearchView extends Component {
           clearIcon={{color: THEMES.basic.DarkGrey, name: 'close'}}
         />
         <ScrollView>
+        <View style={{padding: 5, paddingLeft: 15, paddingRight: 15, backgroundColor: THEMES.basic.White}}>
           <View style={{
             flex: 1,
             flexDirection: 'row',
             flexWrap: 'wrap',
-            justifyContent: 'center',
-            backgroundColor: THEMES.basic.White
+            justifyContent: 'space-around'
           }}>
-            {fac_codes.map((f, i) => {
-              return (
-                <Avatar
-                  onPress={() => this.checkFacility(f)}
-                  icon={{name: facs[f].icon, color: THEMES.basic.White}}
-                  raised
-                  overlayContainerStyle={{backgroundColor: this.state.facilities[f] ? THEMES.basic.DarkColor : THEMES.basic.LightGrey}}
-                  width={50}
-                  height={50}
-                  rounded={THEMES.roundedIcons}
-                  key={i}
-                  containerStyle={{margin: 3}}
-                />
-              )
-            })}
+            {facCodes.slice(0, fHalfLength).map((f, i) => this.getFacilityIcon(f, i, facs))}
+          </View>
+          <View style={{
+            flex: 1,
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            justifyContent: 'space-around'
+          }}>
+            {facCodes.slice(fHalfLength, facCodes.length).map((f, i) => this.getFacilityIcon(f, i, facs))}
+          </View>
           </View>
           <Divider style={{backgroundColor: THEMES.basic.DarkGrey, height: 0.8}}/>
           <View>
