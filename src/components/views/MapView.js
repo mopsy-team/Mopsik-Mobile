@@ -145,19 +145,23 @@ export default class MapView extends Component {
   };
 
   onMapReady = () => {
+    // opens chosen callout if map is in 'focused' mode
     if (this.state.focused && this.marker && this.marker.showCallout) {
       setTimeout(() => this.marker.showCallout(), 0);
     }
     this.setState({initialized: true});
   };
 
+  /* sets variable marker to reference ref;
+    used in focused mode - while creating markers,
+    this function is called when on one the map is supposed to focuse on */
+
   setMarkerRef = (ref) => {
     this.marker = ref
   };
 
-  empty = () => {
-
-  };
+  /* called on every 'not focused' marker */
+  empty = () => {};
 
   render() {
     let {main_vehicle} = SETTINGS.settings;
