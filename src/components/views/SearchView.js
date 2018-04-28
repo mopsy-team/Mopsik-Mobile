@@ -15,6 +15,7 @@ export default class SearchView extends Component {
 
   constructor() {
     super();
+    MOPS.refresh();
     this.state = {
       searchPhrase: "",
       found: MOPS.mops,
