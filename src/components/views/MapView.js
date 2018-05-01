@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Dimensions, Image, View} from 'react-native';
+import {Platform, Dimensions, Image, View} from 'react-native';
 
 import ReactNativeMaps_MapView from 'react-native-maps';
 import {Badge, Icon, Text} from 'react-native-elements'
@@ -104,31 +104,29 @@ export default class MapView extends Component {
   /* callouts when pressed on marker */
   getCallout = (marker, main_vehicle) => {
     return (
-      <ReactNativeMaps_MapView.Callout onPress={() => {
-        this.props.navigation.navigate('MopDetails', {mop: marker, showOnMap: false})
-      }}>
-        <View
-          style={{
-            backgroundColor: THEMES.basic.White,
-            height: 150,
-            width: 150,
-            flex: 1,
-            flexDirection: 'column',
-            justifyContent: 'space-around'
-          }}
-        >
+      <ReactNativeMaps_MapView.Callout
+        onPress={() => {
+          this.props.navigation.navigate('MopDetails', {mop: marker, showOnMap: false})
+        }}
+        style={{ height: 150, width: 150,  flex: 1, justifyContent: 'space-around' }}
+      >
           <Text numberOfLines={2} style={{fontSize: 20, fontWeight: 'bold'}}>{marker.title}</Text>
           <Text numberOfLines={1}>Kierunek: {marker.direction}</Text>
-          {FACILITIES.getFacilitiesIconsShort(marker.facilities_short)}
-          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text>Zapełnienie: </Text>
-            <Badge
-              value={marker.usage[main_vehicle] + '%'}
-              textStyle={{color: marker.color[main_vehicle].text}}
-              containerStyle={{backgroundColor: marker.color[main_vehicle].background}}
-            />
+          <View style={{height: 35}}>
+            {FACILITIES.getFacilitiesIconsShort(marker.facilities_short)}
           </View>
-        </View>
+          <View style={{height: 28}}>
+            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+              <View style={{height: 28, flex: 1, justifyContent: 'center'}}>
+                <Text>Zapełnienie: </Text>
+              </View>
+              <Badge
+                value={marker.usage[main_vehicle] + '%'}
+                textStyle={{color: marker.color[main_vehicle].text}}
+                containerStyle={{backgroundColor: marker.color[main_vehicle].background, height: 28}}
+              />
+            </View>
+          </View>
       </ReactNativeMaps_MapView.Callout>
     )
   };
@@ -145,23 +143,28 @@ export default class MapView extends Component {
   };
 
   onMapReady = () => {
+    // opens chosen callout if map is in 'focused' mode
     if (this.state.focused && this.marker && this.marker.showCallout) {
       setTimeout(() => this.marker.showCallout(), 0);
     }
     this.setState({initialized: true});
   };
 
+  /* sets variable marker to reference ref;
+    used in focused mode - while creating markers,
+    this function is called when on one the map is supposed to focuse on */
+
   setMarkerRef = (ref) => {
     this.marker = ref
   };
 
-  empty = () => {
-
-  };
+  /* called on every 'not focused' marker */
+  empty = () => {};
 
   render() {
     let {main_vehicle} = SETTINGS.settings;
     let mops = this.selectMops();
+
 
     return (
       <View style={styles.main} onLayout={this.changeMeasures}>
@@ -197,7 +200,20 @@ export default class MapView extends Component {
             size={30}
           />
         </View>
-        <View style={styles.container_map}>
+        <View style={{
+          flex: 1,
+          backgroundColor: '#f5fcff',
+          position: 'absolute',
+          top: Platform.select({
+            ios: 70,
+            android: 45,
+          }),
+          left: 0,
+          right: 0,
+          bottom: 0,
+          justifyContent: 'flex-end',
+          alignItems: 'center'
+        }}>
           <ReactNativeMaps_MapView
             region={this.state.region}
             onRegionChangeComplete={this.onRegionChange.bind(this)}
@@ -213,7 +229,10 @@ export default class MapView extends Component {
               bottom: 0,
               flex: 1,
               width: this.state.width,
-              height: this.state.height - 120
+              height: this.state.height - Platform.select({
+                ios: 90,
+                android: 70,
+              })
             }}
           >
             {mops.map((marker, i) => (
@@ -232,8 +251,6 @@ export default class MapView extends Component {
               </ReactNativeMaps_MapView.Marker>
             ))}
           </ReactNativeMaps_MapView>
-          <Text>Latitude: {this.state.region.latitude}</Text>
-          <Text>Longitude: {this.state.region.longitude}</Text>
         </View>
       </View>
     );
