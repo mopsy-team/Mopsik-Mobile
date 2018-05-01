@@ -1,6 +1,6 @@
 let _ = require('lodash');
 
-import {AsyncStorage} from 'react-native';
+import {AsyncStorage, NetInfo, Alert} from 'react-native';
 
 import {facilitiesCodes, facilitiesCodesShort} from 'mopsik_mobile/src/config/facilities';
 
@@ -126,6 +126,13 @@ downloadMops = (turnOffSplash) => {
       }
       turnOffSplash();
     }).done();
+  }).catch((error) => {
+      Alert.alert(
+        'Błąd',
+        'Aplikacja wymaga połączenia z internetem',
+        [{text: 'OK', onPress: () => {downloadMops(turnOffSplash)}}],
+        {cancelable: true}
+      )
   }).done();
 };
 
@@ -145,7 +152,14 @@ let downloadUsages = () => {
       marker.usage = u.usage;
       marker.color = u.color;
     });
-  }).done();
+  }).catch((error) => {
+      Alert.alert(
+        'Błąd',
+        'Aplikacja wymaga połączenia z internetem',
+        [{text: 'OK', onPress: () => {downloadUsages()}}],
+        {cancelable: true}
+      )
+    }).done();
 };
 
 /* function called when refresh button is pressed */

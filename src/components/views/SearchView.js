@@ -9,11 +9,13 @@ import {Avatar, Divider, SearchBar} from 'react-native-elements'
 MOPS = require('mopsik_mobile/src/config/mops');
 let _ = require('lodash');
 
-const ITEMS_PER_PAGE = 25;
+const ITEMS_PER_PAGE = 40;
 
 export default class SearchView extends Component {
+
   constructor() {
     super();
+    MOPS.refresh();
     this.state = {
       searchPhrase: "",
       found: MOPS.mops,
@@ -25,6 +27,7 @@ export default class SearchView extends Component {
     }
   }
 
+  /* initializes facilities dict with all false values */
   getInitialChecks = () => {
     let facs = {};
     FACILITIES.filterFacilitiesCodes.map((f, i) => {
@@ -33,12 +36,29 @@ export default class SearchView extends Component {
     return facs;
   };
 
-  findMops = (txt, param) => {
+  /* checks if mops param contains text txt */
+  checkParam = (txt, mop, param) =>{
+    return mop[param].toLowerCase().match(txt)
+  }
+
+  /* searches for text txt in four parameters of the mop */
+  checkParams = (txt, mop) => {
+    return (
+         this.checkParam(txt, mop, 'title')
+      || this.checkParam(txt, mop, 'road_number')
+      || this.checkParam(txt, mop, 'town')
+      || this.checkParam(txt, mop, 'direction')
+    )
+  }
+
+  /* returns mops that contain text txt if any of the four parameters */
+  findMops = (txt) => {
     return MOPS.mops.filter((mop) => {
-      return mop[param].toLowerCase().match(txt)
+      return this.checkParams(txt, mop)
     })
   };
 
+  /* checks if mop offers all of the facilities chosen in filters */
   matchFacilities = (mop, facs) => {
     for (f in facs) {
       if (facs[f] && !mop.facilities_dict[f]) {
@@ -48,20 +68,33 @@ export default class SearchView extends Component {
     return true;
   };
 
+  /* returns true if no facilities are chosen in filters */
+  allFacsOff = (facs) => {
+    console.log(facs);
+    for (f in facs) {
+      if (facs[f]) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /* returns mops that match search phrase and filters */
   filterMops = (mops, facs) => {
+    if(this.allFacsOff(facs)){
+      console.log('true')
+      return mops;
+    }
     return mops.filter((mop) => {
-      return this.matchFacilities(mop, facs)
+      return this.matchFacilities(mop, facs);
     })
   };
 
+  /* update displayed mops according to searchPhrase */
   changeSearchPhrase = (t) => {
     this.setState({searchPhrase: t});
     let txt = (t && t !== "") ? t.toLowerCase() : "";
-    let found_name = this.findMops(txt, 'title');
-    let found_road = this.findMops(txt, 'road_number');
-    let found_town = this.findMops(txt, 'town');
-    let found_direction = this.findMops(txt, 'direction');
-    let found = _.union(found_direction, found_name, found_road, found_town);
+    let found = this.findMops(txt);
     let found_filtered = this.filterMops(found, this.state.facilities);
 
     this.setState({
@@ -76,6 +109,7 @@ export default class SearchView extends Component {
     this.setState({reload: true});
   };
 
+  /* load more mops on reaching end of ScrollView */
   loadMore = () => {
     const {page, found_trimmed} = this.state;
     const start = page * ITEMS_PER_PAGE;
@@ -88,6 +122,7 @@ export default class SearchView extends Component {
     });
   };
 
+  /* handle checking icon in filters */
   checkFacility = (fac) => {
     const f = this.state.facilities;
     f[fac] = !f[fac];
@@ -100,10 +135,27 @@ export default class SearchView extends Component {
     });
   };
 
+  getFacilityIcon = (f, i, facs) => {
+    return (
+      <Avatar
+        onPress={() => this.checkFacility(f)}
+        icon={{name: facs[f].icon, color: THEMES.basic.White}}
+        raised
+        overlayContainerStyle={{backgroundColor: this.state.facilities[f] ? THEMES.basic.DarkColor : THEMES.basic.LightGrey}}
+        width={50}
+        height={50}
+        rounded={THEMES.roundedIcons}
+        key={i}
+        containerStyle={{margin: 3}}
+      />
+    )
+  }
+
 
   render() {
     const facs = FACILITIES.facilities;
-    const fac_codes = FACILITIES.filterFacilitiesCodes;
+    const facCodes = FACILITIES.filterFacilitiesCodes;
+    const fHalfLength = Math.ceil(facCodes.length / 2);
     return (
       <View>
         <Header navigation={this.props.navigation} title='Wyszukaj MOPa' reload={this.reload}/>
@@ -118,28 +170,23 @@ export default class SearchView extends Component {
           clearIcon={{color: THEMES.basic.DarkGrey, name: 'close'}}
         />
         <ScrollView>
+        <View style={{padding: 5, paddingLeft: 15, paddingRight: 15, backgroundColor: THEMES.basic.White}}>
           <View style={{
             flex: 1,
             flexDirection: 'row',
             flexWrap: 'wrap',
-            justifyContent: 'center',
-            backgroundColor: THEMES.basic.White
+            justifyContent: 'space-around'
           }}>
-            {fac_codes.map((f, i) => {
-              return (
-                <Avatar
-                  onPress={() => this.checkFacility(f)}
-                  icon={{name: facs[f].icon, color: THEMES.basic.White}}
-                  raised
-                  overlayContainerStyle={{backgroundColor: this.state.facilities[f] ? THEMES.basic.DarkColor : THEMES.basic.LightGrey}}
-                  width={50}
-                  height={50}
-                  rounded={THEMES.roundedIcons}
-                  key={i}
-                  containerStyle={{margin: 3}}
-                />
-              )
-            })}
+            {facCodes.slice(0, fHalfLength).map((f, i) => this.getFacilityIcon(f, i, facs))}
+          </View>
+          <View style={{
+            flex: 1,
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            justifyContent: 'space-around'
+          }}>
+            {facCodes.slice(fHalfLength, facCodes.length).map((f, i) => this.getFacilityIcon(f, i, facs))}
+          </View>
           </View>
           <Divider style={{backgroundColor: THEMES.basic.DarkGrey, height: 0.8}}/>
           <View>
