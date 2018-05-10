@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {AsyncStorage, Dimensions, ScrollView, View} from 'react-native';
 
-import {Button, Icon, Text} from 'react-native-elements'
+import {Button, Icon, Text} from 'react-native-elements';
 
 import Header from 'mopsik_mobile/src/components/tools/Header';
 import UsageTable from 'mopsik_mobile/src/components/tools/UsageTable';
-import styles from 'mopsik_mobile/src/config/styles'
+import styles from 'mopsik_mobile/src/config/styles';
 
 let _ = require('lodash');
 
@@ -131,7 +131,7 @@ export default class MopDetailsView extends Component {
         }}
       />
     )
-  }
+  };
 
   render() {
     let {mop} = this.state;

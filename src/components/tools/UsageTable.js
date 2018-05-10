@@ -34,12 +34,12 @@ export default class UsageTable extends Component {
         alignItems: 'center',
         padding: 5
       }}>
-          <Icon
-            name={vehicle.icon}
-            color={THEMES.basic.LightColor}
-            size={25}
-          />
-          <Text style={{textAlign: 'center', padding: 2}}>{vehicle.name}</Text>
+        <Icon
+          name={vehicle.icon}
+          color={THEMES.basic.LightColor}
+          size={25}
+        />
+        <Text style={{textAlign: 'center', padding: 2}}>{vehicle.name}</Text>
       </View>
     )
   };

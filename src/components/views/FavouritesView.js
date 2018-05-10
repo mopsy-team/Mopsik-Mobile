@@ -8,7 +8,6 @@ import Header from 'mopsik_mobile/src/components/tools/Header';
 
 export default class FavouritesView extends Component {
 
-
   constructor() {
     super();
     this.state = {

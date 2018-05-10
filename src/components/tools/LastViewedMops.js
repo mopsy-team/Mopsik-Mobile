@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
 import {AsyncStorage, FlatList, View} from 'react-native';
 
 import {Text} from 'react-native-elements'
