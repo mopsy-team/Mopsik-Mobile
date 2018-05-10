@@ -1,18 +1,13 @@
 import React, {Component} from 'react';
 import {AsyncStorage, Dimensions, ScrollView, View} from 'react-native';
 
-import {Button, Icon, Text} from 'react-native-elements'
+import {Button, Icon, Text} from 'react-native-elements';
 
 import Header from 'mopsik_mobile/src/components/tools/Header';
 import UsageTable from 'mopsik_mobile/src/components/tools/UsageTable';
-import styles from 'mopsik_mobile/src/config/styles'
+import styles from 'mopsik_mobile/src/config/styles';
 
-
-MOPS = require('mopsik_mobile/src/config/mops');
-FAVOURITES = require('mopsik_mobile/src/config/favourites');
-THEMES = require('mopsik_mobile/src/config/themes');
 let _ = require('lodash');
-
 
 export default class MopDetailsView extends Component {
   constructor(props) {
@@ -100,7 +95,7 @@ export default class MopDetailsView extends Component {
           favourites_mapped.push(_.find(MOPS.mops, {id: fav}));
         });
         MOPS.favouriteMOPs = favourites;
-        MOPS.favouriteMOPsmapped = favourites_mapped;
+        MOPS.favouriteMOPsMapped = favourites_mapped;
         AsyncStorage.setItem('mopsik_favouriteMOPs', JSON.stringify(favourites));
       }
       let inFavs = this.isInFavourites(this.state.mop.id);
@@ -136,7 +131,7 @@ export default class MopDetailsView extends Component {
         }}
       />
     )
-  }
+  };
 
   render() {
     let {mop} = this.state;

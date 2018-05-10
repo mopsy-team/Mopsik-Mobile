@@ -1,10 +1,6 @@
-let _ = require('lodash');
-
-import {AsyncStorage, NetInfo, Alert} from 'react-native';
+import {Alert, AsyncStorage, NetInfo} from 'react-native';
 
 import {facilitiesCodes, facilitiesCodesShort} from 'mopsik_mobile/src/config/facilities';
-
-FAVOURITES = require('mopsik_mobile/src/config/favourites');
 
 /*
  * simple color scale for usage of parking spots
@@ -46,7 +42,7 @@ let get_color = (value, scale) => {
 /* 'global' variables */
 let mops = [];
 let favouriteMOPs = [];
-let favouriteMOPsmapped = [];
+let favouriteMOPsMapped = [];
 let savedLocation = { //Warsaw center
   latitude: 52.226,
   longitude: 21,
@@ -95,7 +91,7 @@ let processMop = (mop) => {
     facilities_short: fac_short,
     facilities_dict: fac_dict
   };
-}
+};
 
 /*
  * downloads all parameters for all mops
@@ -127,12 +123,16 @@ downloadMops = (turnOffSplash) => {
       turnOffSplash();
     }).done();
   }).catch((error) => {
-      Alert.alert(
-        'Błąd',
-        'Aplikacja wymaga połączenia z internetem',
-        [{text: 'OK', onPress: () => {downloadMops(turnOffSplash)}}],
-        {cancelable: true}
-      )
+    Alert.alert(
+      'Błąd',
+      'Aplikacja wymaga połączenia z internetem',
+      [{
+        text: 'OK', onPress: () => {
+          downloadMops(turnOffSplash)
+        }
+      }],
+      {cancelable: true}
+    )
   }).done();
 };
 
@@ -153,13 +153,17 @@ let downloadUsages = () => {
       marker.color = u.color;
     });
   }).catch((error) => {
-      Alert.alert(
-        'Błąd',
-        'Aplikacja wymaga połączenia z internetem',
-        [{text: 'OK', onPress: () => {downloadUsages()}}],
-        {cancelable: true}
-      )
-    }).done();
+    Alert.alert(
+      'Błąd',
+      'Aplikacja wymaga połączenia z internetem',
+      [{
+        text: 'OK', onPress: () => {
+          downloadUsages()
+        }
+      }],
+      {cancelable: true}
+    )
+  }).done();
 };
 
 /* function called when refresh button is pressed */
@@ -175,7 +179,7 @@ module.exports = {
   downloadMops: downloadMops,
   refresh: refresh,
   favouriteMOPs: favouriteMOPs,
-  favouriteMOPsmapped: favouriteMOPsmapped,
+  favouriteMOPsMapped: favouriteMOPsMapped,
   savedLocation: savedLocation,
   lastLocationUpdate: lastLocationUpdate,
   lastViewedMops: lastViewedMops

@@ -1,7 +1,7 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
 import {Text, View} from 'react-native';
 
-import {CircularProgress} from 'mopsik_mobile/src/components/tools/CircularProgress';
+import {CircularProgress} from 'react-native-svg-circular-progress';
 
 export default class UsageCircle extends Component {
 

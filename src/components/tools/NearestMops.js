@@ -1,7 +1,7 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
 import {ActivityIndicator, Dimensions, View} from 'react-native';
 
-import {Badge, Button, Card, Divider, Icon, List, Text} from 'react-native-elements'
+import {Badge, Button, Card, Divider, Icon, Text} from 'react-native-elements';
 
 import UsageCircle from 'mopsik_mobile/src/components/tools/UsageCircle';
 import SubHeader from 'mopsik_mobile/src/components/tools/SubHeader';

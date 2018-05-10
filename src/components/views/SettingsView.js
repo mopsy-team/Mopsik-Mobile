@@ -9,11 +9,6 @@ import Header from 'mopsik_mobile/src/components/tools/Header';
 import styles from 'mopsik_mobile/src/config/styles';
 import {VEHICLES, vehiclesCodes} from 'mopsik_mobile/src/config/vehicles';
 
-
-MOPS = require('mopsik_mobile/src/config/mops');
-THEMES = require('mopsik_mobile/src/config/themes');
-let _ = require('lodash');
-
 export default class SettingsView extends Component {
 
   constructor() {

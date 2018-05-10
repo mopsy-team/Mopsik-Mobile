@@ -1,11 +1,8 @@
 import React from 'react';
 import {Alert, View} from 'react-native';
-
 import {Avatar} from 'react-native-elements'
 
-
 let _ = require('lodash');
-
 /* dict of all facilities available with coresponding icon names and polish names */
 export const facilities = {
   car_wash: {

@@ -1,7 +1,7 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
 import {Platform} from 'react-native';
 
-import {Header, List} from 'react-native-elements'
+import {Header, List} from 'react-native-elements';
 
 let _ = require('lodash');
 
@@ -12,10 +12,12 @@ export default class SubHeader extends Component {
       backgroundColor: THEMES.basic.LightColor,
       height: 35
     };
-    let center = {text: this.props.text, style: {
-      color: 'white',
-      fontSize: 16,
-    }};
+    let center = {
+      text: this.props.text, style: {
+        color: 'white',
+        fontSize: 16,
+      }
+    };
     let inner = {
       ...Platform.select({
         ios: {

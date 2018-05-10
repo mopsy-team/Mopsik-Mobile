@@ -1,7 +1,7 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
 import {Text, View} from 'react-native';
 
-import {ListItem} from 'react-native-elements'
+import {ListItem} from 'react-native-elements';
 
 export default class MopListItem extends Component {
 

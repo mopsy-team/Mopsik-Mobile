@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
 import {DeviceEventEmitter} from 'react-native';
 
-import {Header, SideMenu} from 'react-native-elements'
+import {Header} from 'react-native-elements';
 
 MOPS = require('mopsik_mobile/src/config/mops');
 THEMES = require('mopsik_mobile/src/config/themes');
+SETTINGS = require('mopsik_mobile/src/config/settings');
+FACILITIES = require('mopsik_mobile/src/config/facilities');
+FAVOURITES = require('mopsik_mobile/src/config/favourites');
 
 export default class MyHeader extends Component {
   bkg = THEMES.basic.DarkColor;
@@ -12,7 +15,7 @@ export default class MyHeader extends Component {
 
 
   openMenu = () => this.props.navigation.navigate('DrawerToggle');
-  
+
   goBack = () => {
     DeviceEventEmitter.emit('refresh', {});
     this.props.navigation.goBack();
