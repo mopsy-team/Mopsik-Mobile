@@ -42,7 +42,7 @@ let get_color = (value, scale) => {
 /* 'global' variables */
 let mops = [];
 let favouriteMOPs = [];
-let favouriteMOPsmapped = [];
+let favouriteMOPsMapped = [];
 let savedLocation = { //Warsaw center
   latitude: 52.226,
   longitude: 21,
@@ -91,7 +91,7 @@ let processMop = (mop) => {
     facilities_short: fac_short,
     facilities_dict: fac_dict
   };
-}
+};
 
 /*
  * downloads all parameters for all mops
@@ -179,7 +179,7 @@ module.exports = {
   downloadMops: downloadMops,
   refresh: refresh,
   favouriteMOPs: favouriteMOPs,
-  favouriteMOPsMapped: favouriteMOPsmapped,
+  favouriteMOPsMapped: favouriteMOPsMapped,
   savedLocation: savedLocation,
   lastLocationUpdate: lastLocationUpdate,
   lastViewedMops: lastViewedMops

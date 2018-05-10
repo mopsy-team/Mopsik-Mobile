@@ -38,11 +38,18 @@ downloadFavourites = () => {
       favourites = [];
     }
     MOPS.favouriteMOPs = favourites;
+    let favs = [];
     let favourites_mapped = [];
     favourites.map((fav, i) => {
-      favourites_mapped.push(_.find(MOPS.mops, {id: fav}));
+      let x = _.find(MOPS.mops, {id: fav});
+      if (x !== undefined) {
+        favourites_mapped.push(x);
+        favs.push(fav);
+      }
     });
     MOPS.favouriteMOPsMapped = favourites_mapped;
+    MOPS.favouriteMOPs = favs;
+    uploadFavourites(favs);
   }).done();
 };
 
