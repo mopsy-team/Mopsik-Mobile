@@ -12,11 +12,7 @@ import HomeStack from 'mopsik_mobile/src/components/stacks/HomeStack';
 import SearchStack from 'mopsik_mobile/src/components/stacks/SearchStack';
 import SettingsView from 'mopsik_mobile/src/components/views/SettingsView';
 
-MOPS = require('mopsik_mobile/src/config/mops');
-FAVOURITES = require('mopsik_mobile/src/config/favourites');
-
 let _ = require('lodash');
-
 
 export default App = DrawerNavigator({
     Home: {

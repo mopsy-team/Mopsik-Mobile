@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 import {Image, Text, View} from 'react-native';
 
-MOPS = require('mopsik_mobile/src/config/mops');
-SETTINGS = require('mopsik_mobile/src/config/settings');
-
 let _ = require('lodash');
 
 export default class SplashScreen extends Component {

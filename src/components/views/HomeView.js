@@ -10,11 +10,6 @@ import Header from 'mopsik_mobile/src/components/tools/Header';
 import styles from 'mopsik_mobile/src/config/styles'
 import {findNearestMop} from 'mopsik_mobile/src/config/findNearestMop'
 
-MOPS = require('mopsik_mobile/src/config/mops');
-SETTINGS = require('mopsik_mobile/src/config/settings');
-
-let _ = require('lodash');
-
 export default class HomeView extends Component {
 
   constructor() {

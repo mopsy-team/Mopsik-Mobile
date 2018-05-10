@@ -6,9 +6,6 @@ import Header from 'mopsik_mobile/src/components/tools/Header';
 
 import {Avatar, Divider, SearchBar} from 'react-native-elements'
 
-MOPS = require('mopsik_mobile/src/config/mops');
-let _ = require('lodash');
-
 const ITEMS_PER_PAGE = 40;
 
 export default class SearchView extends Component {

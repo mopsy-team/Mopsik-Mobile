@@ -8,8 +8,6 @@ import {Col, Row, Rows, Table, TableWrapper} from 'react-native-table-component'
 import UsageCircle from 'mopsik_mobile/src/components/tools/UsageCircle';
 import {VEHICLES, vehiclesCodes} from 'mopsik_mobile/src/config/vehicles';
 
-MOPS = require('mopsik_mobile/src/config/mops');
-
 export default class UsageTable extends Component {
 
   /*
@@ -107,7 +105,7 @@ export default class UsageTable extends Component {
     const tableHead = this.createHeaderRow();
     const tableTitle = ['Wolne miejsca', 'Zajęte miejsca', 'Całkowita liczba miejsc'];
     const tableData = this.createTableData();
-    const usageTableData = [this.createUsageRow()]
+    const usageTableData = [this.createUsageRow()];
     if (tableHead.length === 1) {
       return (
         <Text style={{textAlign: 'center'}}>Nie wybrano żadnego typu pojazdu do wyświetlania. Możesz to zrobić w

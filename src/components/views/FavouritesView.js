@@ -6,32 +6,26 @@ import Swipeout from 'react-native-swipeout';
 import MopListItem from 'mopsik_mobile/src/components/tools/MopListItem';
 import Header from 'mopsik_mobile/src/components/tools/Header';
 
-MOPS = require('mopsik_mobile/src/config/mops');
-FAVOURITES = require('mopsik_mobile/src/config/favourites');
-THEMES = require('mopsik_mobile/src/config/themes');
-let _ = require('lodash');
-
-
 export default class FavouritesView extends Component {
 
 
   constructor() {
     super();
     this.state = {
-      favouriteMOPsmapped: [],
+      favouriteMOPsMapped: [],
     };
   }
 
   componentDidMount = () => {
-    this.setState({favouriteMOPsmapped: MOPS.favouriteMOPsmapped});
+    this.setState({favouriteMOPsMapped: MOPS.favouriteMOPsMapped});
   };
 
   componentWillMount() {
     /* this listener makes sure that after deleting mop from favourites in details view,
-      mop disapears from favourites view */
+      mop disappears from favourites view */
     DeviceEventEmitter.addListener('refresh', () => {
       if (this.refs.favs) {
-        this.setState({favouriteMOPsmapped: MOPS.favouriteMOPsmapped});
+        this.setState({favouriteMOPsMapped: MOPS.favouriteMOPsMapped});
       }
     });
     /* download usages from API */
@@ -40,10 +34,10 @@ export default class FavouritesView extends Component {
 
   deleteFav = (id) => {
     FAVOURITES.deleteFavourite(id);
-    this.setState({favouriteMOPsmapped: MOPS.favouriteMOPsmapped});
+    this.setState({favouriteMOPsMapped: MOPS.favouriteMOPsMapped});
   };
 
-  /* buttons apearing when swiping left elements on favourites list */
+  /* buttons appearing when swiping left elements on favourites list */
   swipeBtns = (id) => {
     return [{
       text: 'Usuń',
@@ -67,7 +61,7 @@ export default class FavouritesView extends Component {
       <View ref='favs'>
         <Header navigation={this.props.navigation} title='Ulubione MOPy' reload={this.reload}/>
         <FlatList
-          data={this.state.favouriteMOPsmapped}
+          data={this.state.favouriteMOPsMapped}
           keyExtractor={item => item.id}
           renderItem={({item, index}) => (
             <Swipeout right={this.swipeBtns(item.id)}

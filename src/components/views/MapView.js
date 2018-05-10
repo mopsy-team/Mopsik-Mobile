@@ -7,11 +7,6 @@ import {Badge, Icon, Text} from 'react-native-elements'
 import Header from 'mopsik_mobile/src/components/tools/Header';
 import styles from 'mopsik_mobile/src/config/styles'
 
-MOPS = require('mopsik_mobile/src/config/mops');
-FACILITIES = require('mopsik_mobile/src/config/facilities');
-THEMES = require('mopsik_mobile/src/config/themes');
-let _ = require('lodash');
-
 export default class MapView extends Component {
 
   /* when creating component */

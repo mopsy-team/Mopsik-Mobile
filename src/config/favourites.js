@@ -1,6 +1,5 @@
 import {AsyncStorage} from 'react-native';
 
-MOPS = require('../config/mops');
 let _ = require('lodash');
 
 /* uploades array of favourites to AsyncStorage */
@@ -21,14 +20,14 @@ deleteFavourite = (id) => {
        favourites_mapped.push(_.find(MOPS.mops, { id: fav }));
      });
      MOPS.favouriteMOPs = favs;
-     MOPS.favouriteMOPsmapped = favourites_mapped;
+     MOPS.favouriteMOPsMapped = favourites_mapped;
    }
 };
 
 /*
  * get favourites from AsyncStorage, update variables
  * favouriteMOPs is a list of ids
- * favouriteMOPsmapped is list of whole MOP objects (dicts with all parameters)
+ * favouriteMOPsMapped is list of whole MOP objects (dicts with all parameters)
  */
 downloadFavourites = () => {
   AsyncStorage.getItem('mopsik_favouriteMOPs').then((response) => {
@@ -43,7 +42,7 @@ downloadFavourites = () => {
     favourites.map((fav, i) => {
       favourites_mapped.push(_.find(MOPS.mops, {id: fav}));
     });
-    MOPS.favouriteMOPsmapped = favourites_mapped;
+    MOPS.favouriteMOPsMapped = favourites_mapped;
   }).done();
 };
 

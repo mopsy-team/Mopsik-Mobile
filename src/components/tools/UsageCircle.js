@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Text, View} from 'react-native';
 
-import {CircularProgress} from 'mopsik_mobile/src/components/tools/CircularProgress';
+import {CircularProgress} from 'react-native-svg-circular-progress';
 
 export default class UsageCircle extends Component {
 
@@ -18,7 +18,7 @@ export default class UsageCircle extends Component {
           donutColor="red"
           fillColor="white"
           progressWidth={28}
-          size={70}
+          size={50}
         >
           <View>
             <Text style={{fontSize: 17}}>{(available !== 0) ? (usage + '%') : '--'}</Text>
