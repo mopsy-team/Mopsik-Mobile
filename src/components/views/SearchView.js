@@ -48,10 +48,20 @@ export default class SearchView extends Component {
     )
   }
 
+  checkMop = (txt, mop) => {
+    for (t of txt.split(" ")) {
+      if (! this.checkParams(t, mop)){
+        return false;
+      }
+    }
+    return true;
+  }
+
+
   /* returns mops that contain text txt if any of the four parameters */
   findMops = (txt) => {
     return MOPS.mops.filter((mop) => {
-      return this.checkParams(txt, mop)
+      return this.checkMop(txt, mop)
     })
   };
 
