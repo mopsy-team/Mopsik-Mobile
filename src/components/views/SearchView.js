@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {FlatList, ScrollView, View} from 'react-native';
+import {Alert, FlatList, ScrollView, View} from 'react-native';
 
 import MopListItem from 'mopsik_mobile/src/components/tools/MopListItem';
 import Header from 'mopsik_mobile/src/components/tools/Header';
@@ -146,6 +146,16 @@ export default class SearchView extends Component {
     return (
       <Avatar
         onPress={() => this.checkFacility(f)}
+        onLongPress={() => {
+          Alert.alert(
+            facs[f].name, "",[
+                {text: 'Anuluj', onPress: () => {}, style: 'cancel'},
+                {text: 'Filtruj', onPress: () => this.checkFacility(f)},
+              ],
+              {cancelable: true}
+          )
+        }
+        }
         icon={{name: facs[f].icon, color: THEMES.basic.White}}
         raised
         overlayContainerStyle={{backgroundColor: this.state.facilities[f] ? THEMES.basic.DarkColor : THEMES.basic.LightGrey}}
