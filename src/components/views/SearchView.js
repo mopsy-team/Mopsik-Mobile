@@ -77,7 +77,6 @@ export default class SearchView extends Component {
 
   /* returns true if no facilities are chosen in filters */
   allFacsOff = (facs) => {
-    console.log(facs);
     for (f in facs) {
       if (facs[f]) {
         return false;
@@ -89,7 +88,6 @@ export default class SearchView extends Component {
   /* returns mops that match search phrase and filters */
   filterMops = (mops, facs) => {
     if(this.allFacsOff(facs)){
-      console.log('true')
       return mops;
     }
     return mops.filter((mop) => {
