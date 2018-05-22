@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import {AsyncStorage, Dimensions, ScrollView, View} from 'react-native';
+import {AsyncStorage, Dimensions, ScrollView, View, ActivityIndicator} from 'react-native';
 
-import {Button, Icon, Text} from 'react-native-elements';
+import {Button, Icon, Text, Badge} from 'react-native-elements';
 
 import Header from 'mopsik_mobile/src/components/tools/Header';
 import UsageTable from 'mopsik_mobile/src/components/tools/UsageTable';
 import styles from 'mopsik_mobile/src/config/styles';
+import {calculateDistance} from 'mopsik_mobile/src/config/findNearestMop'
 
 let _ = require('lodash');
 
@@ -17,8 +18,33 @@ export default class MopDetailsView extends Component {
     this.state = {
       button: this.generateButton(this.isInFavourites(mop.id)),
       mop: mop,
-      width: Dimensions.get('window').width
+      width: Dimensions.get('window').width,
+      distance: undefined
     };
+  }
+
+  loadNewDistance = () => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        r = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        };
+        MOPS.savedLocation = {
+          ...MOPS.savedLocation,
+          ...r
+        };
+        dist = calculateDistance(r.latitude, r.longitude, this.state.mop);
+        this.setState({distance: dist});
+      },
+      (error) => {
+      },
+      {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000},
+    );
+  }
+
+  componentDidMount() {
+    this.loadNewDistance();
   }
 
   /* checks if mop is in favourites */
@@ -105,6 +131,7 @@ export default class MopDetailsView extends Component {
 
 
   reload = () => {
+    this.loadNewDistance();
     this.setState({reload: true});
   };
 
@@ -137,6 +164,13 @@ export default class MopDetailsView extends Component {
     let {mop} = this.state;
     let {settings} = SETTINGS;
     let {main_vehicle} = settings;
+    let distanceBadge =
+      (this.state.distance) ?
+        (<Badge containerStyle={{backgroundColor: THEMES.basic.LightColor}}>
+          <Text style={{color: 'black', fontSize: 18}}>{this.state.distance} km</Text>
+        </Badge>)
+      :
+        (<ActivityIndicator animating={true} style={{alignItems: 'center'}} size="small"/>);
     let showOnMap = (this.props.navigation.state.params.showOnMap) ? this.getShowOnMapButton() : undefined;
     return (
       <View style={styles.mainWhite} onLayout={this.changeWidth}>
@@ -168,6 +202,10 @@ export default class MopDetailsView extends Component {
                   <Text style={{marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>Miejscowość: </Text>
                   {mop.town}
                 </Text>
+                <View style={{marginTop: 5, marginBottom: 5, flex: 1, flexDirection: 'row'}}>
+                  <Text style={{marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>Odległość:  </Text>
+                  {distanceBadge}
+                </View>
                 <Text></Text>
                 <Text></Text>
                 {this.state.button}
