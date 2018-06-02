@@ -38,10 +38,9 @@ export default class MopDetailsView extends Component {
         this.setState({distance: dist});
       },
       (error) => {
-      },
-      {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000},
+      }
     );
-  }
+  };
 
   componentDidMount() {
     this.loadNewDistance();

@@ -41,7 +41,6 @@ export default class MapView extends Component {
         MOPS.savedLocation = r;
       },
       (error) => this.state = {...this.state, error: error.message},
-      {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000},
     );
   }
 
@@ -56,21 +55,8 @@ export default class MapView extends Component {
           longitude: position.coords.longitude,
           error: null,
         };
-        /* update region at most every 2 seconds */
-        /* updating state rerenders view with new location */
-        const t = new Date().getTime();
-        if ((t - MOPS.lastLocationUpdate) >= 2000) {
-          if (this.state.followPosition) {
-            this.setState({
-              region: r
-            });
-          }
-          MOPS.savedLocation = r;
-          MOPS.lastLocationUpdate = t;
-        }
       },
       (error) => this.setState({error: error.message}),
-      {enableHighAccuracy: false, timeout: 20000, distanceFilter: 10},
     );
   }
 

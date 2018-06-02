@@ -9,6 +9,7 @@ import SplashScreen from 'mopsik_mobile/src/components/tools/SplashScreen';
 import Header from 'mopsik_mobile/src/components/tools/Header';
 import styles from 'mopsik_mobile/src/config/styles'
 import {findNearestMop} from 'mopsik_mobile/src/config/findNearestMop'
+import {requestLocationPermission} from 'mopsik_mobile/src/permissions/GetLocationPermission'
 
 export default class HomeView extends Component {
 
@@ -20,28 +21,6 @@ export default class HomeView extends Component {
       region: null,
       nearestMops: null
     };
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        r = {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude
-        };
-        MOPS.savedLocation = {
-          ...MOPS.savedLocation,
-          ...r
-        };
-        let nearest = findNearestMop(r.latitude, r.longitude);
-        this.state = {
-          ...this.state,
-          region: r,
-          nearestMops: nearest,
-        };
-      },
-      (error) => {
-      },
-      {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000},
-    );
-
   }
 
   generateContents = () => {
@@ -53,7 +32,11 @@ export default class HomeView extends Component {
   };
 
   updateStateWithNewLocation = (r) => {
+
+    console.log('dupa2');
     let nearest = findNearestMop(r.latitude, r.longitude);
+
+    console.log('dupa3');
     this.setState({
       region: r,
       nearestMops: nearest,
@@ -62,30 +45,25 @@ export default class HomeView extends Component {
   };
 
   componentDidMount() {
+    requestLocationPermission();
     /* location change listener */
-    this.watchId = navigator.geolocation.watchPosition(
+    navigator.geolocation.getCurrentPosition(
       (position) => {
         /* new region object */
         r = {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude
         };
-        /* update region at most every 2 seconds */
-        /* updating state rerenders view with new location */
-        const t = new Date().getTime();
-        if ((t - MOPS.lastLocationUpdate) >= 2000) {
-          MOPS.savedLocation = {
-            ...MOPS.savedLocation,
-            ...r
-          };
-          MOPS.lastLocationUpdate = t;
-          this.updateStateWithNewLocation(r);
-        }
+        MOPS.savedLocation = {
+          ...MOPS.savedLocation,
+          ...r
+        };
+        console.log('dupa1');
+        this.updateStateWithNewLocation(r);
       },
       (error) => {
         console.log('error', error)
-      },
-      {enableHighAccuracy: false, timeout: 20000, distanceFilter: 10},
+      }
     );
   }
 
