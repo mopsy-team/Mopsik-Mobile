@@ -37,7 +37,6 @@ downloadFavourites = () => {
     else {
       favourites = [];
     }
-    MOPS.favouriteMOPs = favourites;
     let favs = [];
     let favourites_mapped = [];
     favourites.map((fav, i) => {

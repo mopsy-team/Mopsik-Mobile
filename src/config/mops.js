@@ -2,6 +2,7 @@ import {Alert, AsyncStorage, NetInfo} from 'react-native';
 
 import {facilitiesCodes, facilitiesCodesShort} from 'mopsik_mobile/src/config/facilities';
 
+let _ = require('lodash');
 /*
  * simple color scale for usage of parking spots
  * <0, 35> => green
@@ -113,12 +114,17 @@ downloadMops = (turnOffSplash) => {
     if (favouriteMOPs.length === 0) {
       FAVOURITES.downloadFavourites();
     }
+
+    MOPS.lastViewedMops = [];
     AsyncStorage.getItem('mopsik_lastViewedMops').then((response) => {
       if (response) {
-        MOPS.lastViewedMops = JSON.parse(response);
-      }
-      else {
-        MOPS.lastViewedMops = [];
+        let lastViewed = JSON.parse(response);
+        lastViewed.map((_id, i) => {
+          let x = _.find(MOPS.mops, {id: _id});
+          if (x !== undefined) {
+            MOPS.lastViewedMops.push(_id);
+          }
+        });
       }
       turnOffSplash();
     }).done();
