@@ -9,6 +9,7 @@
   "dependencies": {
     "babel-preset-react-native-stage-0": "^1.0.1",
     "fbjs": "^0.8.16",
+    "glog": "^1.7.0",
     "gradle": "^1.0.9",
     "lodash": "^3.10.1",
     "npm": "^5.8.0",
